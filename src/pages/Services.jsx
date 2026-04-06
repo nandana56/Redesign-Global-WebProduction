@@ -30,7 +30,15 @@ const Services = () => {
     return (
         <div ref={mainContainerRef} className="bg-[#062055] min-h-screen">
             {/* Unified Hero Section */}
-            <div ref={heroSectionRef} className="relative min-h-[80vh] w-full flex flex-col md:flex-row shadow-sm border-b border-white/10 overflow-hidden bg-[#062055]">
+            <div 
+                ref={heroSectionRef} 
+                className="relative min-h-[80vh] w-full flex flex-col md:flex-row shadow-sm border-b border-white/10 overflow-hidden bg-[#062055]"
+                style={{
+                    backgroundImage: "url('/services/New%20Project.webp')",
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                }}
+            >
                 
                 {/* Ambient Subtle Glows */}
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[120px] -translate-y-1/2 pointer-events-none"></div>

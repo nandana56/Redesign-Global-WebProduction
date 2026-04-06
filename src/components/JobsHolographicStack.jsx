@@ -45,8 +45,8 @@ const HolographicCard = ({ job, index }) => {
         >
             {/* Holographic Shimmer Effect */}
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl overflow-hidden pointer-events-none">
-                <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 via-purple-500/20 to-pink-500/20 mix-blend-overlay"></div>
-                <div className="absolute -inset-[100%] bg-[conic-gradient(from_0deg,transparent,rgba(255,255,255,0.1),transparent)] animate-[spin_4s_linear_infinite]"></div>
+                <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/20 via-blue-400/25 to-blue-600/20 mix-blend-overlay"></div>
+                <div className="absolute -inset-[100%] bg-[conic-gradient(from_0deg,transparent,rgba(59,130,246,0.15),transparent)] animate-[spin_5s_linear_infinite]"></div>
             </div>
 
             <div className="relative z-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4" style={{ transform: "translateZ(50px)" }}>
@@ -66,7 +66,7 @@ const HolographicCard = ({ job, index }) => {
                             {job.location}
                         </span>
                         <span className="flex items-center gap-2">
-                            <svg className="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg>
                             {job.type}
@@ -75,8 +75,8 @@ const HolographicCard = ({ job, index }) => {
                 </div>
 
                 <div className="relative group/btn">
-                    <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl blur opacity-20 group-hover/btn:opacity-60 transition duration-300"></div>
-                    <button className="relative px-6 py-3 bg-[#0A1A40] text-white font-bold rounded-xl border border-white/10 group-hover/btn:border-blue-400/50 transition-all flex items-center gap-2">
+                    <div className="absolute -inset-1 bg-gradient-to-r from-blue-700 to-blue-400 rounded-xl blur-md opacity-30 group-hover/btn:opacity-60 transition duration-300"></div>
+                    <button className="relative px-6 py-3 bg-[#020617] text-white font-bold rounded-xl border border-blue-500/30 group-hover/btn:border-blue-400 transition-all flex items-center gap-2">
                         View Details
                         <svg className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -125,7 +125,7 @@ const JobsHolographicStack = ({ jobs }) => {
     }, []);
 
     return (
-        <section ref={containerRef} className="w-full bg-[#071433] py-24 px-6 overflow-hidden">
+        <section ref={containerRef} className="w-full bg-[#020617] py-24 px-6 overflow-hidden relative">
             <div className="max-w-5xl mx-auto flex flex-col gap-6">
                 {jobs.map((job, i) => (
                     <HolographicCard key={i} job={job} index={i} />
@@ -133,8 +133,8 @@ const JobsHolographicStack = ({ jobs }) => {
             </div>
 
             {/* Background elements */}
-            <div className="absolute top-1/4 -left-20 w-96 h-96 bg-blue-600/10 blur-[150px] rounded-full pointer-events-none"></div>
-            <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-purple-600/10 blur-[150px] rounded-full pointer-events-none"></div>
+            <div className="absolute top-1/4 -left-20 w-[500px] h-[500px] bg-blue-700/10 blur-[150px] rounded-full pointer-events-none"></div>
+            <div className="absolute bottom-1/4 -right-20 w-[500px] h-[500px] bg-blue-500/10 blur-[150px] rounded-full pointer-events-none"></div>
         </section>
     );
 };

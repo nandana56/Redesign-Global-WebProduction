@@ -1,163 +1,157 @@
-import React, { useRef } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion, useSpring, useTransform } from "framer-motion";
 
+// --- BUTTON SAAS ---
 const SaasButton = () => {
     return (
-        <button className="group relative overflow-hidden rounded-full text-black bg-white px-3 py-1 sm:px-4 sm:py-2 border border-white text-xs sm:text-sm transition-colors duration-300 text-[17px] font-medium font-poppins hover:shadow-[0_15px_30px_rgba(87,194,255,0.4)] hover:-translate-y-1">
-            {/* Soft background transition instead of sharp fill */}
+        <a 
+            href="https://ladder7.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative overflow-hidden rounded-full text-black bg-white px-3 py-1 sm:px-4 sm:py-2 border border-white text-xs sm:text-sm transition-colors duration-300 text-[17px] font-medium font-poppins hover:shadow-[0_15px_30px_rgba(87,194,255,0.4)] hover:-translate-y-1 inline-flex"
+        >
             <span className="absolute inset-0 w-full h-full bg-[#dbe8f0] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0" />
-            
             <span className="relative z-10 flex items-center gap-3 text-black transition-colors duration-300">
                 Learn More
             </span>
-        </button>
+        </a>
     );
 };
 
-// --- MAIN COMPONENT ---
+// --- MAIN COMPONENT: OPTION 9 ---
 const Ladder7Partnership = () => {
-    // Shared motion values for the entire section's Isometric mouse follow effect
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
+    // Mouse tracking for the entire parallax radar layout
+    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+    
+    // Smooth framer-motion physical springs
+    const springX = useSpring(0, { stiffness: 50, damping: 20 });
+    const springY = useSpring(0, { stiffness: 50, damping: 20 });
 
-    const mouseXSpring = useSpring(x, { stiffness: 100, damping: 30, mass: 0.5 });
-    const mouseYSpring = useSpring(y, { stiffness: 100, damping: 30, mass: 0.5 });
-
-    // The base Isometric rotation is roughly rotate-x: 55deg, rotate-z: 45deg
-    // We add slight variations to these native axes based on mouse position.
-    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], [65, 45]);
-    const rotateZ = useTransform(mouseXSpring, [-0.5, 0.5], [35, 55]);
+    useEffect(() => {
+        springX.set(mousePosition.x);
+        springY.set(mousePosition.y);
+    }, [mousePosition, springX, springY]);
 
     const handleMouseMove = (e) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        const width = rect.width;
-        const height = rect.height;
-        const mouseX = e.clientX - rect.left;
-        const mouseY = e.clientY - rect.top;
-        const xPct = mouseX / width - 0.5;
-        const yPct = mouseY / height - 0.5;
-        x.set(xPct);
-        y.set(yPct);
+        // Normalize mouse coordinates from -1 to 1 based on screen size so center is 0,0
+        const x = (e.clientX / window.innerWidth) * 2 - 1;
+        const y = (e.clientY / window.innerHeight) * 2 - 1;
+        setMousePosition({ x, y });
     };
 
-    const handleMouseLeave = () => {
-        x.set(0);
-        y.set(0);
-    };
+    // Parallax Multipliers for the central core and various floating satellites 
+    // They move in opposing directions and at different speeds to create a 3D orbit feel
+    const coreX = useTransform(springX, [-1, 1], [-15, 15]);
+    const coreY = useTransform(springY, [-1, 1], [-15, 15]);
+    
+    const badgeX = useTransform(springX, [-1, 1], [-40, 40]);
+    const badgeY = useTransform(springY, [-1, 1], [-40, 40]);
+
+    const headingX = useTransform(springX, [-1, 1], [30, -30]);
+    const headingY = useTransform(springY, [-1, 1], [30, -30]);
+
+    const textX = useTransform(springX, [-1, 1], [-25, 25]);
+    const textY = useTransform(springY, [-1, 1], [50, -50]);
+
+    const buttonX = useTransform(springX, [-1, 1], [45, -45]);
+    const buttonY = useTransform(springY, [-1, 1], [-20, 20]);
 
     return (
         <section 
             onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            style={{ perspective: "2500px" }}
-            className="relative w-full bg-[#001c3d] py-24 md:py-40 px-6 sm:px-12 lg:px-24 overflow-hidden"
+            className="relative w-full h-[80vh] min-h-[600px] flex items-center justify-center overflow-hidden bg-[#001c3d]"
         >
-            <div className="max-w-[1400px] mx-auto flex flex-col lg:flex-row items-center justify-center gap-16 lg:gap-8 relative z-10">
-                
-                {/* LEFT SIDE: Typography & Content */}
-                <div className="w-full lg:w-5/12 flex flex-col justify-center order-last lg:order-first z-20">
-                    <motion.div 
-                        initial={{ opacity: 0, x: -40 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true, margin: "-100px" }}
-                        transition={{ duration: 0.8, ease: "easeOut" }}
-                    >
-                        {/* High-Tech SaaS Badge */}
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#57C2FF]/10 border border-[#57C2FF]/30 mb-8 shadow-[0_0_15px_rgba(87,194,255,0.2)]">
-                            <span className="w-2 h-2 rounded-full bg-[#57C2FF] animate-pulse shadow-[0_0_8px_rgba(87,194,255,1)]" />
-                            <span className="text-[#57C2FF] text-xs sm:text-sm font-bold tracking-widest uppercase font-poppins">Strategic Partnership</span>
-                        </div>
+            {/* Ambient Core Lighting */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#57C2FF]/10 rounded-full blur-[150px] pointer-events-none z-0" />
 
-                        <h2 className="text-[#57C2FF] text-[24pt] sm:text-xl md:text-2xl lg:text-3xl lg:mt-8 font-medium mb-3 md:mb-4 lg:mb-6 text-left font-poppins leading-tight">
-                            Ladder7 <br className="hidden lg:block"/> 
+            {/* RADAR SVG BACKPACK */}
+            <svg className="absolute inset-0 w-full h-full z-0 opacity-20 pointer-events-none">
+                {/* Concentric Tech Rings */}
+                <circle cx="50%" cy="50%" r="20%" stroke="#57C2FF" strokeWidth="1" fill="none" strokeDasharray="4 6" opacity="0.5" />
+                <circle cx="50%" cy="50%" r="35%" stroke="#00b4d8" strokeWidth="1" fill="none" strokeDasharray="4 12" opacity="0.3" />
+                <circle cx="50%" cy="50%" r="50%" stroke="#57C2FF" strokeWidth="1" fill="none" strokeDasharray="2 20" opacity="0.1" />
+                
+                {/* Crosshairs Tracker Lines */}
+                <line x1="0" y1="50%" x2="100%" y2="50%" stroke="#57C2FF" strokeWidth="1" opacity="0.2" strokeDasharray="4 8" />
+                <line x1="50%" y1="0" x2="50%" y2="100%" stroke="#57C2FF" strokeWidth="1" opacity="0.2" strokeDasharray="4 8" />
+            </svg>
+
+            {/* 3D SCENE CONTAINER */}
+            <div className="relative w-full max-w-[1400px] h-full flex items-center justify-center z-10 pointer-events-none">
+
+                {/* THE CORE: PERFECTLY CIRCULAR IMAGE */}
+                <motion.div 
+                    style={{ x: coreX, y: coreY }}
+                    className="absolute w-[280px] h-[280px] sm:w-[350px] sm:h-[350px] md:w-[450px] md:h-[450px] rounded-full overflow-hidden border-[2px] sm:border-[4px] border-[#57C2FF]/30 shadow-[0_0_80px_rgba(87,194,255,0.4)] z-20 group cursor-crosshair pointer-events-auto"
+                >
+                    {/* Hover reveal mechanic: dims without hover, fully reveals image on hover */}
+                    <div className="absolute inset-0 bg-[#001c3d]/30 z-10 transition-colors duration-700 group-hover:bg-transparent pointer-events-none" />
+                    <img 
+                        src="/home/ladder7.jpg" 
+                        alt="Ladder7 Core" 
+                        className="w-full h-full object-cover transition-transform duration-[2000ms] group-hover:scale-110"
+                    />
+                    
+                    {/* Internal lens edge light */}
+                    <div className="absolute inset-0 rounded-full border border-white/40 pointer-events-none mix-blend-overlay z-20" />
+                </motion.div>
+
+                {/* SATELLITE 1: STRATEGIC PARTNERSHIP BADGE */}
+                <motion.div 
+                    style={{ x: badgeX, y: badgeY }}
+                    className="absolute top-[12%] left-[4%] sm:top-[15%] sm:left-[8%] lg:left-[15%] z-30 pointer-events-auto"
+                >
+                    {/* Maintained exact class properties within the satellite layout */}
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#001c3d]/80 backdrop-blur-md border border-[#57C2FF]/40 shadow-[0_0_20px_rgba(87,194,255,0.3)] hover:scale-105 transition-transform cursor-default">
+                        <span className="w-2 h-2 rounded-full bg-[#57C2FF] animate-pulse" />
+                        <span className="text-[#57C2FF] text-xs sm:text-sm font-bold tracking-widest uppercase font-poppins">Strategic Partnership</span>
+                    </div>
+                    {/* Visual connecting wire extending toward the core */}
+                    <div className="absolute -bottom-10 right-4 w-[1px] h-12 bg-gradient-to-b from-[#57C2FF]/60 to-transparent rotate-[30deg] pointer-events-none" />
+                </motion.div>
+
+                {/* SATELLITE 2: MAIN HEADING (Ladder7 Nextstep Solutions) */}
+                <motion.div 
+                    style={{ x: headingX, y: headingY }}
+                    className="absolute top-[15%] right-[2%] sm:right-[5%] md:top-[22%] lg:right-[10%] z-30 max-w-[280px] sm:max-w-[350px] pointer-events-auto"
+                >
+                    <div className="p-4 sm:p-6 rounded-[24px] bg-[#001c3d]/60 backdrop-blur-xl border border-white/10 shadow-2xl hover:border-[#57C2FF]/40 transition-colors">
+                        {/* Maintained exact text size & color limits */}
+                        <h2 className="text-[#57C2FF] text-[24pt] sm:text-xl md:text-2xl lg:text-3xl font-medium font-poppins leading-tight">
+                            Ladder7 <br className="hidden sm:block"/> 
                             Nextstep Solutions
                         </h2>
+                    </div>
+                </motion.div>
 
-                        <p className="text-white text-sm sm:text-base leading-relaxed text-left font-poppins mb-12 max-w-xl">
+                {/* SATELLITE 3: PARAGRAPH BLOCK */}
+                <motion.div 
+                    style={{ x: textX, y: textY }}
+                    className="absolute bottom-[10%] left-[2%] sm:bottom-[15%] sm:left-[2%] md:bottom-[20%] lg:left-[2%] xl:left-[3%] z-30 w-[94%] max-w-[350px] sm:max-w-[450px] lg:max-w-[480px] xl:max-w-[530px] pointer-events-auto"
+                >
+                    <div className="p-5 sm:p-8 rounded-[32px] bg-[#001c3d]/60 backdrop-blur-xl border border-white/10 shadow-2xl hover:border-[#57C2FF]/30 transition-colors">
+                        {/* Maintained exact paragraph strings and sizes */}
+                        <p className="text-white text-sm sm:text-base leading-relaxed font-poppins text-justify sm:text-left">
                             Ladder7 Nextstep Solutions is a training academy based in India focused on enhancing the technical skills of their attendees. Through our partnership, we are able to provide opportunities for real-world experience to students, and also provide the companies we serve with top talent.
                         </p>
+                    </div>
+                    {/* Visual connecting wire heading toward the core */}
+                    <div className="absolute top-1/2 -right-16 w-16 h-[1px] bg-gradient-to-r from-transparent to-[#57C2FF]/60 pointer-events-none" />
+                </motion.div>
 
-                        <div className="mt-4">
-                            <SaasButton />
-                        </div>
-                    </motion.div>
-                </div>
+                {/* SATELLITE 4: THE SAAS BUTTON */}
+                <motion.div 
+                    style={{ x: buttonX, y: buttonY }}
+                    className="absolute bottom-[20%] right-[8%] sm:right-[15%] lg:right-[20%] z-30 pointer-events-auto"
+                >
+                    <div className="relative group/btn cursor-pointer">
+                        <SaasButton />
+                        {/* Dramatic Radar Ping orbiting the button specifically */}
+                        <div className="absolute inset-0 rounded-full border-[2px] border-[#57C2FF] animate-ping opacity-30 group-hover/btn:border-white transition-colors" />
+                    </div>
+                </motion.div>
 
-                {/* RIGHT SIDE: Isometric 3D Object (Framer Motion) */}
-                <div className="w-full lg:w-7/12 h-[450px] sm:h-[550px] lg:h-[650px] flex items-center justify-center relative order-first lg:order-last">
-                    
-                    {/* The 3D Scene Container */}
-                    <motion.div 
-                        style={{
-                            rotateX,
-                            rotateZ,
-                            transformStyle: "preserve-3d",
-                        }}
-                        className="relative w-[300px] h-[300px] sm:w-[380px] sm:h-[380px] pointer-events-none"
-                    >
-                        {/* Continuous floating animation wrapper */}
-                        <motion.div
-                            animate={{ y: [0, -30, 0] }}
-                            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                            className="w-full h-full relative"
-                            style={{ transformStyle: "preserve-3d" }}
-                        >
-                            {/* Layer 3: Drop Shadow Plate (bottom-most) */}
-                            <div 
-                                className="absolute inset-0 bg-[#57C2FF]/15 blur-2xl rounded-3xl"
-                                style={{ transform: "translateZ(-80px)" }}
-                            />
-
-                            {/* Layer 2: Abstract Blue Glass Plate */}
-                            <div 
-                                className="absolute inset-0 bg-gradient-to-tr from-[#57C2FF]/40 to-blue-700/20 backdrop-blur-md border-[2px] border-[#57C2FF]/40 rounded-3xl"
-                                style={{ transform: "translateZ(-40px) scale(1.05)" }}
-                            />
-                            
-                            {/* Layer 1: Solid Image Plate (top-most) */}
-                            <div 
-                                className="absolute inset-0 bg-white/5 border-[3px] border-white/20 rounded-3xl overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.9)]"
-                                style={{ transform: "translateZ(0px)" }}
-                            >
-                                <img 
-                                    src="/home/ladder7.jpg" 
-                                    alt="Ladder7 Nextstep Solutions Isometric" 
-                                    loading="lazy" 
-                                    className="w-full h-full object-cover rounded-3xl" 
-                                />
-                                
-                                {/* Inner Glass Shine */}
-                                <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-black/30 pointer-events-none" />
-                            </div>
-
-                            {/* Extra Floating Decor Layers */}
-                            <motion.div 
-                                animate={{ y: [0, 20, 0] }}
-                                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                                className="absolute -top-12 -right-12 w-28 h-28 bg-white/5 backdrop-blur-xl border border-white/20 rounded-2xl shadow-xl"
-                                style={{ transform: "translateZ(80px)" }}
-                            >
-                                {/* Mini glass detail */}
-                                <div className="absolute inset-2 border border-white/10 rounded-xl" />
-                            </motion.div>
-
-                            <motion.div 
-                                animate={{ y: [0, -15, 0] }}
-                                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-                                className="absolute -bottom-8 -left-8 w-20 h-20 bg-[#57C2FF]/20 backdrop-blur-xl border border-[#57C2FF]/40 rounded-xl shadow-xl flex items-center justify-center p-3"
-                                style={{ transform: "translateZ(50px)" }}
-                            >
-                                <div className="w-full h-full bg-[#57C2FF]/30 rounded-lg animate-pulse" />
-                            </motion.div>
-                        </motion.div>
-                    </motion.div>
-
-                </div>
             </div>
-
-            {/* Ambient Background Light (Softened for the lighter background) */}
-            <div className="absolute top-1/2 right-[10%] -translate-y-1/2 w-[80vw] h-[80vw] max-w-[800px] max-h-[800px] bg-[#57C2FF]/15 rounded-full blur-[150px] pointer-events-none" />
-            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-[#001c3d] via-[#002b5e] to-[#001c3d] opacity-50 pointer-events-none" />
         </section>
     );
 };

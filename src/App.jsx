@@ -13,9 +13,8 @@ import ScrollToTop from './components/ScrollToTop';
 import Footer from './components/Footer';
 import Aboutlearnmore from './pages/Aboutlearnmore';
 import RealEstateCaseStudy from './pages/RealEstateCaseStudy';
-import Enterprise from './pages/Enterprise';
-import SMBDetail from './pages/SMBDetail';
 import Products from './pages/Products';
+import Solutions from './pages/Solutions';
 
 const App = () => {
   return (
@@ -34,9 +33,8 @@ const App = () => {
           <Route path="/careers" element={<Careers />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about-journey" element={<Aboutlearnmore />} />
-          <Route path="/enterprise" element={<Enterprise />} />
-          <Route path="/smb-solutions" element={<SMBDetail />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/solutions" element={<Solutions />} />
 
 
         </Routes>

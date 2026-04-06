@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import AboutOverview from "../components/AboutOverview";
 import CompanyManagement from "../components/CompanyManagement";
 import AboutHeroKinetic from "../components/AboutHeroKinetic";
+import IndustryArticles from "../components/IndustryArticles";
 
 const About = () => {
     useEffect(() => {
@@ -18,6 +19,9 @@ const About = () => {
             </div>
             <div className="relative z-30">
                 <CompanyManagement />
+            </div>
+            <div className="relative z-20">
+                <IndustryArticles />
             </div>
         </div>
     );

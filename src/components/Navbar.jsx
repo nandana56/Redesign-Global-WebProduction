@@ -32,15 +32,7 @@ export default function Navbar() {
   ];
 
   const navLinksRight = [
-    { 
-      name: "Solutions", 
-      path: "/enterprise", 
-      hasDropdown: true,
-      subLinks: [
-        { name: "Enterprise", path: "/enterprise" },
-        { name: "SMB Solutions", path: "/smb-solutions" },
-      ]
-    },
+    { name: "Solutions", path: "/solutions" },
     { name: "Blogs", path: "/blogs" },
     { name: "Careers", path: "/careers" },
     { name: "Contact", path: "/contact" },
@@ -51,36 +43,6 @@ export default function Navbar() {
     }`;
 
   const renderNavLink = (link) => {
-    if (link.hasDropdown) {
-      return (
-        <div key={link.path} className="relative group/dropdown services-dropdown">
-          <button
-            className={`text-base min-[1084px]:text-lg min-[1200px]:text-xl min-[1400px]:text-2xl min-[1920px]:text-3xl font-medium ${location.pathname.startsWith(link.path) ? "text-[#52b8f4]" : "text-white"
-              } cursor-pointer flex items-center hover:scale-105 transition-transform duration-200`}
-          >
-            {link.name}
-            <svg className="ml-1 w-4 h-4 transition-transform duration-200 group-hover/dropdown:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-          
-          {/* Dropdown Menu */}
-          <div className="absolute top-full left-0 mt-2 w-48 bg-[#061539] border border-white/10 rounded-lg shadow-xl opacity-0 invisible group-hover/dropdown:opacity-100 group-hover/dropdown:visible transition-all duration-300 z-[150]">
-            <div className="py-2">
-              {link.subLinks?.map((sub) => (
-                <Link
-                  key={sub.path}
-                  to={sub.path}
-                  className="block px-4 py-2 text-sm text-white hover:bg-[#52b8f4] hover:text-white transition-colors"
-                >
-                  {sub.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      );
-    }
     return (
       <div key={link.path}>
         <Link to={link.path} className={linkClass(link.path)}>
@@ -95,7 +57,7 @@ export default function Navbar() {
       initial={false}
       animate={{ y: 0 }}
       className={`fixed w-full top-0 z-[100] transition-all duration-500 ease-in-out ${isScrolled
-        ? "bg-gradient-to-r from-[#061539] via-[#062157] to-[#062862] shadow-2xl border-b border-white/10"
+        ? "bg-[#061e4f]/95 backdrop-blur-xl shadow-2xl border-b border-white/10"
         : "bg-transparent"
         }`}
     >
@@ -223,38 +185,18 @@ export default function Navbar() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed inset-0 bg-[#061539] z-[105] flex flex-col pt-24 px-8 overflow-y-auto"
+            className="fixed inset-0 bg-[#061e4f] z-[105] flex flex-col pt-24 px-8 overflow-y-auto"
           >
             <div className="flex flex-col gap-6">
               {[...navLinksLeft, ...navLinksRight].map((link) => (
                 <div key={link.path} className="border-b border-white/5 pb-4">
-                  {link.hasDropdown ? (
-                    <div className="flex flex-col gap-4">
-                      <span className="text-2xl font-bold text-white/50 uppercase tracking-widest text-sm">
-                        {link.name}
-                      </span>
-                      <div className="flex flex-col gap-4 pl-4">
-                        {link.subLinks?.map((sub) => (
-                          <Link
-                            key={sub.path}
-                            to={sub.path}
-                            onClick={closeMobileMenu}
-                            className={`text-2xl font-semibold ${location.pathname === sub.path ? "text-[#52b8f4]" : "text-white"}`}
-                          >
-                            {sub.name}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  ) : (
-                    <Link
-                      to={link.path}
-                      onClick={closeMobileMenu}
-                      className={`text-3xl font-bold ${location.pathname === link.path ? "text-[#52b8f4]" : "text-white"}`}
-                    >
-                      {link.name}
-                    </Link>
-                  )}
+                  <Link
+                    to={link.path}
+                    onClick={closeMobileMenu}
+                    className={`text-3xl font-bold ${location.pathname === link.path ? "text-[#52b8f4]" : "text-white"}`}
+                  >
+                    {link.name}
+                  </Link>
                 </div>
               ))}
             </div>
