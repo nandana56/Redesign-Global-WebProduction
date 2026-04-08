@@ -88,7 +88,7 @@ export default function SolutionsRadar() {
   const activeMod = ((activeIndex % AGENTS.length) + AGENTS.length) % AGENTS.length;
 
   return (
-    <section className="relative w-full bg-[#061e4f] pt-10 pb-20 overflow-hidden z-10 flex flex-col border-t border-white/5">
+    <section id="copilot-ai-section" className="relative w-full bg-[#061e4f] pt-10 pb-20 overflow-hidden z-10 flex flex-col border-t border-white/5 scroll-mt-24 md:scroll-mt-32">
       
       {/* Dynamic Background Image linked to Active Card */}
       <AnimatePresence mode="popLayout">
@@ -120,7 +120,12 @@ export default function SolutionsRadar() {
               >
                 Custom AI
               </button>
-              <button className="text-[10px] font-black text-blue-400/60 hover:text-white hover:bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-lg uppercase tracking-widest transition-all duration-300">Case Studies</button>
+              <button 
+                onClick={() => document.getElementById('case-studies-fold')?.scrollIntoView({ behavior: 'smooth' })}
+                className="text-[10px] font-black text-blue-400/60 hover:text-white hover:bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-lg uppercase tracking-widest transition-all duration-300"
+              >
+                Case Studies
+              </button>
             </div>
           </div>
         </div>

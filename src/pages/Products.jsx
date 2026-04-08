@@ -30,15 +30,11 @@ const productsData = [
     }
 ];
 
-// Magnetic effect wrapper removed since it's replaced or moved to PartnerCTA
-
 const Products = () => {
     const maskRef = useRef(null);
     const wireframeRef = useRef(null);
     const heroRef = useRef(null);
     const [activeAccordion, setActiveAccordion] = useState(0);
-    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-    const spotlightRef = useRef(null);
 
     useEffect(() => {
         // Geometric clip-path morphing animation using 6-point polygons
@@ -96,7 +92,7 @@ const Products = () => {
     };
 
     return (
-        <main className="bg-[#020617] min-h-screen text-white overflow-hidden">
+        <main className="bg-[#061e4f] min-h-screen text-white overflow-hidden">
             {/* Hero container */}
             <section ref={heroRef} className="relative h-screen w-full flex items-center px-6 sm:px-10 md:px-16 lg:px-24">
                 
@@ -211,16 +207,16 @@ const Products = () => {
             </section>
 
             {/* The Orbiting Constellation Section */}
-            <section className="bg-[#020617] text-white py-12 lg:py-20 w-full flex flex-col items-center justify-center overflow-hidden z-30 relative">
+            <section className="bg-[#061e4f] text-white py-24 lg:py-40 w-full flex flex-col items-center justify-center overflow-hidden z-30 relative border-t border-white/5">
                 
                 {/* Section Label */}
                 <motion.h2 
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
-                    className="text-sm uppercase tracking-[0.3em] text-[#57C2FF] font-bold mb-6 lg:mb-10"
+                    className="text-xs uppercase tracking-[0.5em] text-blue-400 font-black mb-12"
                 >
-                    Our Ecosystem
+                    Strategic Ecosystem
                 </motion.h2>
 
                 <div className="relative w-full max-w-7xl flex flex-col lg:flex-row items-center lg:justify-center gap-12 lg:gap-16 px-4 lg:px-8">
@@ -233,9 +229,9 @@ const Products = () => {
                             <motion.div 
                                 animate={{ scale: [1, 1.08, 1], opacity: [0.6, 1, 0.6] }}
                                 transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
-                                className="w-32 h-32 rounded-full bg-gradient-to-br from-[#57C2FF]/30 to-[#0A1628] border border-[#57C2FF]/50 flex items-center justify-center shadow-[0_0_60px_rgba(87,194,255,0.25)]"
+                                className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-500/30 to-[#04153b] border border-blue-500/50 flex items-center justify-center shadow-[0_0_60px_rgba(75,181,248,0.25)]"
                             >
-                                <span className="text-[10px] font-bold tracking-widest uppercase text-[#57C2FF]">GWP</span>
+                                <span className="text-[10px] font-black tracking-widest uppercase text-blue-400">GWP-CORE</span>
                             </motion.div>
                         </div>
 
@@ -287,8 +283,8 @@ const Products = () => {
                                         }
                                         className={`absolute z-20 cursor-pointer flex flex-col items-center gap-3 group`}
                                         style={{ 
-                                            top: `calc(50% + ${y}px - 40px)`, 
-                                            left: `calc(50% + ${x}px - 40px)` 
+                                            top: `calc(50% + ${y}px - 64px)`, 
+                                            left: `calc(50% + ${x}px - 64px)` 
                                         }}
                                     >
                                         <div className={`w-32 h-32 rounded-full overflow-hidden border-2 transition-all duration-500 shadow-lg ${

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import SolutionsHero from "../components/SolutionsHero";
 import SolutionsRadar from "../components/SolutionsRadar";
 import SolutionsCustomAgents from "../components/SolutionsCustomAgents";
+import SolutionsCaseStudies from "../components/SolutionsCaseStudies";
 
 export default function Solutions() {
   useEffect(() => {
@@ -13,6 +14,7 @@ export default function Solutions() {
       <SolutionsHero />
       <SolutionsRadar />
       <SolutionsCustomAgents />
+      <SolutionsCaseStudies />
     </div>
   );
 }

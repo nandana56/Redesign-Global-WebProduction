@@ -70,11 +70,17 @@ export default function SolutionsCustomAgents() {
           </div>
           
           <div className="flex items-center gap-4">
-            <button className="text-[10px] font-black text-blue-400/80 hover:text-white hover:bg-blue-500/20 border border-blue-500/30 px-5 py-3 rounded-lg uppercase tracking-widest transition-all duration-300 shadow-[0_0_20px_rgba(75,181,248,0.15)] bg-[#04153b]/50 backdrop-blur-md">
+            <button 
+              onClick={() => document.getElementById('case-studies-fold')?.scrollIntoView({ behavior: 'smooth' })}
+              className="text-[10px] font-black text-blue-400/80 hover:text-white hover:bg-blue-500/20 border border-blue-500/30 px-5 py-3 rounded-lg uppercase tracking-widest transition-all duration-300 shadow-[0_0_20px_rgba(75,181,248,0.15)] bg-[#04153b]/50 backdrop-blur-md"
+            >
               Case Studies
             </button>
             <div className="h-4 w-px bg-white/10 hidden sm:block"></div>
-            <button className="text-[10px] font-black text-blue-400/80 hover:text-white hover:bg-blue-500/20 border border-blue-500/30 px-5 py-3 rounded-lg uppercase tracking-widest transition-all duration-300 shadow-[0_0_20px_rgba(75,181,248,0.15)] bg-[#04153b]/50 backdrop-blur-md">
+            <button 
+              onClick={() => document.getElementById('copilot-ai-section')?.scrollIntoView({ behavior: 'smooth' })}
+              className="text-[10px] font-black text-blue-400/80 hover:text-white hover:bg-blue-500/20 border border-blue-500/30 px-5 py-3 rounded-lg uppercase tracking-widest transition-all duration-300 shadow-[0_0_20px_rgba(75,181,248,0.15)] bg-[#04153b]/50 backdrop-blur-md"
+            >
               Copilot AI
             </button>
           </div>

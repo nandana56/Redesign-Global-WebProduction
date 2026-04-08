@@ -1,7 +1,6 @@
-import React, { useRef, Suspense } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import React, { Suspense } from "react";
+import { Canvas } from "@react-three/fiber";
 import { 
-    MeshTransmissionMaterial, 
     Environment, 
     Float, 
     Stars, 
@@ -10,19 +9,8 @@ import {
     PerspectiveCamera
 } from "@react-three/drei";
 import { motion } from "framer-motion";
-import * as THREE from "three";
 
 const Scene = () => {
-    const sphereRef = useRef();
-    
-    useFrame((state) => {
-        const { x, y } = state.mouse;
-        if (sphereRef.current) {
-            sphereRef.current.rotation.x = THREE.MathUtils.lerp(sphereRef.current.rotation.x, -y * 0.5, 0.1);
-            sphereRef.current.rotation.y = THREE.MathUtils.lerp(sphereRef.current.rotation.y, x * 0.5, 0.1);
-        }
-    });
-
     return (
         <>
             <PerspectiveCamera makeDefault position={[0, 1, 10]} fov={50} />
@@ -50,28 +38,6 @@ const Scene = () => {
                 </Text>
             </Float>
 
-            {/* The Refracting Glass Sphere */}
-            <Float speed={4} rotationIntensity={1} floatIntensity={2}>
-                <mesh ref={sphereRef} scale={2.2} position={[0, 2, 0]}>
-                    <sphereGeometry args={[1, 64, 64]} />
-                    <MeshTransmissionMaterial
-                        backside
-                        samples={16}
-                        thickness={1}
-                        chromaticAberration={0.03}
-                        anisotropy={0.3}
-                        distortion={0.2}
-                        distortionScale={0.3}
-                        temporalDistortion={0.1}
-                        transmission={1}
-                        roughness={0.05}
-                        ior={1.15}
-                        color="#ffffff"
-                        background={new THREE.Color("#020617")}
-                    />
-                </mesh>
-            </Float>
-
             <Environment preset="city" />
         </>
     );
@@ -79,7 +45,7 @@ const Scene = () => {
 
 const PartnerCTA = () => {
     return (
-        <section className="relative h-[85vh] w-full bg-[#020617] overflow-hidden flex items-center justify-center cursor-none">
+        <section className="relative h-[85vh] w-full bg-[#061e4f] overflow-hidden flex items-center justify-center cursor-none">
             {/* 3D Scene Layer */}
             <div className="absolute inset-0 z-0">
                 <Canvas shadows dpr={[1, 2]}>
@@ -120,3 +86,4 @@ const PartnerCTA = () => {
 };
 
 export default PartnerCTA;
+

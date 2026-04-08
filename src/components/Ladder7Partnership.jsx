@@ -59,7 +59,7 @@ const Ladder7Partnership = () => {
     return (
         <section 
             onMouseMove={handleMouseMove}
-            className="relative w-full h-[80vh] min-h-[600px] flex items-center justify-center overflow-hidden bg-[#001c3d]"
+            className="relative w-full min-h-[700px] lg:h-[85vh] lg:min-h-[800px] flex items-center justify-center overflow-hidden bg-[#001c3d] py-20 lg:py-0"
         >
             {/* Ambient Core Lighting */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#57C2FF]/10 rounded-full blur-[150px] pointer-events-none z-0" />
@@ -77,12 +77,63 @@ const Ladder7Partnership = () => {
             </svg>
 
             {/* 3D SCENE CONTAINER */}
-            <div className="relative w-full max-w-[1400px] h-full flex items-center justify-center z-10 pointer-events-none">
+            <div className="relative w-full max-w-[1400px] h-full flex flex-col lg:flex-row items-center justify-center lg:justify-between px-[6%] sm:px-[10%] gap-12 lg:gap-0 z-10 pointer-events-none">
 
-                {/* THE CORE: PERFECTLY CIRCULAR IMAGE */}
+                {/* --- WRITINGS COLUMN (Left Side on Desktop, Top on Mobile) --- */}
+                <div className="flex flex-col gap-6 w-full lg:max-w-[600px] z-30 order-2 lg:order-1 items-center lg:items-start text-center lg:text-left">
+                    
+                    {/* SATELLITE 1: STRATEGIC PARTNERSHIP BADGE */}
+                    <motion.div 
+                        style={{ x: badgeX, y: badgeY }}
+                        className="pointer-events-auto"
+                    >
+                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#001c3d]/80 backdrop-blur-md border border-[#57C2FF]/40 shadow-[0_0_20px_rgba(87,194,255,0.3)] hover:scale-105 transition-transform cursor-default">
+                            <span className="w-2 h-2 rounded-full bg-[#57C2FF] animate-pulse" />
+                            <span className="text-[#57C2FF] text-xs sm:text-sm font-bold tracking-widest uppercase font-poppins">Strategic Partnership</span>
+                        </div>
+                    </motion.div>
+
+                    {/* SATELLITE 2: MAIN HEADING */}
+                    <motion.div 
+                        style={{ x: headingX, y: headingY }}
+                        className="pointer-events-auto w-full"
+                    >
+                        <div className="p-4 sm:p-6 rounded-[24px] bg-[#001c3d]/60 backdrop-blur-xl border border-white/10 shadow-2xl hover:border-[#57C2FF]/40 transition-all hover:translate-x-0 lg:hover:translate-x-2">
+                            <h2 className="text-[#57C2FF] text-[20pt] sm:text-3xl md:text-4xl lg:text-5xl font-medium font-poppins leading-tight">
+                                Ladder7 <br className="hidden sm:block"/> 
+                                Nextstep Solutions
+                            </h2>
+                        </div>
+                    </motion.div>
+
+                    {/* SATELLITE 3: PARAGRAPH BLOCK */}
+                    <motion.div 
+                        style={{ x: textX, y: textY }}
+                        className="pointer-events-auto w-full"
+                    >
+                        <div className="p-5 sm:p-8 rounded-[32px] bg-[#001c3d]/60 backdrop-blur-xl border border-white/10 shadow-2xl hover:border-[#57C2FF]/30 transition-all">
+                            <p className="text-white text-sm sm:text-base md:text-lg leading-relaxed font-poppins text-justify sm:text-left">
+                                Ladder7 Nextstep Solutions is a training academy based in India focused on enhancing the technical skills of their attendees. Through our partnership, we are able to provide opportunities for real-world experience to students, and also provide the companies we serve with top talent.
+                            </p>
+                        </div>
+                    </motion.div>
+
+                    {/* SATELLITE 4: THE SAAS BUTTON */}
+                    <motion.div 
+                        style={{ x: buttonX, y: buttonY }}
+                        className="pointer-events-auto"
+                    >
+                        <div className="relative group/btn cursor-pointer">
+                            <SaasButton />
+                            <div className="absolute inset-0 rounded-full border-[2px] border-[#57C2FF] animate-ping opacity-30 group-hover/btn:border-white transition-colors" />
+                        </div>
+                    </motion.div>
+                </div>
+
+                {/* THE CORE: PUSHED TO THE RIGHT (Desktop) or BOTTOM (Mobile) */}
                 <motion.div 
                     style={{ x: coreX, y: coreY }}
-                    className="absolute w-[280px] h-[280px] sm:w-[350px] sm:h-[350px] md:w-[450px] md:h-[450px] rounded-full overflow-hidden border-[2px] sm:border-[4px] border-[#57C2FF]/30 shadow-[0_0_80px_rgba(87,194,255,0.4)] z-20 group cursor-crosshair pointer-events-auto"
+                    className="relative lg:absolute lg:right-[6%] xl:right-[10%] w-[240px] h-[240px] sm:w-[300px] sm:h-[300px] md:w-[350px] md:h-[350px] lg:w-[450px] lg:h-[450px] xl:w-[500px] xl:h-[500px] rounded-full overflow-hidden border-[2px] sm:border-[4px] border-[#57C2FF]/30 shadow-[0_0_80px_rgba(87,194,255,0.4)] z-20 group cursor-crosshair pointer-events-auto order-1 lg:order-2"
                 >
                     {/* Hover reveal mechanic: dims without hover, fully reveals image on hover */}
                     <div className="absolute inset-0 bg-[#001c3d]/30 z-10 transition-colors duration-700 group-hover:bg-transparent pointer-events-none" />
@@ -94,61 +145,6 @@ const Ladder7Partnership = () => {
                     
                     {/* Internal lens edge light */}
                     <div className="absolute inset-0 rounded-full border border-white/40 pointer-events-none mix-blend-overlay z-20" />
-                </motion.div>
-
-                {/* SATELLITE 1: STRATEGIC PARTNERSHIP BADGE */}
-                <motion.div 
-                    style={{ x: badgeX, y: badgeY }}
-                    className="absolute top-[12%] left-[4%] sm:top-[15%] sm:left-[8%] lg:left-[15%] z-30 pointer-events-auto"
-                >
-                    {/* Maintained exact class properties within the satellite layout */}
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#001c3d]/80 backdrop-blur-md border border-[#57C2FF]/40 shadow-[0_0_20px_rgba(87,194,255,0.3)] hover:scale-105 transition-transform cursor-default">
-                        <span className="w-2 h-2 rounded-full bg-[#57C2FF] animate-pulse" />
-                        <span className="text-[#57C2FF] text-xs sm:text-sm font-bold tracking-widest uppercase font-poppins">Strategic Partnership</span>
-                    </div>
-                    {/* Visual connecting wire extending toward the core */}
-                    <div className="absolute -bottom-10 right-4 w-[1px] h-12 bg-gradient-to-b from-[#57C2FF]/60 to-transparent rotate-[30deg] pointer-events-none" />
-                </motion.div>
-
-                {/* SATELLITE 2: MAIN HEADING (Ladder7 Nextstep Solutions) */}
-                <motion.div 
-                    style={{ x: headingX, y: headingY }}
-                    className="absolute top-[15%] right-[2%] sm:right-[5%] md:top-[22%] lg:right-[10%] z-30 max-w-[280px] sm:max-w-[350px] pointer-events-auto"
-                >
-                    <div className="p-4 sm:p-6 rounded-[24px] bg-[#001c3d]/60 backdrop-blur-xl border border-white/10 shadow-2xl hover:border-[#57C2FF]/40 transition-colors">
-                        {/* Maintained exact text size & color limits */}
-                        <h2 className="text-[#57C2FF] text-[24pt] sm:text-xl md:text-2xl lg:text-3xl font-medium font-poppins leading-tight">
-                            Ladder7 <br className="hidden sm:block"/> 
-                            Nextstep Solutions
-                        </h2>
-                    </div>
-                </motion.div>
-
-                {/* SATELLITE 3: PARAGRAPH BLOCK */}
-                <motion.div 
-                    style={{ x: textX, y: textY }}
-                    className="absolute bottom-[10%] left-[2%] sm:bottom-[15%] sm:left-[2%] md:bottom-[20%] lg:left-[2%] xl:left-[3%] z-30 w-[94%] max-w-[350px] sm:max-w-[450px] lg:max-w-[480px] xl:max-w-[530px] pointer-events-auto"
-                >
-                    <div className="p-5 sm:p-8 rounded-[32px] bg-[#001c3d]/60 backdrop-blur-xl border border-white/10 shadow-2xl hover:border-[#57C2FF]/30 transition-colors">
-                        {/* Maintained exact paragraph strings and sizes */}
-                        <p className="text-white text-sm sm:text-base leading-relaxed font-poppins text-justify sm:text-left">
-                            Ladder7 Nextstep Solutions is a training academy based in India focused on enhancing the technical skills of their attendees. Through our partnership, we are able to provide opportunities for real-world experience to students, and also provide the companies we serve with top talent.
-                        </p>
-                    </div>
-                    {/* Visual connecting wire heading toward the core */}
-                    <div className="absolute top-1/2 -right-16 w-16 h-[1px] bg-gradient-to-r from-transparent to-[#57C2FF]/60 pointer-events-none" />
-                </motion.div>
-
-                {/* SATELLITE 4: THE SAAS BUTTON */}
-                <motion.div 
-                    style={{ x: buttonX, y: buttonY }}
-                    className="absolute bottom-[20%] right-[8%] sm:right-[15%] lg:right-[20%] z-30 pointer-events-auto"
-                >
-                    <div className="relative group/btn cursor-pointer">
-                        <SaasButton />
-                        {/* Dramatic Radar Ping orbiting the button specifically */}
-                        <div className="absolute inset-0 rounded-full border-[2px] border-[#57C2FF] animate-ping opacity-30 group-hover/btn:border-white transition-colors" />
-                    </div>
                 </motion.div>
 
             </div>

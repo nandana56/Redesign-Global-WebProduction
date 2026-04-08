@@ -28,7 +28,7 @@ export default function SolutionsHero() {
     };
 
     const t = setTimeout(burst, 600);
-    const id = setInterval(burst, 4200);
+    const id = setInterval(burst, 1500);
     return () => { clearTimeout(t); clearInterval(id); };
   }, []);
 
@@ -103,22 +103,7 @@ export default function SolutionsHero() {
         <div className="w-full lg:w-[52%] flex flex-col justify-center">
 
           {/* Tag */}
-          <motion.div
-            initial={{ opacity: 0, x: -24 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex items-center gap-3 mb-8"
-          >
-            <svg width="24" height="2" viewBox="0 0 24 2" fill="none">
-              <line x1="0" y1="1" x2="24" y2="1" stroke="#4bb5f8" strokeWidth="2"/>
-            </svg>
-            <span
-              className="text-[11px] font-bold uppercase tracking-[0.32em]"
-              style={{ color: "#4bb5f8", fontFamily: "'Poppins', sans-serif" }}
-            >
-              Enterprise Technology
-            </span>
-          </motion.div>
+
 
           {/* Glitch heading */}
           <motion.div
