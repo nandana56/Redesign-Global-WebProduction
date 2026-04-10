@@ -70,6 +70,7 @@ function OrigamiCard({ study, activeId, setActiveId, index }) {
   const groupRef = useRef();
   const topFlapRef = useRef();
   const bottomFlapRef = useRef();
+  const [hoveredBtn, setHoveredBtn] = useState(false);
   const isActive = activeId === index;
   
   // Animation targets
@@ -145,17 +146,50 @@ function OrigamiCard({ study, activeId, setActiveId, index }) {
           <planeGeometry args={[2.5, 1.2]} />
           <meshStandardMaterial color="#020c28" roughness={0.3} metalness={0.4} />
           {isActive && (
-            <Text
-              position={[0, 0, 0.05]}
-              fontSize={0.105}
-              color="#d1d5db"
-              maxWidth={2.3}
-              textAlign="center"
-              lineHeight={1.5}
-              anchorY="middle"
-            >
-              {study.desc}
-            </Text>
+            <>
+              <Text
+                position={[0, 0.15, 0.05]}
+                fontSize={0.105}
+                color="#d1d5db"
+                maxWidth={2.3}
+                textAlign="center"
+                lineHeight={1.5}
+                anchorY="middle"
+              >
+                {study.desc}
+              </Text>
+              
+              {/* Explore Case Study 3D Button */}
+              <group position={[0, -0.3, 0.05]}>
+                <mesh 
+                  onPointerOver={() => setHoveredBtn(true)}
+                  onPointerOut={() => setHoveredBtn(false)}
+                  onClick={(e) => { 
+                    e.stopPropagation(); 
+                    console.log("Explore:", study.id);
+                  }}
+                >
+                  <planeGeometry args={[1.1, 0.25]} />
+                  <meshStandardMaterial 
+                    color={hoveredBtn ? "#ffffff" : "#2563eb"} 
+                    emissive={hoveredBtn ? "#ffffff" : "#000000"}
+                    emissiveIntensity={hoveredBtn ? 0.8 : 0}
+                    roughness={0.2} 
+                    metalness={0.5} 
+                  />
+                  <Text
+                    position={[0, 0, 0.01]}
+                    fontSize={0.06}
+                    color={hoveredBtn ? "#000000" : "#ffffff"}
+                    anchorY="middle"
+                    letterSpacing={0.2}
+                    fontWeight={900}
+                  >
+                    EXPLORE CASE
+                  </Text>
+                </mesh>
+              </group>
+            </>
           )}
         </mesh>
       </group>

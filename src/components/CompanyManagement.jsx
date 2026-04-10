@@ -79,18 +79,15 @@ const CompanyManagement = () => {
     return (
         <section className="bg-gradient-to-b from-[#003C70] to-[#000026] overflow-hidden relative font-poppins pt-20 pb-40 px-4 sm:px-6 lg:px-12 flex flex-col items-center min-h-[90vh]">
             
-            <div className="w-full text-white relative z-20 mb-12 flex flex-col items-center">
+            <div className="w-full text-white relative z-20 mb-10 flex flex-col items-center">
                 <h2 className="text-4xl md:text-5xl font-bold tracking-wide text-center uppercase">
                     COMPANY MANAGEMENT
                 </h2>
                 <div className="w-24 h-1 bg-[#57C2FF] mt-4 rounded-full"></div>
-                <span className="text-[#57C2FF] text-sm md:text-base uppercase tracking-widest animate-pulse mt-4 font-bold text-center">
-                    Hover or tap a profile to expand
-                </span>
             </div>
 
             {/* Accordion Container */}
-            <div className="w-full max-w-[1400px] flex flex-col lg:flex-row h-auto lg:h-[650px] gap-4 relative z-10 transition-all duration-500 mx-auto">
+            <div className="w-full max-w-[1400px] flex flex-col lg:flex-row h-auto lg:min-h-[650px] gap-4 relative z-10 transition-all duration-500 mx-auto">
                 {executives.map((exec) => {
                     const isActive = activeId === exec.id;
 
@@ -98,11 +95,10 @@ const CompanyManagement = () => {
                         <motion.div
                             key={exec.id}
                             layout
-                            onMouseEnter={() => setActiveId(exec.id)}
                             onClick={() => setActiveId(exec.id)}
                             initial={false}
                             animate={{
-                                flex: isActive ? 6 : 1
+                                flex: isActive ? 5 : 1.5
                             }}
                             className={`relative rounded-[30px] overflow-hidden cursor-pointer flex flex-col lg:flex-row items-center justify-center border border-[#57C2FF]/20 shadow-2xl bg-[#000026]/40 backdrop-blur-xl group
                             `}
@@ -133,16 +129,18 @@ const CompanyManagement = () => {
                                     </motion.div>
                                 </motion.div>
 
-                                {/* Closed State Content (Vertical/Horizontal Text) */}
+                                {/* Closed State Content (Horizontal Text) */}
                                 {!isActive && (
                                     <motion.div 
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
                                         exit={{ opacity: 0 }}
-                                        className="flex flex-col items-center justify-start lg:justify-center text-center lg:-rotate-90 lg:whitespace-nowrap flex-grow pb-6 lg:pb-0 h-full w-full"
+                                        className="flex flex-col items-center justify-start lg:justify-center text-center flex-grow pb-6 lg:pb-0 h-full w-full px-2"
                                     >
-                                        <h2 className="text-white text-lg lg:text-2xl font-bold tracking-wider">{exec.name}</h2>
-                                        <p className="text-[#57C2FF] text-[10px] lg:text-xs uppercase tracking-widest mt-2">{exec.title.split(' ')[0]}</p>
+                                        <h2 className="text-white text-md lg:text-xl font-bold tracking-wider leading-tight whitespace-nowrap">{exec.name}</h2>
+                                        <p className="text-[#57C2FF] text-[9px] lg:text-[11px] uppercase tracking-widest mt-2">
+                                            {exec.title.length > 25 ? exec.title.split(' of ')[0] : exec.title}
+                                        </p>
                                     </motion.div>
                                 )}
 
@@ -160,11 +158,11 @@ const CompanyManagement = () => {
                                                 <h3 className="text-[#57C2FF] text-sm md:text-base font-medium tracking-widest uppercase mb-2">
                                                     {exec.title}
                                                 </h3>
-                                                <h2 className="text-white text-3xl lg:text-5xl font-bold pb-6 tracking-tight">
+                                                <h2 className="text-white text-2xl lg:text-4xl font-bold pb-4 tracking-tight">
                                                     {exec.name}
                                                 </h2>
                                                 {/* Text Content */}
-                                                <div className="text-gray-200 text-sm md:text-base leading-relaxed font-light space-y-4 max-h-[300px] lg:max-h-[400px] overflow-y-auto pr-4 custom-scrollbar">
+                                                <div className="text-gray-200 text-xs md:text-sm leading-relaxed font-light space-y-4 pr-2">
                                                     {exec.bio}
                                                 </div>
                                             </div>

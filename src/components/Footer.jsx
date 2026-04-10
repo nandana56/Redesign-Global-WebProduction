@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaLinkedinIn, FaEnvelope } from "react-icons/fa";
+import ScrollToTopArrow from "./ScrollToTopArrow";
 
 // ORIGINAL LOGO SVG CODE (from original Footer.jsx)
 const LogoSVG = () => (
@@ -197,12 +198,15 @@ const Footer = () => {
                             </div>
                             <p className="text-xs md:text-sm max-w-xs text-right">Trivandrum,<br />kerala,India</p>
                         </div>
-                        <div className="flex flex-col items-end space-y-2">
-                            <div className="flex items-center space-x-2">
-                                <USAFlagSVG />
-                                <div className="font-semibold">USA</div>
+                        <div className="flex items-center gap-12">
+                            <div className="flex flex-col items-end space-y-2">
+                                <div className="flex items-center space-x-2">
+                                    <USAFlagSVG />
+                                    <div className="font-semibold">USA</div>
+                                </div>
+                                <p className="text-xs md:text-sm max-w-xs text-right">Hourglass ST,<br />Temecula, CA</p>
                             </div>
-                            <p className="text-xs md:text-sm max-w-xs text-right">Hourglass ST,<br />Temecula, CA</p>
+                            <ScrollToTopArrow />
                         </div>
                     </div>
                 </div>

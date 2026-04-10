@@ -200,10 +200,10 @@ const LightningRing = ({ radius = 2.0 }) => {
                 <shaderMaterial ref={outerShaderRef} {...outerRingMaterial} />
             </mesh>
 
-            {/* Dark inner fill (Brand Blue Background) */}
+            {/* Dark inner fill (Transparent to see background image) */}
             <mesh position={[0, 0, -0.05]}>
                 <circleGeometry args={[radius - 0.05, 64]} />
-                <meshBasicMaterial color="#1C39BB" opacity={0.8} transparent />
+                <meshBasicMaterial color="#1C39BB" opacity={0} transparent />
             </mesh>
         </group>
     );
@@ -401,8 +401,6 @@ const CircuitLines = ({ radius }) => {
 
 /** Small electric arcs floating around the ring */
 const ElectricArcs = ({ radius }) => {
-    const arcsRef = useRef([]);
-
     const arcData = useMemo(() => {
         return Array.from({ length: 6 }, (_, i) => {
             const angle = (i / 6) * Math.PI * 2;
@@ -459,7 +457,6 @@ const ContactIcon = ({ type, index }) => {
             const progress = t / 6;
 
             // Travel path: from left-front to right-back, passing ring center
-            // Ring center is approx [0, 0.8, 0]
             const x = THREE.MathUtils.lerp(-10, 10, progress);
             const y = 0.8 + Math.sin(t * 2) * 0.2; // Slight vertical wave
             const z = THREE.MathUtils.lerp(4, -4, progress);
@@ -467,9 +464,7 @@ const ContactIcon = ({ type, index }) => {
             if (meshRef.current) {
                 meshRef.current.position.set(x, y, z);
                 meshRef.current.visible = true;
-                // Spin the disc
                 meshRef.current.rotation.y = t * 1.5;
-                // Fade in/out
                 const opacity = progress < 0.1 ? progress * 10 : progress > 0.9 ? (1 - progress) * 10 : 1;
                 meshRef.current.children[0].material.opacity = opacity;
             }
@@ -494,32 +489,16 @@ const ContactIcon = ({ type, index }) => {
                 />
             </mesh>
 
-            {/* The Symbol (Front) */}
-            <Text
-                position={[0, 0, 0.07]}
-                fontSize={0.55}
-                color="#ffffff"
-                anchorX="center"
-                anchorY="middle"
-            >
+            <Text position={[0, 0, 0.07]} fontSize={0.55} color="#ffffff" anchorX="center" anchorY="middle">
                 {symbols[type]}
                 <meshStandardMaterial attach="material" color="#ffffff" emissive="#ffffff" emissiveIntensity={2} />
             </Text>
 
-            {/* The Symbol (Back) */}
-            <Text
-                position={[0, 0, -0.07]}
-                rotation={[0, Math.PI, 0]}
-                fontSize={0.55}
-                color="#ffffff"
-                anchorX="center"
-                anchorY="middle"
-            >
+            <Text position={[0, 0, -0.07]} rotation={[0, Math.PI, 0]} fontSize={0.55} color="#ffffff" anchorX="center" anchorY="middle">
                 {symbols[type]}
                 <meshStandardMaterial attach="material" color="#ffffff" emissive="#ffffff" emissiveIntensity={2} />
             </Text>
 
-            {/* Inner glow */}
             <pointLight intensity={1} distance={2} color="#ffffff" />
         </group>
     );
@@ -531,14 +510,13 @@ export default function ContactLightningScene() {
 
     return (
         <div className="h-full w-full" style={{ background: 'transparent' }}>
-            
-<Canvas
-                camera={{ position: [0, 0.5, 12], fov: 55 }}
+            <Canvas
+                shadows
+                camera={{ position: [0, 0, 12], fov: 55 }}
                 dpr={[1, 2]}
                 gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
             >
                 <WebGLDisposer />
-                {/* Transparent background so it matches page background */}
 
                 {/* Lighting */}
                 <ambientLight intensity={0.3} />
@@ -546,48 +524,17 @@ export default function ContactLightningScene() {
                 <pointLight position={[-5, -3, 3]} intensity={0.7} color="#06b6d4" />
                 <pointLight position={[0, 0, 5]} intensity={0.5} color="#67e8f9" />
 
-                <group position={[0, 0.5, 0]}>
-                    <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.3}>
-                        {/* Lightning Ring */}
+                {/* THE SYNC FIX: We removed <Float /> to stop the bobbing drift */}
+                <group position={[0, 0.4, 0]}>
+                    <group scale={1.0}>
                         <LightningRing radius={radius} />
-
-                        {/* Pen Icon */}
                         <group scale={0.85}>
                             <PenIcon />
                         </group>
-
-                        {/* CONTACT US Text */}
-                        <Text
-                            position={[0, -0.25, 0.1]}
-                            fontSize={0.45}
-                            fontWeight="bold"
-                            color="#ffffff"
-                            anchorX="center"
-                            anchorY="middle"
-                            letterSpacing={0.12}
-                        >
-                            CONTACT US
-                            <meshStandardMaterial
-                                attach="material"
-                                color="#ffffff"
-                                emissive="#0ea5e9"
-                                emissiveIntensity={1.5}
-                                metalness={0.9}
-                                roughness={0.1}
-                            />
-                        </Text>
-
-                        {/* Electric Arcs around ring */}
                         <ElectricArcs radius={radius} />
-
-                        {/* Bottom pointer */}
                         <BottomPointer radius={radius} />
-                    </Float>
-
-                    {/* Circuit lines (outside Float so they stay grounded) */}
+                    </group>
                     <CircuitLines radius={radius} />
-
-                    {/* Contact Icons traveling through the ring */}
                     <ContactIcon type="chat" index={0} />
                     <ContactIcon type="at" index={1} />
                     <ContactIcon type="phone" index={2} />
@@ -595,24 +542,9 @@ export default function ContactLightningScene() {
                 </group>
 
                 {/* Ambient particles */}
-                <Sparkles
-                    count={80}
-                    scale={12}
-                    size={2.5}
-                    speed={0.5}
-                    opacity={0.6}
-                    color="#0ea5e9"
-                />
-                <Sparkles
-                    count={30}
-                    scale={8}
-                    size={4}
-                    speed={0.3}
-                    opacity={0.3}
-                    color="#67e8f9"
-                />
+                <Sparkles count={80} scale={12} size={2.5} speed={0.5} opacity={0.6} color="#0ea5e9" />
+                <Sparkles count={30} scale={8} size={4} speed={0.3} opacity={0.3} color="#67e8f9" />
             </Canvas>
-
         </div>
     );
 }

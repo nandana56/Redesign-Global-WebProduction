@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import PartnerCTA from "../components/PartnerCTA";
+import DynamicPartnerCTA from "../components/DynamicPartnerCTA";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -53,17 +53,17 @@ const Products = () => {
              // Animate the image mask
              tl.to(maskRef.current, {
                  clipPath: poly,
-                 duration: 3,
+                 duration: 1.2,
                  ease: "sine.inOut"
-             }, index * 3);
+             }, index * 1.2);
 
              // Synchronize wireframe accent with a slight offset/delay
              if (wireframeRef.current) {
                  tl.to(wireframeRef.current, {
                      clipPath: poly,
-                     duration: 3,
+                     duration: 1.2,
                      ease: "sine.inOut"
-                 }, index * 3);
+                 }, index * 1.2);
              }
         });
 
@@ -71,7 +71,7 @@ const Products = () => {
         gsap.to(maskRef.current, {
             y: -20,
             rotation: 2,
-            duration: 5,
+            duration: 1.2,
             repeat: -1,
             yoyo: true,
             ease: "sine.inOut"
@@ -173,7 +173,7 @@ const Products = () => {
                             style={{ clipPath: "polygon(20% 0%, 80% 0%, 100% 50%, 80% 100%, 20% 100%, 0% 50%)" }}
                         >
                             <img 
-                                src="/products/businesswoman-typing-laptop-workplace-woman-working-home-office-hand-keyboard-63534001.webp" 
+                                src="/products/laptop_meeting_test.jpg" 
                                 alt="Business Workspace" 
                                 className="w-full h-full object-cover scale-[1.05]"
                             />
@@ -207,7 +207,7 @@ const Products = () => {
             </section>
 
             {/* The Orbiting Constellation Section */}
-            <section className="bg-[#061e4f] text-white py-24 lg:py-40 w-full flex flex-col items-center justify-center overflow-hidden z-30 relative border-t border-white/5">
+            <section className="bg-[#061e4f] text-white pt-24 pb-10 lg:pt-40 lg:pb-16 w-full flex flex-col items-center justify-center overflow-hidden z-30 relative border-t border-white/5">
                 
                 {/* Section Label */}
                 <motion.h2 
@@ -378,7 +378,10 @@ const Products = () => {
 
                 </div>
             </section>
-            <PartnerCTA />
+            
+            {/* Newly Designed Partner CTA Section */}
+            <DynamicPartnerCTA />
+            
         </main>
     );
 };
