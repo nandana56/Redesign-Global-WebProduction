@@ -10,7 +10,7 @@ export default function Solutions() {
   }, []);
 
   return (
-    <div className="bg-[#000e34] min-h-screen text-white overflow-x-hidden">
+    <div className="bg-[#000e34] min-h-screen text-white">
       <SolutionsHero />
       <SolutionsRadar />
       <SolutionsCustomAgents />

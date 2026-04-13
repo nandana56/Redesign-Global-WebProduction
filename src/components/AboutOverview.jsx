@@ -59,7 +59,7 @@ const AboutOverview = () => {
     }, []);
 
     return (
-        <div ref={containerRef} className="bg-[url(/About/digital_transformation_era_en_top_img.jpg)] bg-cover bg-center bg-no-repeat overflow-hidden relative z-10 w-full min-h-screen -mt-[2px]">
+        <div ref={containerRef} className="bg-[url(/About/digital_transformation_era_en_top_img.jpg)] bg-cover bg-center bg-no-repeat overflow-hidden relative z-10 w-full min-h-screen">
             
             {/* Adding a dark overlay to make text pop against the background */}
             <div className="absolute inset-0 bg-[#000044]/80 z-0"></div>

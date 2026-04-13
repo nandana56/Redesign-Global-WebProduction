@@ -196,33 +196,18 @@ export default function SolutionsHero() {
             </Link>
           </motion.div>
 
-          {/* Decorative bottom line */}
-          <motion.div
-            initial={{ scaleX: 0, opacity: 0 }}
-            animate={{ scaleX: 1, opacity: 1 }}
-            transition={{ duration: 0.9, delay: 1.1, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-16 flex items-center gap-4 origin-left"
-          >
-            <div className="w-12 h-px bg-gradient-to-r from-[#4bb5f8] to-transparent" />
-            <span
-              className="text-[9px] uppercase tracking-[0.5em]"
-              style={{ color: "rgba(255,255,255,0.2)", fontFamily: "'Poppins', sans-serif" }}
-            >
-              Global Web Production
-            </span>
-          </motion.div>
+
         </div>
 
         {/* ── RIGHT: Circular image + orbit rings ────────── */}
-        <div className="w-full lg:w-[48%] flex items-center justify-center lg:-ml-12 relative">
+        <div className="w-full lg:w-[48%] flex items-center justify-center lg:-ml-12 relative mt-16 lg:mt-0 px-4 sm:px-0">
 
           {/* Outer glow halo */}
           <motion.div
             initial={{ opacity: 0, scale: 0.7 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="relative flex items-center justify-center"
-            style={{ width: 640, height: 640 }}
+            className="relative flex items-center justify-center w-full max-w-[560px] lg:max-w-[640px] aspect-square"
           >
 
             {/* Halo glow */}
@@ -236,8 +221,7 @@ export default function SolutionsHero() {
 
             {/* ── Orbit ring 1 (outer) ── */}
             <svg
-              className="absolute inset-0"
-              width="640" height="640"
+              className="absolute inset-0 w-full h-full"
               viewBox="0 0 640 640"
               style={{ animation: "spin 18s linear infinite" }}
             >
@@ -250,8 +234,7 @@ export default function SolutionsHero() {
 
             {/* ── Orbit ring 2 (mid, reverse) ── */}
             <svg
-              className="absolute inset-0"
-              width="640" height="640"
+              className="absolute inset-0 w-full h-full"
               viewBox="0 0 640 640"
               style={{ animation: "spin 12s linear infinite reverse" }}
             >
@@ -263,8 +246,7 @@ export default function SolutionsHero() {
 
             {/* ── Orbit ring 3 (inner fast) ── */}
             <svg
-              className="absolute"
-              width="440" height="440"
+              className="absolute w-[68%] h-[68%]"
               viewBox="0 0 440 440"
               style={{ animation: "spin 8s linear infinite" }}
             >
@@ -272,15 +254,13 @@ export default function SolutionsHero() {
               <circle cx="220" cy="10" r="4" fill="#fff" opacity="0.7" style={{ filter: "drop-shadow(0 0 4px #fff)" }} />
             </svg>
 
-            {/* ── Circular clipped image ── */}
+            {/* ── Image Panel ── */}
             <motion.div
               initial={{ opacity: 0, scale: 0.85 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="relative z-10 rounded-full overflow-hidden"
+              className="relative z-10 rounded-full overflow-hidden w-[62%] aspect-square bg-[#020a1f] p-8 lg:p-12"
               style={{
-                width: 400,
-                height: 400,
                 border: "2px solid rgba(75,181,248,0.25)",
                 boxShadow: "0 0 0 8px rgba(75,181,248,0.06), 0 0 60px rgba(75,181,248,0.2), 0 20px 80px rgba(0,0,0,0.6)",
               }}
@@ -288,7 +268,7 @@ export default function SolutionsHero() {
               <img
                 src="/solution/IT-Solutions.webp"
                 alt="IT Solutions"
-                className="w-full h-full object-cover object-center"
+                className="w-full h-full object-contain object-center"
                 draggable={false}
               />
               {/* Blue tint + scan-line overlay */}
@@ -311,7 +291,7 @@ export default function SolutionsHero() {
             {/* Ping dot — top */}
             <div
               className="absolute"
-              style={{ top: 20, left: "50%", transform: "translateX(-50%)" }}
+              style={{ top: "3%", left: "50%", transform: "translateX(-50%)" }}
             >
               <span
                 className="absolute inset-0 rounded-full bg-[#4bb5f8]"
@@ -320,51 +300,7 @@ export default function SolutionsHero() {
               <span className="relative block w-3 h-3 rounded-full bg-[#4bb5f8]" />
             </div>
 
-            {/* Badge — bottom right */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8, x: 20 }}
-              animate={{ opacity: 1, scale: 1, x: 0 }}
-              transition={{ delay: 1.2, duration: 0.6 }}
-              className="absolute bottom-[80px] right-[-10px] z-20"
-              style={{
-                background: "rgba(6,25,60,0.85)",
-                backdropFilter: "blur(12px)",
-                border: "1px solid rgba(75,181,248,0.25)",
-                borderRadius: "14px",
-                padding: "10px 16px",
-                boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
-              }}
-            >
-              <p className="text-[9px] uppercase tracking-[0.2em] font-bold mb-0.5" style={{ color: "#4bb5f8" }}>
-                AI-Powered
-              </p>
-              <p className="text-xs text-white/70" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                Agentic Systems
-              </p>
-            </motion.div>
 
-            {/* Badge — top left */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8, x: -20 }}
-              animate={{ opacity: 1, scale: 1, x: 0 }}
-              transition={{ delay: 1.45, duration: 0.6 }}
-              className="absolute top-[100px] left-[-20px] z-20"
-              style={{
-                background: "rgba(6,25,60,0.85)",
-                backdropFilter: "blur(12px)",
-                border: "1px solid rgba(75,181,248,0.25)",
-                borderRadius: "14px",
-                padding: "10px 16px",
-                boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
-              }}
-            >
-              <p className="text-[9px] uppercase tracking-[0.2em] font-bold mb-0.5" style={{ color: "#4bb5f8" }}>
-                Enterprise-Grade
-              </p>
-              <p className="text-xs text-white/70" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                Scalable & Secure
-              </p>
-            </motion.div>
 
           </motion.div>
         </div>

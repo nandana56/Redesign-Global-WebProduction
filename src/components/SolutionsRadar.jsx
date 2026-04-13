@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
+import { ArrowLeft, ArrowRight, Pause, Play } from "lucide-react";
 
 /* ─────────────────────────────────────────────────────────────────
    SolutionsRadar — Option 4: The Core Orbit Radar (Circular)
@@ -54,6 +54,7 @@ const AGENTS = [
 export default function SolutionsRadar() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [autoDirection, setAutoDirection] = useState(1);
 
   // Responsive radii tracking
   const [radii, setRadii] = useState({ x: 500, y: 160 });
@@ -71,18 +72,22 @@ export default function SolutionsRadar() {
   }, []);
 
   const handleNext = useCallback(() => {
+    setAutoDirection(1);
     setActiveIndex((prev) => prev + 1);
   }, []);
 
   const handlePrev = useCallback(() => {
+    setAutoDirection(-1);
     setActiveIndex((prev) => prev - 1);
   }, []);
 
   useEffect(() => {
     if (isPaused) return;
-    const interval = setInterval(handleNext, 4000);
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => prev + autoDirection);
+    }, 4000);
     return () => clearInterval(interval);
-  }, [isPaused, handleNext]);
+  }, [isPaused, autoDirection]);
 
   // Derived clamped index for array access
   const activeMod = ((activeIndex % AGENTS.length) + AGENTS.length) % AGENTS.length;
@@ -227,33 +232,31 @@ export default function SolutionsRadar() {
         </div>
       </div>
 
-      {/* ── CONTROLS ROW (Bottom Center) ── */}
-      <div className="relative z-40 flex justify-center mt-12 px-4 md:px-12">
-        <div className="flex items-center gap-6 sm:gap-8 backdrop-blur-md bg-white/5 px-6 py-2 rounded-full border border-white/10 shadow-xl">
+      {/* ── CONTROLS ROW (At the end of the section) ── */}
+      <div className="relative z-40 flex justify-center mt-32 sm:mt-40 pb-8 px-4 w-full">
+        <div className="flex items-center gap-6">
           <button
             onClick={handlePrev}
-            className="p-3 rounded-full text-white/70 hover:text-white hover:bg-blue-600/50 active:scale-95 transition-all"
-            aria-label="Rotate Left"
+            className="p-3 rounded-full border border-white/20 text-white/50 hover:text-white hover:border-[#57c2ff]/60 hover:bg-[#57c2ff]/20 active:scale-95 transition-all"
+            aria-label="Rotate Anticlockwise"
           >
-            <ChevronLeft className="w-5 h-5" />
+            <ArrowLeft className="w-4 h-4" />
           </button>
 
           <button
             onClick={() => setIsPaused(!isPaused)}
-            className="group relative p-3 rounded-full text-white/70 hover:text-white hover:bg-blue-600/50 transition-all duration-300"
-            title={isPaused ? "Engage Rotation" : "Halt Rotation"}
+            className="p-3 rounded-full border border-white/20 text-white/50 hover:text-white hover:border-[#57c2ff]/60 hover:bg-[#57c2ff]/20 active:scale-95 transition-all"
+            title={isPaused ? "Resume Rotation" : "Pause Rotation"}
           >
-            <div className="relative z-10 flex items-center justify-center">
-              {isPaused ? <Play className="w-5 h-5 fill-current" /> : <Pause className="w-5 h-5 fill-current" />}
-            </div>
+            {isPaused ? <Play className="w-4 h-4 fill-current ml-0.5" /> : <Pause className="w-4 h-4 fill-current" />}
           </button>
 
           <button
             onClick={handleNext}
-            className="p-3 rounded-full text-white/70 hover:text-white hover:bg-blue-600/50 active:scale-95 transition-all"
-            aria-label="Rotate Right"
+            className="p-3 rounded-full border border-white/20 text-white/50 hover:text-white hover:border-[#57c2ff]/60 hover:bg-[#57c2ff]/20 active:scale-95 transition-all"
+            aria-label="Rotate Clockwise"
           >
-            <ChevronRight className="w-5 h-5" />
+            <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       </div>

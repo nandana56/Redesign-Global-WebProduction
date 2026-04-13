@@ -10,11 +10,11 @@ const About = () => {
     }, []);
 
     return (
-        <div className="bg-black relative">
+        <div className="bg-black relative pt-1" style={{ backgroundColor: '#000000' }}>
             <div className="relative z-50">
                 <AboutHeroKinetic />
             </div>
-            <div className="relative z-40">
+            <div className="relative z-40 -mt-2">
                 <AboutOverview />
             </div>
             <div className="relative z-30">

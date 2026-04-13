@@ -83,7 +83,7 @@ const AboutHeroKinetic = () => {
     return (
         <section 
             ref={sectionRef}
-            className="relative w-full h-[90vh] overflow-hidden bg-black font-poppins -mb-[2px]"
+            className="relative w-full h-[90vh] overflow-hidden bg-black font-poppins"
         >
             {/* BACKGROUND LAYER (Shared) */}
             <div 
@@ -137,6 +137,9 @@ const AboutHeroKinetic = () => {
             <div className="absolute top-10 left-10 w-[1px] h-24 bg-white/10" />
             <div className="absolute bottom-10 right-10 w-24 h-[1px] bg-white/10" />
             <div className="absolute bottom-10 right-10 w-[1px] h-24 bg-white/10" />
+
+            {/* Seamless bottom fade into the next section */}
+            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-[#000044] z-30 pointer-events-none" />
         </section>
     );
 };

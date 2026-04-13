@@ -162,7 +162,10 @@ const Footer = () => {
                         </div>
                         
                         <div className="flex flex-col space-y-1 text-[#57C2FF]">
-                            <h1 className="text-white text-lg font-semibold">Partners</h1>
+                            <div className="flex items-center gap-6">
+                                <h1 className="text-white text-lg font-semibold">Partners</h1>
+                                <ScrollToTopArrow />
+                            </div>
                             <a href="https://www.artech.com/" target="_blank" rel="noopener noreferrer" className="text-sm transition-colors duration-300 text-white hover:text-[#57C2FF]">Artech</a>
                             <a href="https://ladder7.in" target="_blank" rel="noopener noreferrer" className="text-sm transition-colors duration-300 text-white hover:text-[#57C2FF]">Ladder7</a>
                         </div>
@@ -198,15 +201,12 @@ const Footer = () => {
                             </div>
                             <p className="text-xs md:text-sm max-w-xs text-right">Trivandrum,<br />kerala,India</p>
                         </div>
-                        <div className="flex items-center gap-12">
-                            <div className="flex flex-col items-end space-y-2">
-                                <div className="flex items-center space-x-2">
-                                    <USAFlagSVG />
-                                    <div className="font-semibold">USA</div>
-                                </div>
-                                <p className="text-xs md:text-sm max-w-xs text-right">Hourglass ST,<br />Temecula, CA</p>
+                        <div className="flex flex-col items-end space-y-2">
+                            <div className="flex items-center space-x-2">
+                                <USAFlagSVG />
+                                <div className="font-semibold">USA</div>
                             </div>
-                            <ScrollToTopArrow />
+                            <p className="text-xs md:text-sm max-w-xs text-right">Hourglass ST,<br />Temecula, CA</p>
                         </div>
                     </div>
                 </div>

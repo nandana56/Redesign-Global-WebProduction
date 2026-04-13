@@ -12,6 +12,22 @@
     font-family: 'Outfit', sans-serif;
     background: #020617;
   }
+
+  /* Fix GSAP pin spacer white-line artifact between pinned sections */
+  .gsap-pin-spacer {
+    background: transparent !important;
+    line-height: 0 !important;
+    font-size: 0 !important;
+  }
+
+  /* Eliminate subpixel rendering gaps between sections */
+  section {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    margin-bottom: -1px;
+    padding-bottom: 1px;
+  }
 }
 
 @keyframes shimmer {

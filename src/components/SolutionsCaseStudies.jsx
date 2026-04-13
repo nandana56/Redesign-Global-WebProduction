@@ -1,228 +1,202 @@
-import React, { useState, useRef, useMemo, Suspense } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { 
-  Text, 
-  Image, 
-  PerspectiveCamera, 
-  Environment,
-  ContactShadows,
-  MeshReflectorMaterial,
-  Html
-} from "@react-three/drei";
-import * as THREE from "three";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, Layers, MousePointer2 } from "lucide-react";
+import React from 'react';
+import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
+import { ArrowRight, Layers, Globe } from 'lucide-react';
 
-/**
- * Option 7: THE "INFINITE FOLD" (Origami Dimensions)
- * Stabilized No-Dependency Version (Uses Native Lerping)
- */
+// ── UI COMPONENTS ─────────────────────────────────────────────────────────
 
-const caseStudies = [
-  {
-    id: 1,
-    lines: ["From Legacy to", "Leading Edge", "AEM Migration"],
-    desc: "Legacy CMS to Adobe Experience Manager transformation: 300 pages, 4,000+ assets, 4 months, zero compromises.",
-    image: "/solution/11.webp",
-    category: "Custom AI",
-    color: "#3b82f6",
-    pos: [-5, 0, 0],
-  },
-  {
-    id: 2,
-    lines: ["AI Shopping", "Experience"],
-    desc: "Revolutionizing retail with agentic AI recommendations and personalized journeys that drive conversion.",
-    image: "/solution/12.jfif",
-    category: "Copilot AI",
-    color: "#6366f1",
-    pos: [-1.8, 0, 0],
-  },
-  {
-    id: 3,
-    lines: ["Market", "Sentiment", "Analysis"],
-    desc: "Real-time market insights using advanced NLP models to track global trends and drive smarter decisions.",
-    image: "/solution/13.webp",
-    category: "Custom AI",
-    color: "#06b6d4",
-    pos: [1.5, 0, 0],
-  },
-  {
-    id: 4,
-    lines: ["Copilot", "Checkout", "Integration"],
-    desc: "Seamless payment integration with AI-powered security and checkout optimization for higher conversions.",
-    image: "/solution/14.jfif",
-    category: "Copilot AI",
-    color: "#2563eb",
-    pos: [4.8, 0, 0],
-  },
-  {
-    id: 5,
-    lines: ["Custom", "Editor", "for WordPress"],
-    desc: "Enhancing content creation with AI-driven editing tools, smart blocks, and intelligent layout suggestions.",
-    image: "/solution/15.jfif",
-    category: "Custom AI",
-    color: "#8b5cf6",
-    pos: [8, 0, 0],
-  },
-];
+const LiquidBlob = ({ className, color, size = "300px" }) => (
+  <motion.div
+    animate={{
+      scale: [1, 1.3, 1],
+      rotate: [0, 180, 0],
+      borderRadius: ["40% 60% 70% 30% / 40% 50% 60% 55%", "60% 40% 30% 70% / 60% 30% 70% 40%", "40% 60% 70% 30% / 40% 50% 60% 55%"],
+    }}
+    transition={{
+      duration: 15,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+    className={`absolute blur-[100px] opacity-30 pointer-events-none ${className}`}
+    style={{
+      width: size,
+      height: size,
+      background: color,
+    }}
+  />
+);
 
-function OrigamiCard({ study, activeId, setActiveId, index }) {
-  const groupRef = useRef();
-  const topFlapRef = useRef();
-  const bottomFlapRef = useRef();
-  const [hoveredBtn, setHoveredBtn] = useState(false);
-  const isActive = activeId === index;
-  
-  // Animation targets
-  // Calculate dynamic X position based on index: starts from left (-6) with 3.3 unit spacing
-  const closedX = -6.5 + (index * 3.3);
-  
-  const targetScale = isActive ? 1.8 : 1;
-  const targetZ = isActive ? 3 : 0;
-  const targetX = isActive ? 0 : closedX;
-  const targetY = isActive ? 1.5 : 0;
-  const targetRotation = isActive ? 0 : Math.PI / 1.2;
+const OrganicCaseStudyCard = ({ item, index }) => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
 
-  useFrame((state, delta) => {
-    if (!groupRef.current) return;
+  const mouseXSpring = useSpring(x);
+  const mouseYSpring = useSpring(y);
 
-    // Smooth lerping for the main group
-    groupRef.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.1);
-    groupRef.current.position.x = THREE.MathUtils.lerp(groupRef.current.position.x, targetX, 0.1);
-    groupRef.current.position.y = THREE.MathUtils.lerp(groupRef.current.position.y, targetY, 0.1);
-    groupRef.current.position.z = THREE.MathUtils.lerp(groupRef.current.position.z, targetZ, 0.1);
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
 
-    // Smooth mechanical folding
-    if (topFlapRef.current) {
-      topFlapRef.current.rotation.x = THREE.MathUtils.lerp(topFlapRef.current.rotation.x, targetRotation, 0.1);
-    }
-    if (bottomFlapRef.current) {
-      bottomFlapRef.current.rotation.x = THREE.MathUtils.lerp(bottomFlapRef.current.rotation.x, -targetRotation, 0.1);
-    }
-  });
+  const shineBg = useTransform(
+    [mouseXSpring, mouseYSpring],
+    ([lx, ly]) => `radial-gradient(circle at ${50 + lx * 80}% ${50 + ly * 80}%, rgba(255,255,255,0.2) 0%, transparent 60%)`
+  );
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
 
   return (
-    <group
-      ref={groupRef}
-      position={[closedX, 0, 0]}
-      onClick={() => setActiveId(isActive ? null : index)}
+    <motion.article
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.1, duration: 0.8, ease: "easeOut" }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        rotateX,
+        rotateY,
+        transformStyle: "preserve-3d",
+      }}
+      className="relative flex flex-col group cursor-pointer [perspective:1000px] h-full"
     >
-      {/* Front Face - Title only, Poppins ExtraBold matching original */}
-      <mesh position={[0, 0, 0.01]}>
-        <planeGeometry args={[2.5, 3.8]} />
-        <meshStandardMaterial color="#000e34" roughness={0.1} metalness={0.5} />
-        <Text
-          position={[0, 0, 0.05]}
-          fontSize={0.28}
-          color="white"
-          anchorY="middle"
-          maxWidth={2.2}
-          textAlign="center"
-          lineHeight={1.15}
+      <div 
+        style={{
+          transform: "translateZ(50px)",
+          transformStyle: "preserve-3d",
+        }}
+        className="relative h-full min-h-[400px] sm:min-h-[450px] aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-2xl transition-all duration-700 bg-[#0d1f3c] border border-white/10 group-hover:border-[#57c2ff]/50 backdrop-blur-xl"
+      >
+        <img
+          src={item.image}
+          alt={item.title}
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-out opacity-70 group-hover:opacity-100"
+        />
+        
+        {/* Holographic Shine Effect */}
+        <motion.div 
+          className="absolute inset-0 z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          style={{ background: shineBg }}
+        />
+
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/40 to-transparent opacity-90" />
+
+        {/* Floating Tag */}
+        <div 
+          style={{ transform: "translateZ(80px)" }}
+          className="absolute top-6 left-6"
         >
-          {study.lines.join("\n").toUpperCase()}
-        </Text>
-      </mesh>
+          <span className="bg-white/10 backdrop-blur-md text-white text-[10px] font-bold px-4 py-2 rounded-full border border-white/20 uppercase tracking-widest shadow-lg">
+            {item.category}
+          </span>
+        </div>
 
-      {/* Folding Flap - Top Half: Image */}
-      <group ref={topFlapRef} position={[0, 1.9, 0]}>
-        <mesh position={[0, -1.3, 0.02]}>
-          <planeGeometry args={[2.5, 2.6]} />
-          <meshStandardMaterial color="#3b82f6" roughness={0.1} metalness={0.8} />
-          {isActive && (
-            <Image 
-              url={study.image} 
-              scale={[2.4, 2.5]} 
-              position={[0, 0, 0.01]} 
-              opacity={0.95}
-            />
-          )}
-        </mesh>
-      </group>
+        {/* Content Section */}
+        <div 
+          style={{ transform: "translateZ(60px)" }}
+          className="absolute inset-x-0 bottom-0 p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-700"
+        >
+          <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 font-poppins leading-tight">
+            {item.title}
+          </h3>
+          <p className="text-slate-300 text-sm mb-6 line-clamp-3 font-poppins opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100">
+            {item.desc}
+          </p>
+          
+          <div className="flex items-center gap-3 text-white group-hover:text-[#57c2ff] transition-all duration-500 relative overflow-hidden inline-flex px-6 py-3 rounded-2xl bg-white/10 border border-white/10 backdrop-blur-md group-hover:bg-[#57c2ff]/20 group-hover:border-[#57c2ff]/40 shadow-xl">
+            <span className="text-xs font-bold uppercase tracking-widest relative z-10">Explore Case</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform relative z-10" />
+          </div>
+        </div>
+      </div>
 
-      {/* Folding Flap - Bottom Half: Description */}
-      <group ref={bottomFlapRef} position={[0, -1.9, 0]}>
-        <mesh position={[0, 0.6, 0.02]}>
-          <planeGeometry args={[2.5, 1.2]} />
-          <meshStandardMaterial color="#020c28" roughness={0.3} metalness={0.4} />
-          {isActive && (
-            <>
-              <Text
-                position={[0, 0.15, 0.05]}
-                fontSize={0.105}
-                color="#d1d5db"
-                maxWidth={2.3}
-                textAlign="center"
-                lineHeight={1.5}
-                anchorY="middle"
-              >
-                {study.desc}
-              </Text>
-              
-              {/* Explore Case Study 3D Button */}
-              <group position={[0, -0.3, 0.05]}>
-                <mesh 
-                  onPointerOver={() => setHoveredBtn(true)}
-                  onPointerOut={() => setHoveredBtn(false)}
-                  onClick={(e) => { 
-                    e.stopPropagation(); 
-                    console.log("Explore:", study.id);
-                  }}
-                >
-                  <planeGeometry args={[1.1, 0.25]} />
-                  <meshStandardMaterial 
-                    color={hoveredBtn ? "#ffffff" : "#2563eb"} 
-                    emissive={hoveredBtn ? "#ffffff" : "#000000"}
-                    emissiveIntensity={hoveredBtn ? 0.8 : 0}
-                    roughness={0.2} 
-                    metalness={0.5} 
-                  />
-                  <Text
-                    position={[0, 0, 0.01]}
-                    fontSize={0.06}
-                    color={hoveredBtn ? "#000000" : "#ffffff"}
-                    anchorY="middle"
-                    letterSpacing={0.2}
-                    fontWeight={900}
-                  >
-                    EXPLORE CASE
-                  </Text>
-                </mesh>
-              </group>
-            </>
-          )}
-        </mesh>
-      </group>
-
-      {/* Shine / glow border */}
-      <mesh position={[0, 0, -0.01]}>
-        <planeGeometry args={[2.6, 3.9]} />
-        <meshBasicMaterial color={study.color} transparent opacity={isActive ? 0.35 : 0.12} />
-      </mesh>
-    </group>
+      {/* Outer Glow Effect */}
+      <div className="absolute -inset-4 bg-[#57c2ff]/10 blur-2xl rounded-[3rem] opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10" />
+    </motion.article>
   );
-}
+};
 
 export default function SolutionsCaseStudies() {
-  const [activeId, setActiveId] = useState(null);
+  const caseStudies = [
+    {
+      id: 1,
+      title: "From Legacy to Leading Edge AEM Migration",
+      desc: "Legacy CMS to Adobe Experience Manager transformation: 300 pages, 4,000+ assets, 4 months, zero compromises.",
+      image: "/solution/11.webp",
+      category: "Custom AI",
+    },
+    {
+      id: 2,
+      title: "AI Shopping Experience",
+      desc: "Revolutionizing retail with agentic AI recommendations and personalized journeys that drive conversion.",
+      image: "/solution/12.jfif",
+      category: "Copilot AI",
+    },
+    {
+      id: 3,
+      title: "Market Sentiment Analysis",
+      desc: "Real-time market insights using advanced NLP models to track global trends and drive smarter decisions.",
+      image: "/solution/13.webp",
+      category: "Custom AI",
+    },
+    {
+      id: 4,
+      title: "Copilot Checkout Integration",
+      desc: "Seamless payment integration with AI-powered security and checkout optimization for higher conversions.",
+      image: "/solution/14.jfif",
+      category: "Copilot AI",
+    },
+    {
+      id: 5,
+      title: "Custom Editor for WordPress",
+      desc: "Enhancing content creation with AI-driven editing tools, smart blocks, and intelligent layout suggestions.",
+      image: "/solution/15.jfif",
+      category: "Custom AI",
+    },
+  ];
 
   return (
     <section 
       id="case-studies-fold"
-      className="relative w-full h-[100vh] bg-[#000e34] overflow-hidden flex flex-col scroll-mt-24 md:scroll-mt-32"
+      className="relative w-full py-32 bg-[#000e34] overflow-hidden flex flex-col scroll-mt-24 md:scroll-mt-32"
     >
+      {/* ── BACKGROUND BLOBS ── */}
+      <LiquidBlob color="linear-gradient(to right, #3b82f6, #1d4ed8)" className="top-20 -left-20" size="500px" />
+      <LiquidBlob color="linear-gradient(to right, #57c2ff, #3b82f6)" className="bottom-20 right-10" size="400px" />
+      <LiquidBlob color="linear-gradient(to right, #6366f1, #4338ca)" className="top-1/2 left-1/3" size="300px" />
+
       {/* ── TOP: Heading & Filters ── */}
-      <div className="relative z-20 px-12 md:px-20 pt-12 pb-4 flex flex-col md:flex-row justify-between items-start gap-6 shrink-0">
+      <div className="relative z-20 px-8 md:px-20 mb-20 flex flex-col md:flex-row justify-between items-start gap-6 max-w-7xl mx-auto w-full">
         <div className="space-y-2">
           <div className="flex items-center gap-3 text-blue-400 font-black text-[10px] uppercase tracking-[0.5em]">
             <Layers size={14} /> Real World Impact
           </div>
-          <h2 className="text-5xl md:text-7xl font-black text-white tracking-tighter uppercase leading-[0.85]">
+          <h2 className="text-5xl md:text-7xl font-black text-white tracking-tighter uppercase leading-[0.85] font-poppins">
             Case <span className="text-blue-500">Studies</span>
           </h2>
+          <motion.div 
+            initial={{ width: 0 }}
+            whileInView={{ width: "80px" }}
+            viewport={{ once: true }}
+            className="h-1.5 bg-[#57c2ff] rounded-full mt-6" 
+            aria-hidden="true"
+          />
         </div>
 
-        <div className="flex items-center gap-4 flex-wrap">
+        <div className="flex items-center gap-4 flex-wrap mt-4 md:mt-0">
           <button 
             onClick={() => document.getElementById('custom-ai-section')?.scrollIntoView({ behavior: 'smooth' })}
             className="text-[10px] font-black text-blue-400/80 hover:text-white hover:bg-blue-500/20 border border-blue-500/30 px-5 py-3 rounded-lg uppercase tracking-widest transition-all duration-300 shadow-[0_0_20px_rgba(75,181,248,0.15)] bg-[#04153b]/50 backdrop-blur-md"
@@ -239,76 +213,15 @@ export default function SolutionsCaseStudies() {
         </div>
       </div>
 
-      {/* ── BOTTOM: 3D Canvas fills remaining space ── */}
-      <div className="relative flex-1 w-full min-h-0">
-        <div className="absolute inset-0 cursor-pointer">
-          <Canvas dpr={[1, 2]} shadows gl={{ antialias: true }}>
-            <PerspectiveCamera makeDefault position={[0, 3, 9]} fov={55} />
-            <color attach="background" args={["#000e34"]} />
-            <fog attach="fog" args={["#000e34", 10, 25]} />
+      {/* ── BOTTOM: Liquid Cards Grid ── */}
+      <div className="relative z-10 px-8 md:px-20 max-w-7xl mx-auto w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {caseStudies.map((item, idx) => (
+            <OrganicCaseStudyCard key={item.id} item={item} index={idx} />
+          ))}
 
-            <Suspense fallback={<Html center><div className="text-blue-400 font-black animate-pulse tracking-[1em] uppercase bg-black/50 p-10 rounded-full">Constructing Folds...</div></Html>}>
-               <Environment preset="city" />
-               <ambientLight intensity={0.5} />
-               <spotLight position={[10, 10, 10]} intensity={1} castShadow />
 
-               <group position={[0, 2.5, 0]}>
-                  {caseStudies.map((study, i) => (
-                    <OrigamiCard 
-                      key={study.id} 
-                      study={study} 
-                      index={i} 
-                      activeId={activeId} 
-                      setActiveId={setActiveId}
-                    />
-                  ))}
-               </group>
-
-               <ContactShadows 
-                 position={[0, -4.5, 0]} 
-                 opacity={0.4} 
-                 scale={20} 
-                 blur={1.5} 
-                 far={10} 
-               />
-
-               <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -5, 0]}>
-                  <planeGeometry args={[50, 50]} />
-                  <MeshReflectorMaterial
-                    blur={[300, 100]}
-                    resolution={2048}
-                    mixBlur={1}
-                    mixStrength={40}
-                    roughness={1}
-                    depthScale={1.2}
-                    minDepthThreshold={0.4}
-                    maxDepthThreshold={1.4}
-                    color="#050505"
-                    metalness={0.5}
-                  />
-               </mesh>
-            </Suspense>
-          </Canvas>
         </div>
-
-        {/* Hint and Recollapse Button */}
-        <div className="absolute bottom-6 left-12 right-12 z-30 flex justify-between items-end pointer-events-none">
-          <div className="text-white/20 text-[10px] uppercase tracking-[0.4em] font-bold flex items-center gap-3">
-            <MousePointer2 size={12} /> Click to Unfold
-          </div>
-          
-          {activeId !== null && (
-            <button 
-              onClick={() => setActiveId(null)}
-              className="px-10 py-5 bg-white text-black text-[10px] font-black uppercase tracking-widest rounded-2xl pointer-events-auto hover:bg-blue-600 hover:text-white transition-all flex items-center gap-4 shadow-2xl"
-            >
-              Recollapse Dimensions <X size={16} />
-            </button>
-          )}
-        </div>
-
-        {/* Gradient vignette */}
-        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_50%_50%,transparent_0%,rgba(0,14,52,0.6)_100%)]" />
       </div>
     </section>
   );

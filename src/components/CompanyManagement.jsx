@@ -106,12 +106,12 @@ const CompanyManagement = () => {
                         >
                             
                             {/* Inner Content Wrapper */}
-                            <div className={`w-full h-full flex items-center justify-center p-6 ${isActive ? 'flex-col lg:flex-row gap-6 lg:gap-12' : 'flex-col gap-4'} transition-all duration-500`}>
+                            <div className={`w-full h-full flex items-center justify-center p-6 ${isActive ? 'flex-col lg:flex-row gap-6 lg:gap-12' : 'flex-col gap-1'} transition-all duration-500`}>
                                 
                                 {/* Image / Avatar Area */}
                                 <motion.div 
                                     layout
-                                    className={`relative flex justify-center items-center shrink-0 ${isActive ? 'w-full lg:w-[45%] max-w-[350px] aspect-square' : 'w-24 lg:w-32 aspect-square lg:mt-6 self-start lg:self-center'}`}
+                                    className={`relative flex justify-center items-center shrink-0 ${isActive ? 'w-full lg:w-[45%] max-w-[350px] aspect-square' : 'w-24 lg:w-32 aspect-square self-start lg:self-center'}`}
                                 >
                                     {isActive && <RotatingSvgOverlays />}
                                     
@@ -135,10 +135,10 @@ const CompanyManagement = () => {
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
                                         exit={{ opacity: 0 }}
-                                        className="flex flex-col items-center justify-start lg:justify-center text-center flex-grow pb-6 lg:pb-0 h-full w-full px-2"
+                                        className="flex flex-col items-center justify-start text-center pb-6 lg:pb-0 h-auto w-full px-2"
                                     >
                                         <h2 className="text-white text-md lg:text-xl font-bold tracking-wider leading-tight whitespace-nowrap">{exec.name}</h2>
-                                        <p className="text-[#57C2FF] text-[9px] lg:text-[11px] uppercase tracking-widest mt-2">
+                                        <p className="text-[#57C2FF] text-[9px] lg:text-[11px] uppercase tracking-widest mt-1">
                                             {exec.title.length > 25 ? exec.title.split(' of ')[0] : exec.title}
                                         </p>
                                     </motion.div>

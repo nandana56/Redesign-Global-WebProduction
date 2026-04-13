@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import ContactLightningScene from "../components/ContactLightningScene";
+import ContactPrismPortal from "../components/ContactPrismPortal";
 
 
 const Contact = () => {
@@ -60,7 +61,8 @@ const Contact = () => {
                     </motion.div>
                 </div>
             </div>
-
+            {/* Kinetic Prism Contact Section */}
+            <ContactPrismPortal />
         </div>
     );
 };

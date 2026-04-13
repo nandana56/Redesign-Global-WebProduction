@@ -119,8 +119,8 @@ export default function SolutionsCustomAgents() {
               <div 
                 key={agent.id}
                 onClick={() => setActiveIndex(i)}
-                className={`relative p-6 sm:p-8 rounded-[2rem] cursor-pointer border transform transition-all duration-500 group overflow-hidden
-                  ${isActive ? 'bg-[#04153b]/80 border-[#57C2FF]/40 shadow-[0_20px_40px_rgba(0,0,0,0.4)] translate-x-0 lg:translate-x-4 scale-100' : 'bg-[#04153b]/20 border-white/5 hover:border-white/10 hover:bg-[#04153b]/40 scale-[0.98] blur-[0.5px] hover:blur-none'}
+                className={`relative p-4 sm:p-5 rounded-2xl cursor-pointer border transform transition-all duration-500 group overflow-hidden
+                  ${isActive ? 'bg-[#04153b]/80 border-[#57C2FF]/40 shadow-[0_15px_30px_rgba(0,0,0,0.4)] translate-x-0 lg:translate-x-2 scale-100' : 'bg-[#04153b]/20 border-white/5 hover:border-white/10 hover:bg-[#04153b]/40 scale-[0.98] blur-[0.5px] hover:blur-none'}
                 `}
               >
                 
@@ -130,14 +130,14 @@ export default function SolutionsCustomAgents() {
                 <div className="relative z-10">
                    
                   {/* Exact typography from pasted code */}
-                  <h3 className={`text-xl md:text-2xl font-black mb-2 transition-colors leading-tight
+                  <h3 className={`text-lg md:text-xl font-black mb-1 transition-colors leading-tight
                     ${isActive ? 'text-[#57C2FF] drop-shadow-md' : 'text-white/60 group-hover:text-white/90'}
                   `}>
                     {agent.title}
                   </h3>
                   
                   {/* Exact subtitle typography mapped */}
-                  <p className={`text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 backdrop-blur-md inline-block
+                  <p className={`text-[9px] font-black uppercase tracking-[0.2em] transition-all duration-500 backdrop-blur-md inline-block
                     ${isActive ? 'text-[#57C2FF] opacity-100' : 'text-white/40 opacity-70 group-hover:text-white/70'}
                   `}>
                     {agent.subtitle}
@@ -168,8 +168,8 @@ export default function SolutionsCustomAgents() {
         </div>
 
 
-        {/* RIGHT COLUMN: Massive Dynamic Display Window */}
-        <div className="w-full lg:w-[55%] xl:w-[65%] h-[400px] md:h-[500px] lg:h-[550px] relative rounded-[3rem] overflow-hidden bg-[#04153b] shadow-[0_40px_100px_rgba(0,0,0,0.8),_0_0_40px_rgba(75,181,248,0.1)] border-2 border-white/5 flex-shrink-0">
+        {/* RIGHT COLUMN: Display Window */}
+        <div className="w-full lg:w-[45%] xl:w-[48%] h-[280px] md:h-[350px] lg:h-[400px] relative rounded-[2rem] overflow-hidden bg-[#04153b] shadow-[0_30px_80px_rgba(0,0,0,0.8),_0_0_30px_rgba(75,181,248,0.1)] border-2 border-white/5 flex-shrink-0 lg:ml-auto">
           
           <AnimatePresence mode="wait">
             <motion.div
