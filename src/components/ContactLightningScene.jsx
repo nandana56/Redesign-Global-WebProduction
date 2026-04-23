@@ -512,7 +512,7 @@ export default function ContactLightningScene() {
         <div className="h-full w-full" style={{ background: 'transparent' }}>
             <Canvas
                 shadows
-                camera={{ position: [0, 0, 12], fov: 55 }}
+                camera={{ position: [0, 0, 12], fov: typeof window !== 'undefined' && window.innerWidth < 640 ? 75 : 55 }}
                 dpr={[1, 2]}
                 gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
             >
@@ -525,7 +525,7 @@ export default function ContactLightningScene() {
                 <pointLight position={[0, 0, 5]} intensity={0.5} color="#67e8f9" />
 
                 {/* THE SYNC FIX: We removed <Float /> to stop the bobbing drift */}
-                <group position={[0, 0.4, 0]}>
+                <group position={[0, 0.4, 0]} scale={typeof window !== 'undefined' && window.innerWidth < 640 ? 0.7 : 1.0}>
                     <group scale={1.0}>
                         <LightningRing radius={radius} />
                         <group scale={0.85}>

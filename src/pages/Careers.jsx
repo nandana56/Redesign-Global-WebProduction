@@ -111,15 +111,19 @@ const FutureOfWebProduction = () => {
     const imageContainerRef = useRef(null);
 
     useEffect(() => {
+        const isTouch = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
+
         let ctx = gsap.context(() => {
-            // Pin the entire section
-            ScrollTrigger.create({
-                trigger: containerRef.current,
-                start: "top top",
-                end: "+=600", // Reduced from 1500 to appear faster
-                pin: true,
-                anticipatePin: 1,
-            });
+            if (!isTouch) {
+                // Pin the entire section ONLY on non-touch devices
+                ScrollTrigger.create({
+                    trigger: containerRef.current,
+                    start: "top top",
+                    end: "+=600",
+                    pin: true,
+                    anticipatePin: 1,
+                });
+            }
 
             // Text staggered animation
             const textElements = gsap.utils.toArray('.future-text-reveal');
@@ -127,33 +131,37 @@ const FutureOfWebProduction = () => {
             // Initial state for text
             gsap.set(textElements, { opacity: 0, y: 50 });
 
-            // Animate text as user scrolls through the pinned section
+            // Animate text as user scrolls
             gsap.to(textElements, {
                 scrollTrigger: {
                     trigger: containerRef.current,
-                    start: "top top",
-                    end: "+=600",
-                    scrub: 0.3, // Snappier scrub (was 1)
+                    start: isTouch ? "top 80%" : "top top",
+                    end: isTouch ? "bottom 20%" : "+=600",
+                    scrub: isTouch ? false : 0.3,
+                    toggleActions: isTouch ? "play none none reverse" : undefined
                 },
                 y: 0,
                 opacity: 1,
-                stagger: 0.05, // Faster stagger (was 0.2)
+                stagger: 0.1,
                 ease: "power2.out",
+                duration: isTouch ? 0.8 : undefined
             });
             
             // Image subtle zoom parallax
-            gsap.fromTo('.future-image', 
-                { scale: 1 }, 
-                {
-                    scale: 1.15,
-                    scrollTrigger: {
-                        trigger: containerRef.current,
-                        start: "top top",
-                        end: "+=600",
-                        scrub: true,
+            if (!isTouch) {
+                gsap.fromTo('.future-image', 
+                    { scale: 1 }, 
+                    {
+                        scale: 1.15,
+                        scrollTrigger: {
+                            trigger: containerRef.current,
+                            start: "top top",
+                            end: "+=600",
+                            scrub: true,
+                        }
                     }
-                }
-            );
+                );
+            }
 
         }, containerRef);
         
@@ -226,6 +234,7 @@ const Careers = () => {
 
     const handleMouseMove = (e) => {
         if (!sectionRef.current) return;
+        if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) return;
         const rect = sectionRef.current.getBoundingClientRect();
         const x = (e.clientX - rect.left) / rect.width - 0.5;
         const y = (e.clientY - rect.top) / rect.height - 0.5;
@@ -245,8 +254,6 @@ const Careers = () => {
                             alt="Career Hero Background"
                             className="w-full h-full object-cover"
                         />
-                        <div className="absolute inset-0 bg-[#020617]/40" />
-                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#020617]/20 to-[#020617]" />
                     </div>
 
                     <div className="relative z-10 max-w-7xl mx-auto px-6">

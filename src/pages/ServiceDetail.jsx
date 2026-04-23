@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import Enterprise from './Enterprise'; // The component I created above
 
 import SMBDetail from './SMBDetail';
+import DataAndAI from './DataAndAI';
 
 const ServiceDetail = () => {
   const { id } = useParams();
@@ -14,6 +15,10 @@ const ServiceDetail = () => {
 
   if (id === 'smb') {
     return <SMBDetail />; // You would create this similarly
+  }
+
+  if (id === 'dataandai') {
+    return <DataAndAI />;
   }
 
   return (

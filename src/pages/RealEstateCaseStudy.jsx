@@ -104,7 +104,7 @@ const RealEstateCaseStudy = () => {
                             ))}
                         </div>
 
-                        <h1 className="text-4xl lg:text-7xl font-bold text-white leading-tight mb-8">
+                        <h1 className="text-3xl sm:text-4xl lg:text-7xl font-bold text-white leading-tight mb-8">
                             Transforming Real Estate with an <span className="text-[#57c2ff]">AI Chatbot Agent</span>
                         </h1>
 
@@ -116,7 +116,7 @@ const RealEstateCaseStudy = () => {
             </section>
 
             {/* --- CLIENT OVERVIEW & IMAGE --- */}
-            <section className="py-20 lg:py-32 container mx-auto px-6">
+            <section className="py-12 sm:py-20 lg:py-32 container mx-auto px-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     <motion.div
                         initial={{ opacity: 0, x: -30 }}
@@ -163,7 +163,7 @@ const RealEstateCaseStudy = () => {
             </section>
 
             {/* --- PROBLEM & SOLUTION GRID --- */}
-            <section className="bg-gray-50 py-20 lg:py-32 overflow-hidden">
+            <section className="bg-gray-50 py-12 sm:py-20 lg:py-32 overflow-hidden">
                 <div className="container mx-auto px-6">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-32">
                         {/* Requirement */}
@@ -234,21 +234,21 @@ const RealEstateCaseStudy = () => {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-white text-3xl lg:text-5xl font-bold mb-16"
+                        className="text-white text-2xl sm:text-3xl lg:text-5xl font-bold mb-16"
                     >
                         Estimated Impact in <span className="text-[#57c2ff]">6 Months</span>
                     </motion.h2>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {stats.map((stat, idx) => (
-                            <motion.div
-                                key={idx}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ delay: idx * 0.2 }}
-                                viewport={{ once: true }}
-                                className="p-10 rounded-[3rem] bg-white/5 backdrop-blur-xl border border-white/10 text-left hover:bg-white/10 transition-all duration-300 group"
-                            >
+                                <motion.div
+                                    key={idx}
+                                    initial={{ opacity: 0, y: 30 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: idx * 0.2 }}
+                                    viewport={{ once: true }}
+                                    className="p-6 sm:p-10 rounded-[2.5rem] sm:rounded-[3rem] bg-white/5 backdrop-blur-xl border border-white/10 text-left hover:bg-white/10 transition-all duration-300 group"
+                                >
                                 <div className="mb-6 w-12 h-12 rounded-2xl bg-[#57c2ff]/20 flex items-center justify-center group-hover:scale-110 transition-transform">
                                     {stat.icon}
                                 </div>
@@ -264,8 +264,8 @@ const RealEstateCaseStudy = () => {
             </section>
 
             {/* --- CTA SECTION --- */}
-            <section className="py-24 container mx-auto px-6 text-center">
-                <div className="max-w-4xl mx-auto rounded-[4rem] bg-gray-900 p-12 lg:p-24 relative overflow-hidden shadow-2xl">
+            <section className="py-16 sm:py-24 container mx-auto px-6 text-center">
+                <div className="max-w-4xl mx-auto rounded-[2.5rem] sm:rounded-[4rem] bg-gray-900 p-8 sm:p-12 lg:p-24 relative overflow-hidden shadow-2xl">
                     <div className="relative z-10">
                         <h2 className="text-3xl lg:text-5xl font-bold text-white mb-8">
                             Ready to automate your <br /> <span className="text-[#57c2ff]">client success?</span>

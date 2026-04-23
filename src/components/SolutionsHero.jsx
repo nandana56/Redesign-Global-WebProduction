@@ -119,7 +119,7 @@ export default function SolutionsHero() {
               aria-hidden
               className="absolute inset-0 font-bold leading-none pointer-events-none"
               style={{
-                fontSize: "clamp(52px, 9vw, 80px)",
+                fontSize: "clamp(42px, 12vw, 80px)",
                 fontFamily: "'Poppins', sans-serif",
                 color: "transparent",
                 WebkitTextStroke: "2px #00e5ff",
@@ -136,7 +136,7 @@ export default function SolutionsHero() {
               aria-hidden
               className="absolute inset-0 font-bold leading-none pointer-events-none"
               style={{
-                fontSize: "clamp(52px, 9vw, 80px)",
+                fontSize: "clamp(42px, 12vw, 80px)",
                 fontFamily: "'Poppins', sans-serif",
                 color: "transparent",
                 WebkitTextStroke: "2px #ff2d55",
@@ -151,7 +151,7 @@ export default function SolutionsHero() {
             <h1
               className="font-bold text-white leading-none"
               style={{
-                fontSize: "clamp(52px, 9vw, 80px)",
+                fontSize: "clamp(42px, 12vw, 80px)",
                 fontFamily: "'Poppins', sans-serif",
                 textShadow: "0 0 60px rgba(75,181,248,0.2)",
               }}
@@ -207,7 +207,7 @@ export default function SolutionsHero() {
             initial={{ opacity: 0, scale: 0.7 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="relative flex items-center justify-center w-full max-w-[560px] lg:max-w-[640px] aspect-square"
+            className="relative flex items-center justify-center w-full max-w-[320px] sm:max-w-[560px] lg:max-w-[640px] aspect-square"
           >
 
             {/* Halo glow */}

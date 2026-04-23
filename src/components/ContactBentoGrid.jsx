@@ -382,7 +382,9 @@ const ContactBentoGrid = () => {
                                 <motion.a 
                                     whileHover={{ scale: 1.1, rotate: -5 }}
                                     whileTap={{ scale: 0.9 }}
-                                    href="https://linkedin.com" 
+                                    href="https://www.linkedin.com/company/global-web-production/posts/?feedView=all" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
                                     className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center text-white border border-white/20 hover:bg-white/20 transition-all"
                                 >
                                     <Linkedin className="w-6 h-6" />

@@ -33,7 +33,10 @@ const Ladder7Partnership = () => {
     }, [mousePosition, springX, springY]);
 
     const handleMouseMove = (e) => {
-        // Normalize mouse coordinates from -1 to 1 based on screen size so center is 0,0
+        // Disable parallax logic if on a touch device
+        if (window.matchMedia('(pointer: coarse)').matches) return;
+        
+        // Normalize mouse coordinates from -1 to 1
         const x = (e.clientX / window.innerWidth) * 2 - 1;
         const y = (e.clientY / window.innerHeight) * 2 - 1;
         setMousePosition({ x, y });
@@ -133,7 +136,7 @@ const Ladder7Partnership = () => {
                 {/* THE CORE: PUSHED TO THE RIGHT (Desktop) or BOTTOM (Mobile) */}
                 <motion.div 
                     style={{ x: coreX, y: coreY }}
-                    className="relative lg:absolute lg:right-[6%] xl:right-[10%] w-[240px] h-[240px] sm:w-[300px] sm:h-[300px] md:w-[350px] md:h-[350px] lg:w-[450px] lg:h-[450px] xl:w-[500px] xl:h-[500px] rounded-full overflow-hidden border-[2px] sm:border-[4px] border-[#57C2FF]/30 shadow-[0_0_80px_rgba(87,194,255,0.4)] z-20 group cursor-crosshair pointer-events-auto order-1 lg:order-2"
+                    className="relative lg:absolute lg:right-[6%] xl:right-[10%] w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] md:w-[350px] md:h-[350px] lg:w-[450px] lg:h-[450px] xl:w-[500px] xl:h-[500px] rounded-full overflow-hidden border-[2px] sm:border-[4px] border-[#57C2FF]/30 shadow-[0_0_80px_rgba(87,194,255,0.4)] z-20 group cursor-crosshair pointer-events-auto order-1 lg:order-2 shrink-0"
                 >
                     {/* Hover reveal mechanic: dims without hover, fully reveals image on hover */}
                     <div className="absolute inset-0 bg-[#001c3d]/30 z-10 transition-colors duration-700 group-hover:bg-transparent pointer-events-none" />

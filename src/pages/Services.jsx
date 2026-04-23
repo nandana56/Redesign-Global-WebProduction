@@ -32,7 +32,7 @@ const Services = () => {
             {/* Unified Hero Section */}
             <div 
                 ref={heroSectionRef} 
-                className="relative min-h-[80vh] w-full flex flex-col md:flex-row shadow-sm border-b border-white/10 overflow-hidden bg-[#062055]"
+                className="relative min-h-[50vh] md:min-h-[65vh] w-full flex flex-col md:flex-row shadow-sm border-b border-white/10 overflow-hidden bg-[#062055]"
                 style={{
                     backgroundImage: "url('/services/New%20Project.webp')",
                     backgroundSize: 'cover',
@@ -68,7 +68,7 @@ const Services = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.5 }}
                         >
-                            <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-8 text-[#52b8f4] drop-shadow-sm font-poppins">
+                            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-8 text-[#52b8f4] drop-shadow-sm font-poppins">
                                 Our Services
                             </h1>
                             <p className="text-white max-w-xl text-xl md:text-2xl leading-relaxed font-poppins font-medium drop-shadow-lg">
@@ -101,21 +101,25 @@ const Services = () => {
                     <div className="relative z-[2] grid md:grid-cols-2 lg:grid-cols-4 gap-12 px-8 py-24 md:px-16 lg:px-24">
                         {/* Application Services & Engineering */}
                         <div className="space-y-8">
-                            <h2 className="text-xl font-bold leading-tight min-h-[3.5rem] flex items-start text-white border-l-2 border-[#52b8f4] pl-4">
+                            <h2 className="text-xl font-bold leading-tight md:min-h-[3.5rem] flex items-start text-white border-l-2 border-[#52b8f4] pl-4">
                                 Application Services & Engineering
                             </h2>
                             <ul className="space-y-4">
                                 {[
-                                    "Application Support Services",
-                                    "Enterprise Platform Services",
-                                    "CRM Implementation",
-                                    "Software Product Development",
-                                    "Quality Engineering & Assurance",
-                                    "Engineering Research and Development",
-                                    "Business Process Services"
+                                    { label: "Application Support Services", link: "/services/applicationServices" },
+                                    { label: "Enterprise Platform Services" },
+                                    { label: "CRM Implementation" },
+                                    { label: "Software Product Development" },
+                                    { label: "Quality Engineering & Assurance" },
+                                    { label: "Engineering Research and Development" },
+                                    { label: "Business Process Services" }
                                 ].map((item) => (
-                                    <li key={item} className="text-gray-300 text-sm hover:text-[#52b8f4] transition-colors cursor-default">
-                                        {item}
+                                    <li key={typeof item === 'string' ? item : item.label} className="text-gray-300 text-sm hover:text-[#52b8f4] transition-colors cursor-pointer">
+                                        {typeof item === 'string' ? item : (
+                                            item.link ? (
+                                                <Link to={item.link}>{item.label}</Link>
+                                            ) : item.label
+                                        )}
                                     </li>
                                 ))}
                             </ul>
@@ -128,19 +132,23 @@ const Services = () => {
 
                         {/* Data, AI & Automation */}
                         <div className="space-y-8">
-                            <h2 className="text-xl font-bold leading-tight min-h-[3.5rem] flex items-start text-white border-l-2 border-[#52b8f4] pl-4">
+                            <h2 className="text-xl font-bold leading-tight md:min-h-[3.5rem] flex items-start text-white border-l-2 border-[#52b8f4] pl-4">
                                 Data, AI & Automation
                             </h2>
                             <ul className="space-y-4">
                                 {[
-                                    "Data & AI",
-                                    "Agentic AI Solutions",
-                                    "Intelligent Business Automations",
-                                    "GWP Insights",
-                                    "Experimentation & Optimization"
+                                    { label: "Data & AI", link: "/services/dataandai" },
+                                    { label: "Agentic AI Solutions" },
+                                    { label: "Intelligent Business Automations" },
+                                    { label: "GWP Insights" },
+                                    { label: "Experimentation & Optimization" }
                                 ].map((item) => (
-                                    <li key={item} className="text-gray-300 text-sm hover:text-[#52b8f4] transition-colors cursor-default">
-                                        {item}
+                                    <li key={typeof item === 'string' ? item : item.label} className="text-gray-300 text-sm hover:text-[#52b8f4] transition-colors cursor-pointer">
+                                        {typeof item === 'string' ? item : (
+                                            item.link ? (
+                                                <Link to={item.link}>{item.label}</Link>
+                                            ) : item.label
+                                        )}
                                     </li>
                                 ))}
                             </ul>
@@ -153,17 +161,21 @@ const Services = () => {
 
                         {/* Strategy & Transformation Consulting */}
                         <div className="space-y-8">
-                            <h2 className="text-xl font-bold leading-tight min-h-[3.5rem] flex items-start text-white border-l-2 border-[#52b8f4] pl-4">
+                            <h2 className="text-xl font-bold leading-tight md:min-h-[3.5rem] flex items-start text-white border-l-2 border-[#52b8f4] pl-4">
                                 Strategy & Transformation Consulting
                             </h2>
                             <ul className="space-y-4">
                                 {[
-                                    "Technology Consulting",
-                                    "Digital Strategy",
-                                    "Sustainability & Resilience"
+                                    { label: "Technology Consulting", link: "/services/technology" },
+                                    { label: "Digital Strategy" },
+                                    { label: "Sustainability & Resilience" }
                                 ].map((item) => (
-                                    <li key={item} className="text-gray-300 text-sm hover:text-[#52b8f4] transition-colors cursor-default">
-                                        {item}
+                                    <li key={typeof item === 'string' ? item : item.label} className="text-gray-300 text-sm hover:text-[#52b8f4] transition-colors cursor-pointer">
+                                        {typeof item === 'string' ? item : (
+                                            item.link ? (
+                                                <Link to={item.link}>{item.label}</Link>
+                                            ) : item.label
+                                        )}
                                     </li>
                                 ))}
                             </ul>
@@ -176,7 +188,7 @@ const Services = () => {
 
                         {/* Creative & Experience Services */}
                         <div className="space-y-8">
-                            <h2 className="text-xl font-bold leading-tight min-h-[3.5rem] flex items-start text-white border-l-2 border-[#52b8f4] pl-4">
+                            <h2 className="text-xl font-bold leading-tight md:min-h-[3.5rem] flex items-start text-white border-l-2 border-[#52b8f4] pl-4">
                                 Creative & Experience Services
                             </h2>
                             <ul className="space-y-4">

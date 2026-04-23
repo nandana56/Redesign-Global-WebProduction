@@ -36,21 +36,29 @@ const AboutOverview = () => {
             gsap.set(missionImageRef.current, { xPercent: -100, opacity: 0 });
             gsap.set(missionTextRef.current, { xPercent: 100, opacity: 0 });
 
+            const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
             // Create a timeline that is scrubbed with the scroll
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: containerRef.current,
-                    start: "top 20%",    // Start slightly later to avoid sudden jump
-                    end: "+=120%",       
-                    scrub: 1,            // Smooth scrubbing
-                    pin: true,           // Pin the container in place
-                    pinSpacing: true,
+                    start: isMobile ? "top 80%" : "top 20%",
+                    end: isMobile ? "bottom 20%" : "+=120%",
+                    scrub: 1,
+                    pin: !isMobile, // Disable pinning on mobile
+                    pinSpacing: !isMobile,
                 }
             });
 
-            // Animate both elements sliding to their neutral (center) positions simultaneously
-            tl.to(missionImageRef.current, { xPercent: 0, opacity: 1, ease: "none", duration: 1 }, 0)
-                .to(missionTextRef.current, { xPercent: 0, opacity: 1, ease: "none", duration: 1 }, 0);
+            if (isMobile) {
+                // simple vertical fade-up on mobile instead of side-clash
+                tl.to(missionImageRef.current, { xPercent: 0, opacity: 1, duration: 0.5 })
+                  .to(missionTextRef.current, { xPercent: 0, opacity: 1, duration: 0.5 }, "-=0.2");
+            } else {
+                // The Apple-Style Pinned Reveal for Desktop
+                tl.to(missionImageRef.current, { xPercent: 0, opacity: 1, ease: "none", duration: 1 }, 0)
+                  .to(missionTextRef.current, { xPercent: 0, opacity: 1, ease: "none", duration: 1 }, 0);
+            }
 
 
         }, containerRef); // Scope to the outermost container

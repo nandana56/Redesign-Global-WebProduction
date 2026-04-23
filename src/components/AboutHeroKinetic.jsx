@@ -97,7 +97,7 @@ const AboutHeroKinetic = () => {
 
             {/* LAYER 1: OUTSIDE THE SPOT (Standard Heading) */}
             <div className="hero-content-outside absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-4">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight text-white drop-shadow-lg select-none [-webkit-text-stroke:2px_#52b8f4] md:[-webkit-text-stroke:3px_#52b8f4]">
+                <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight text-white drop-shadow-lg select-none [-webkit-text-stroke:2px_#52b8f4] md:[-webkit-text-stroke:3px_#52b8f4]">
                     Where Technology <br className="hidden md:block" /> Meets Reliability
                 </h1>
                 <p className="mt-8 text-white text-sm tracking-[0.5em] uppercase font-bold [-webkit-text-stroke:1px_#52b8f4]">

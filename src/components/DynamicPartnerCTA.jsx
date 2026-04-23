@@ -1,10 +1,12 @@
 import React from "react";
 import { motion } from "framer-motion";
 
+import { Link } from "react-router-dom";
+
 const DynamicPartnerCTA = () => {
     return (
         <section
-            className="relative w-full h-[65vh] min-h-[500px] flex items-center justify-center overflow-hidden"
+            className="relative w-full h-[50vh] md:h-[65vh] min-h-[400px] md:min-h-[500px] flex items-center justify-center overflow-hidden"
             style={{
                 backgroundImage: 'url("/products/patnership1.jfif")',
                 backgroundSize: 'cover',
@@ -31,7 +33,7 @@ const DynamicPartnerCTA = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.9, ease: "easeOut" }}
             >
-                <h2 className="text-4xl md:text-6xl font-bold leading-[1.15] text-white drop-shadow-[0_10px_10px_rgba(0,0,0,0.8)]">
+                <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold leading-[1.15] text-white drop-shadow-[0_10px_10px_rgba(0,0,0,0.8)]">
                     PARTNER WITH <br />
                     <span className="inline-block mt-3 text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-[#57C2FF] to-blue-600">
                         GLOBAL WEB PRODUCTION
@@ -40,10 +42,10 @@ const DynamicPartnerCTA = () => {
 
 
 
-                <button className="relative px-10 py-4 bg-[#57C2FF] text-black font-semibold rounded-full text-lg shadow-[0_0_40px_rgba(87,194,255,0.6)] hover:bg-white hover:scale-105 active:scale-95 transition-all duration-300 group overflow-hidden">
+                <Link to="/contact" className="relative px-10 py-4 bg-[#57C2FF] text-black font-semibold rounded-full text-lg shadow-[0_0_40px_rgba(87,194,255,0.6)] hover:bg-white hover:scale-105 active:scale-95 transition-all duration-300 group overflow-hidden inline-block">
                     <span className="relative z-10">Request a Demo</span>
-                    <div className="absolute inset-0 bg-white translate-y-[100%] group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
-                </button>
+                    <div className="absolute inset-0 bg-white translate-y-[100%] group-hover:translate-y-0 transition-transform duration-300 ease-out z-0 rounded-full" />
+                </Link>
             </motion.div>
         </section>
     );

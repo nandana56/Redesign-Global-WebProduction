@@ -247,7 +247,7 @@ const ContactGlassBento = () => {
                                 <a href="https://www.facebook.com/globalwebproduction/" target="_blank" rel="noopener noreferrer" className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-white hover:bg-blue-600 hover:scale-110 hover:-rotate-12 transition-all duration-300 border border-white/5">
                                     <Facebook className="w-6 h-6" />
                                 </a>
-                                <a href="https://www.linkedin.com/company/global-web-production/" target="_blank" rel="noopener noreferrer" className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-white hover:bg-blue-700 hover:scale-110 hover:rotate-12 transition-all duration-300 border border-white/5">
+                                <a href="https://www.linkedin.com/company/global-web-production/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-white hover:bg-blue-700 hover:scale-110 hover:rotate-12 transition-all duration-300 border border-white/5">
                                     <Linkedin className="w-6 h-6" />
                                 </a>
                             </div>

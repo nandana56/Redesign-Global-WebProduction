@@ -40,8 +40,8 @@ const MagneticCard = ({ text, className, glowColor }) => {
         <motion.div
             ref={cardRef}
             style={{
-                rotateX: rotateX,
-                rotateY: rotateY,
+                rotateX: typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches ? 0 : rotateX,
+                rotateY: typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches ? 0 : rotateY,
                 perspective: 1000
             }}
             onMouseMove={handleMouseMove}

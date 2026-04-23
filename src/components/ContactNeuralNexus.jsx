@@ -1,73 +1,83 @@
-import React, { useRef, useState, useEffect } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Canvas } from '@react-three/fiber';
 import { 
-    Send, MapPin, Globe, ArrowUpRight, 
-    User, Mail, Briefcase, MessageSquare, 
-    CheckCircle2, Sparkles, Facebook, Linkedin 
-} from "lucide-react";
+    User, Mail, Briefcase, MessageSquare, Send, 
+    Facebook, Linkedin, ArrowUpRight, Globe, Sparkles, 
+    CheckCircle2, Search, MapPin
+} from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import NeuralNetworkScene from './NeuralNetworkScene';
+import LazyCanvas from './LazyCanvas';
 
-// --- Animated Neural Pathway Component ---
-const NeuralPath = ({ start, end, active }) => {
-    return (
-        <svg className="absolute inset-0 w-full h-full pointer-events-none overflow-visible z-0">
-            <motion.path
-                d={`M ${start.x} ${start.y} C ${(start.x + end.x) / 2} ${start.y}, ${(start.x + end.x) / 2} ${end.y}, ${end.x} ${end.y}`}
-                stroke={active ? "#3b82f6" : "rgba(255,255,255,0.05)"}
-                strokeWidth={active ? "2" : "1"}
-                fill="none"
-                initial={{ pathLength: 0 }}
-                animate={{ 
-                    pathLength: 1,
-                    stroke: active ? "#3b82f6" : "rgba(255,255,255,0.05)",
-                    strokeWidth: active ? 2 : 1
-                }}
-                transition={{ duration: 2, ease: "easeInOut" }}
-            />
-            {active && (
-                <motion.circle
-                    r="3"
-                    fill="#60a5fa"
-                    animate={{
-                        offsetDistance: ["0%", "100%"]
-                    }}
-                    transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "linear"
-                    }}
-                    style={{ offsetPath: `path("M ${start.x} ${start.y} C ${(start.x + end.x) / 2} ${start.y}, ${(start.x + end.x) / 2} ${end.y}, ${end.x} ${end.y}")` }}
-                />
-            )}
-        </svg>
-    );
-};
+gsap.registerPlugin(ScrollTrigger);
 
-// --- Floating Nexus Module ---
-const NexusModule = ({ children, className = "", delay = 0 }) => (
+const NexusCard = ({ children, className = "", delay = 0 }) => (
     <motion.div
-        initial={{ opacity: 0, scale: 0.9, y: 50 }}
-        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 1, delay, ease: [0.16, 1, 0.3, 1] }}
-        className={`relative z-10 p-8 rounded-[3rem] border border-white/10 bg-white/5 backdrop-blur-2xl shadow-2xl hover:border-blue-500/30 transition-colors duration-700 ${className}`}
+        transition={{ duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] }}
+        className={`bg-[#000021]/60 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] overflow-hidden shadow-2xl hover:border-blue-500/30 transition-colors duration-700 p-8 ${className}`}
     >
         {children}
     </motion.div>
 );
 
+const BUSINESS_AREAS = [
+    {
+        label: "── Agentic AI – Copilot ──",
+        options: [
+            { value: "AI-Powered-Agentic-Sales-Assistant", text: "AI-Powered Agentic Sales Assistant | Co-Pilot Based" },
+            { value: "Ask-Me-Role-Specific", text: "Ask Me – Role Specific | Finetuned & Orchestrated" },
+            { value: "Ask-Me-Knowledge-Agent", text: "Ask Me – Knowledge Agent | Corporate Brain" },
+            { value: "Request-Intake-Agent", text: "Request Intake Agent | Reporting & Dashboards" },
+            { value: "Content-Update-Agent-WebOps", text: "Content Update Agent for WebOps (Connected to WP)" },
+            { value: "Content-Checker-Agent", text: "Aria Label / Alt Text Generator / Content Checker Agent" }
+        ]
+    },
+    {
+        label: "── Agentic AI – Custom ──",
+        options: [
+            { value: "Supervisor-Agent", text: "Supervisor Agent" },
+            { value: "AI-Document-Extractor", text: "AI Document Extractor" },
+            { value: "HR-Assistant", text: "HR Assistant" },
+            { value: "Aptitude-IQ-Assessment", text: "AI-Powered Aptitude & IQ Assessment" }
+        ]
+    },
+    {
+        label: "── Products ──",
+        options: [
+            { value: "Site360ai", text: "Site360.ai" },
+            { value: "Quality-Checker-Extension", text: "Quality Checker Extension" },
+            { value: "Content-Search-Tools", text: "Content Search Tools" }
+        ]
+    },
+    {
+        label: "── Services ──",
+        options: [
+            { value: "Accelerated-WordPress-Development", text: "Accelerated WordPress Development with AI" },
+            { value: "web-development", text: "Web Development" },
+            { value: "Managed-Services", text: "Managed Services" },
+            { value: "Testing-QA", text: "Testing / QA" },
+            { value: "Accessibility-Compliance", text: "Web Accessibility" },
+            { value: "Experimentation", text: "Experimentation" },
+            { value: "Salesforce", text: "CRM Solutions" },
+            { value: "seo", text: "SEO & Site Performance" },
+            { value: "Staffing-Solutions", text: "Staffing Solutions" },
+            { value: "Analytics-Technology-Implementation", text: "Analytics Technology Implementation" },
+            { value: "Automation", text: "Automation" },
+            { value: "AI-Enablement", text: "AI Enablement" },
+            { value: "Content-Services", text: "Content Services" }
+        ]
+    }
+];
+
 const ContactNeuralNexus = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
-    const [activePath, setActivePath] = useState(null);
+    const [isFormActive, setIsFormActive] = useState(false);
     const containerRef = useRef(null);
-
-    // Dynamic coordinates for paths (approximate for demo, would be ref-based in production)
-    const coordinates = {
-        header: { x: "20%", y: "20%" },
-        form: { x: "50%", y: "45%" },
-        insight: { x: "80%", y: "30%" },
-        locations: { x: "75%", y: "70%" },
-        socials: { x: "25%", y: "75%" }
-    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -75,192 +85,197 @@ const ContactNeuralNexus = () => {
         setTimeout(() => setIsSubmitted(false), 5000);
     };
 
-    const inputClasses = "w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-300";
+    const inputClasses = "w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 pl-14 text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-300 font-public-sans";
 
     return (
-        <section ref={containerRef} className="relative w-full py-32 px-6 lg:px-16 bg-[#040816] overflow-hidden min-h-screen">
-            
-            {/* Background Neural Network (SVGs) */}
-            <div className="absolute inset-0 pointer-events-none opacity-50">
-                <NeuralPath start={{x: 200, y: 200}} end={{x: 800, y: 400}} active={activePath === 'form'} />
-                <NeuralPath start={{x: 1400, y: 300}} end={{x: 800, y: 450}} active={activePath === 'insight'} />
-                <NeuralPath start={{x: 800, y: 600}} end={{x: 1200, y: 800}} active={activePath === 'locations'} />
-                <NeuralPath start={{x: 400, y: 850}} end={{x: 700, y: 650}} active={activePath === 'socials'} />
-            </div>
+        <section ref={containerRef} className="relative w-full py-24 px-6 lg:px-16 bg-[#040816] overflow-hidden">
+            {/* Background Glows */}
+            <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-cyan-600/5 rounded-full blur-[150px] pointer-events-none" />
 
-            {/* Glowing Orbs */}
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-[150px] animate-pulse" />
-            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-600/10 rounded-full blur-[150px]" />
-
-            <div className="max-w-7xl mx-auto flex flex-col items-center">
-                
-                {/* 1. HEADER MODULE */}
-                <motion.div 
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    className="text-center mb-24 max-w-3xl"
-                >
-                    <h2 className="text-6xl md:text-8xl font-black text-white mb-8 tracking-tighter uppercase italic">
-                        The <span className="text-blue-500 not-italic">Nexus.</span>
-                    </h2>
-                    <p className="text-white/40 text-xl font-light leading-relaxed">
-                        Establishing a multi-threaded connection to the GWP brain. Transmit your data through the neural network.
-                    </p>
-                </motion.div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 w-full">
+            <div className="max-w-7xl mx-auto">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
                     
-                    {/* 2. FORM MODULE (Central Hub) */}
-                    <div className="lg:col-span-8">
-                        <NexusModule className="p-10 lg:p-16" onMouseEnter={() => setActivePath('form')} onMouseLeave={() => setActivePath(null)}>
-                            <div className="flex items-center gap-4 mb-12">
-                                <span className="w-12 h-1 bg-blue-500 rounded-full" />
-                                <h3 className="text-3xl font-bold text-white tracking-widest uppercase">Input Module</h3>
+                    {/* FORM MODULE - Main Card */}
+                    <NexusCard className="lg:col-span-8 p-10 lg:p-14" delay={0.1}>
+                        <div className="flex flex-col gap-2 mb-10">
+                            <h2 className="text-3xl sm:text-4xl font-black text-white uppercase tracking-tighter">
+                                Send us a <span className="text-blue-500 italic">message.</span>
+                            </h2>
+                            <p className="text-white/40 max-w-xl text-lg font-light leading-relaxed">
+                                We want to hear from you! Contact our team to learn about the services and language solutions we can provide to aid your business.
+                            </p>
+                        </div>
+
+                        <AnimatePresence mode="wait">
+                            {!isSubmitted ? (
+                                <motion.form 
+                                    key="form"
+                                    initial={{ opacity: 1 }}
+                                    exit={{ opacity: 0, y: 20 }}
+                                    onSubmit={handleSubmit}
+                                    className="space-y-6"
+                                    onFocus={() => setIsFormActive(true)}
+                                    onBlur={() => setIsFormActive(false)}
+                                >
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                        <div className="relative">
+                                            <User className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-500/50" />
+                                            <input type="text" placeholder="First Name*" required className={inputClasses} />
+                                        </div>
+                                        <div className="relative">
+                                            <User className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-500/50" />
+                                            <input type="text" placeholder="Last Name*" required className={inputClasses} />
+                                        </div>
+                                    </div>
+
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                        <div className="relative">
+                                            <Briefcase className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-500/50" />
+                                            <input type="text" placeholder="Company" className={inputClasses} />
+                                        </div>
+                                        <div className="relative">
+                                            <Mail className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-500/50" />
+                                            <input type="email" placeholder="Email*" required className={inputClasses} />
+                                        </div>
+                                    </div>
+
+                                    <div className="relative">
+                                        <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-500/50" />
+                                        <select required className={`${inputClasses} appearance-none cursor-pointer pr-12`}>
+                                            <option value="" disabled selected className="bg-[#000021]">Select a Business Area*</option>
+                                            {BUSINESS_AREAS.map((group, idx) => (
+                                                <optgroup key={idx} label={group.label} className="bg-[#000021] text-blue-400 font-bold py-2">
+                                                    {group.options.map((opt, oIdx) => (
+                                                        <option key={oIdx} value={opt.value} className="bg-[#000021] text-white py-1">
+                                                            {opt.text}
+                                                        </option>
+                                                    ))}
+                                                </optgroup>
+                                            ))}
+                                        </select>
+                                        <ArrowUpRight className="absolute right-6 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 pointer-events-none rotate-45" />
+                                    </div>
+
+                                    <div className="relative">
+                                        <MessageSquare className="absolute left-6 top-6 w-4 h-4 text-blue-500/50" />
+                                        <textarea placeholder="How can we help you?*" rows="4" required className={`${inputClasses} resize-none pt-5`}></textarea>
+                                    </div>
+
+                                    <motion.button 
+                                        type="submit" 
+                                        whileHover={{ scale: 1.02 }}
+                                        whileTap={{ scale: 0.98 }}
+                                        className="w-full sm:w-auto px-12 py-5 bg-blue-600 text-white font-black uppercase tracking-[0.3em] rounded-2xl flex items-center justify-center gap-3 shadow-[0_20px_40px_rgba(0,0,0,0.3)] hover:bg-blue-500 transition-all duration-300"
+                                    >
+                                        <Send className="w-5 h-5" /> Send Message
+                                    </motion.button>
+                                </motion.form>
+                            ) : (
+                                <motion.div 
+                                    key="success"
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    className="py-16 text-center"
+                                >
+                                    <div className="w-24 h-24 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-8 border border-blue-500/50">
+                                        <CheckCircle2 className="w-12 h-12 text-blue-400" />
+                                    </div>
+                                    <h3 className="text-4xl font-bold text-white mb-4">Message Transmission Complete</h3>
+                                    <p className="text-white/40 text-lg">Establishing connection... Our team will respond shortly.</p>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </NexusCard>
+
+                    {/* INTERACTIVE MODULES - Right Panel */}
+                    <div className="lg:col-span-4 flex flex-col gap-8">
+                        
+                        {/* 3D Visualizer Tile */}
+                        <NexusCard className="h-full min-h-[300px] flex flex-col p-0 relative group" delay={0.2}>
+                            <div className="absolute inset-0 z-0">
+                                <LazyCanvas>
+                                    <Canvas camera={{ position: [0, 0, 10], fov: 50 }}>
+                                        <NeuralNetworkScene isFormActive={isFormActive} />
+                                    </Canvas>
+                                </LazyCanvas>
                             </div>
+                            <div className="relative z-10 p-8 flex flex-col h-full justify-between pointer-events-none">
+                                <span className="text-blue-500 font-black text-xs tracking-[0.4em] uppercase">Status: Online</span>
+                                <h4 className="text-white font-bold text-xl leading-snug">Neural Connection established.</h4>
+                            </div>
+                        </NexusCard>
 
-                            <AnimatePresence mode="wait">
-                                {!isSubmitted ? (
-                                    <motion.form 
-                                        key="form"
-                                        initial={{ opacity: 1 }}
-                                        exit={{ opacity: 0, scale: 0.95 }}
-                                        onSubmit={handleSubmit}
-                                        className="space-y-8"
-                                    >
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                            <div className="space-y-4">
-                                                <div className="flex items-center gap-2 text-blue-400 text-xs font-black tracking-widest uppercase ml-2">
-                                                    <User className="w-3 h-3" /> Identity_First
-                                                </div>
-                                                <input type="text" placeholder="First Name" required className={inputClasses} />
-                                            </div>
-                                            <div className="space-y-4">
-                                                <div className="flex items-center gap-2 text-blue-400 text-xs font-black tracking-widest uppercase ml-2">
-                                                    <User className="w-3 h-3" /> Identity_Last
-                                                </div>
-                                                <input type="text" placeholder="Last Name" required className={inputClasses} />
-                                            </div>
-                                        </div>
-
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                            <div className="space-y-4">
-                                                <div className="flex items-center gap-2 text-blue-400 text-xs font-black tracking-widest uppercase ml-2">
-                                                    <Briefcase className="w-3 h-3" /> Entity_Name
-                                                </div>
-                                                <input type="text" placeholder="Company" className={inputClasses} />
-                                            </div>
-                                            <div className="space-y-4">
-                                                <div className="flex items-center gap-2 text-blue-400 text-xs font-black tracking-widest uppercase ml-2">
-                                                    <Mail className="w-3 h-3" /> Vector_Address
-                                                </div>
-                                                <input type="email" placeholder="Email" required className={inputClasses} />
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-4">
-                                            <div className="flex items-center gap-2 text-blue-400 text-xs font-black tracking-widest uppercase ml-2">
-                                                <Globe className="w-3 h-3" /> Protocol_Select
-                                            </div>
-                                            <select required className={`${inputClasses} appearance-none cursor-pointer`}>
-                                                <option value="" disabled selected className="bg-[#040816]">Select Protocol</option>
-                                                <optgroup label="── Intelligent Agents ──" className="bg-[#040816]">
-                                                    <option value="Agentic-AI" className="bg-[#040816]">Agentic AI Copilot</option>
-                                                    <option value="Custom-AI" className="bg-[#040816]">Custom Agent Systems</option>
-                                                </optgroup>
-                                                <optgroup label="── Core Services ──" className="bg-[#040816]">
-                                                    <option value="Web-Performance" className="bg-[#040816]">Web Performance & SEO</option>
-                                                    <option value="Managed-Services" className="bg-[#040816]">Managed Services</option>
-                                                </optgroup>
-                                            </select>
-                                        </div>
-
-                                        <div className="space-y-4">
-                                            <div className="flex items-center gap-2 text-blue-400 text-xs font-black tracking-widest uppercase ml-2">
-                                                <MessageSquare className="w-3 h-3" /> Transmission_Body
-                                            </div>
-                                            <textarea placeholder="Your vision..." rows="4" required className={`${inputClasses} resize-none`}></textarea>
-                                        </div>
-
-                                        <button 
-                                            type="submit" 
-                                            className="w-full py-6 rounded-2xl bg-white text-black font-black uppercase tracking-[0.3em] hover:bg-blue-500 hover:text-white transition-all shadow-[0_20px_50px_rgba(59,130,246,0.3)] active:scale-95"
-                                        >
-                                            Initiate Transmission
-                                        </button>
-                                    </motion.form>
-                                ) : (
-                                    <motion.div 
-                                        key="success"
-                                        initial={{ opacity: 0, scale: 0.9 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        className="py-16 text-center"
-                                    >
-                                        <div className="w-24 h-24 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-8 border border-blue-500/50">
-                                            <CheckCircle2 className="w-12 h-12 text-blue-400" />
-                                        </div>
-                                        <h3 className="text-4xl font-bold text-white mb-4">Transmission Locked</h3>
-                                        <p className="text-white/40 text-lg">Your data is currently propagating through the GWP nexus.</p>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                        </NexusModule>
+                        {/* Featured Article Tile */}
+                        <NexusCard className="flex flex-col gap-6" delay={0.3}>
+                            <div className="flex items-center justify-between mb-2">
+                                <span className="px-3 py-1 bg-blue-500/10 rounded-full text-blue-400 text-[10px] font-black uppercase tracking-wider">Featured</span>
+                                <Sparkles className="w-4 h-4 text-blue-500" />
+                            </div>
+                            <div className="aspect-video rounded-2xl overflow-hidden border border-white/5">
+                                <img src="/Assets/aiblog-.webp" alt="AI Optimizer" className="w-full h-full object-cover transition-transform duration-700 hover:scale-110" />
+                            </div>
+                            <div>
+                                <h4 className="text-white font-bold text-lg mb-2">AI-Powered Web Content Optimizer</h4>
+                                <p className="text-white/40 text-sm leading-relaxed mb-6 font-light">
+                                    Enhancing UX through intelligent content orchestration...
+                                </p>
+                                <a href="/blogs" className="flex items-center gap-2 text-blue-400 font-black text-xs tracking-widest uppercase hover:text-white transition-colors group">
+                                    Read Full Article <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                                </a>
+                            </div>
+                        </NexusCard>
                     </div>
 
-                    {/* 3. PERIPHERAL MODULES */}
-                    <div className="lg:col-span-4 flex flex-col gap-12">
-                        
-                        {/* Featured Insight node */}
-                        <NexusModule className="p-8" onMouseEnter={() => setActivePath('insight')} onMouseLeave={() => setActivePath(null)}>
-                            <div className="flex justify-between items-start mb-6">
-                                <span className="text-blue-500 font-black text-[10px] tracking-[0.4em] uppercase">Data_Stream</span>
-                                <Sparkles className="w-5 h-5 text-blue-500" />
-                            </div>
-                            <h4 className="text-xl font-bold text-white mb-4">AI Web Content Optimizer</h4>
-                            <p className="text-white/40 text-sm font-light leading-relaxed mb-6">
-                                Enhancing UX through intelligent content orchestration and real-time user mapping.
-                            </p>
-                            <a href="/blogs" className="group flex items-center gap-2 text-xs font-black text-white/60 hover:text-white transition-colors">
-                                LEARN_MORE <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                            </a>
-                        </NexusModule>
-
-                        {/* Location nodes */}
-                        <NexusModule className="p-8" onMouseEnter={() => setActivePath('locations')} onMouseLeave={() => setActivePath(null)}>
-                            <h4 className="text-blue-500 font-black text-[10px] tracking-[0.4em] uppercase mb-8 flex items-center gap-3">
-                                <Globe className="w-4 h-4" /> Global_Nodes
+                    {/* BOTTOM MODULES */}
+                    
+                    {/* Locations Tile */}
+                    <NexusCard className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-8" delay={0.4}>
+                        <div className="flex flex-col gap-6">
+                            <h4 className="text-blue-500 font-black text-[10px] tracking-[0.4em] uppercase flex items-center gap-3">
+                                <Globe className="w-4 h-4" /> GWP Nodes
                             </h4>
                             <div className="space-y-8">
                                 <div className="flex items-center gap-5">
-                                    <div className="w-10 h-10 rounded-full bg-blue-600/20 flex items-center justify-center text-blue-500 font-black text-xs">US</div>
+                                    <div className="w-12 h-8 rounded overflow-hidden shadow-lg border border-white/20">
+                                        <img src="/Assets/usa-flag.webp" alt="USA" className="w-full h-full object-cover" />
+                                    </div>
                                     <div>
-                                        <div className="text-white font-bold text-sm">Temecula</div>
-                                        <div className="text-white/20 text-[10px] uppercase font-black">California</div>
+                                        <div className="text-white font-bold text-sm tracking-widest uppercase">United States</div>
+                                        <div className="text-white/30 text-xs font-light">Temecula, California</div>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-5">
-                                    <div className="w-10 h-10 rounded-full bg-blue-600/20 flex items-center justify-center text-blue-400 font-black text-xs">IN</div>
+                                    <div className="w-12 h-8 rounded overflow-hidden shadow-lg border border-white/20">
+                                        <img src="/Assets/indian-flag.webp" alt="India" className="w-full h-full object-cover" />
+                                    </div>
                                     <div>
-                                        <div className="text-white font-bold text-sm">Trivandrum</div>
-                                        <div className="text-white/20 text-[10px] uppercase font-black">Kerala</div>
+                                        <div className="text-white font-bold text-sm tracking-widest uppercase">India</div>
+                                        <div className="text-white/30 text-xs font-light">Trivandrum, Kerala</div>
                                     </div>
                                 </div>
                             </div>
-                        </NexusModule>
+                        </div>
+                        <div className="hidden md:flex flex-col justify-end">
+                            <p className="text-white/20 text-xs font-mono uppercase text-right">Coordinate established: [8.52N 76.93E]</p>
+                        </div>
+                    </NexusCard>
 
-                        {/* Social node */}
-                        <NexusModule className="p-8" onMouseEnter={() => setActivePath('socials')} onMouseLeave={() => setActivePath(null)}>
-                            <h4 className="text-blue-500 font-black text-[10px] tracking-[0.4em] uppercase mb-8">Social_Sync</h4>
-                            <div className="flex gap-6">
-                                <a href="https://facebook.com" className="text-white/20 hover:text-white transition-colors">
-                                    <Facebook className="w-8 h-8" />
+                    {/* Socials Tile */}
+                    <NexusCard className="lg:col-span-4 flex flex-col justify-between" delay={0.5}>
+                        <div>
+                            <h4 className="text-blue-500 font-black text-[10px] tracking-[0.4em] uppercase mb-8">Social Sync</h4>
+                            <div className="flex gap-4">
+                                <a href="https://www.facebook.com/globalwebproduction/" target="_blank" rel="noopener noreferrer" className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-white/40 hover:text-white hover:bg-blue-600 hover:scale-110 transition-all duration-500">
+                                    <Facebook className="w-6 h-6" />
                                 </a>
-                                <a href="https://linkedin.com" className="text-white/20 hover:text-white transition-colors">
-                                    <Linkedin className="w-8 h-8" />
+                                <a href="https://www.linkedin.com/company/global-web-production/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-white/40 hover:text-white hover:bg-blue-700 hover:scale-110 transition-all duration-500">
+                                    <Linkedin className="w-6 h-6" />
                                 </a>
                             </div>
-                        </NexusModule>
-
-                    </div>
+                        </div>
+                        <p className="text-white/20 text-[10px] font-black uppercase tracking-[0.2em] mt-8">Establishing persistent uplink...</p>
+                    </NexusCard>
                 </div>
             </div>
         </section>

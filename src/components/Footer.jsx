@@ -164,7 +164,6 @@ const Footer = () => {
                         <div className="flex flex-col space-y-1 text-[#57C2FF]">
                             <div className="flex items-center gap-6">
                                 <h1 className="text-white text-lg font-semibold">Partners</h1>
-                                <ScrollToTopArrow />
                             </div>
                             <a href="https://www.artech.com/" target="_blank" rel="noopener noreferrer" className="text-sm transition-colors duration-300 text-white hover:text-[#57C2FF]">Artech</a>
                             <a href="https://ladder7.in" target="_blank" rel="noopener noreferrer" className="text-sm transition-colors duration-300 text-white hover:text-[#57C2FF]">Ladder7</a>
@@ -181,7 +180,7 @@ const Footer = () => {
                 <div className="flex flex-col md:flex-row justify-between items-start space-y-8 md:space-y-0">
                     <div className="flex flex-col items-start space-y-4">
                         <div className="flex space-x-4">
-                            <a href="https://www.linkedin.com/company/global-web-production/" target="_blank" rel="noopener noreferrer" className="bg-white p-2 rounded shadow-md hover:scale-110 transition-transform">
+                            <a href="https://www.linkedin.com/company/global-web-production/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="bg-white p-2 rounded shadow-md hover:scale-110 transition-transform">
                                 <FaLinkedinIn className="text-[#061539] text-xl" />
                             </a>
                             <a href="mailto:lekshmi@globalwebproduction.com" className="bg-white p-2 rounded shadow-md hover:scale-110 transition-transform">

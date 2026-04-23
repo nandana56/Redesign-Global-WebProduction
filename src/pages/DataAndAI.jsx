@@ -1,0 +1,62 @@
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import DataAndAIHero from "../components/DataAndAIHero";
+import DataAndAICapabilities from "../components/DataAndAICapabilities";
+
+const differentiators = [
+    "Proven experience in enterprise AI and data transformation",
+    "Cross-functional teams with deep AI, data, and engineering expertise",
+    "Cloud-native and hybrid deployment capabilities",
+    "End-to-end delivery: from strategy to production at scale"
+];
+
+const DataAndAI = () => {
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+    }, []);
+
+    return (
+        <main className="w-full min-h-screen bg-[#06153d] font-poppins selection:bg-blue-500/30">
+            <DataAndAIHero />
+            <DataAndAICapabilities />
+
+            {/* What Makes Us Different + CTA */}
+            <section className="w-full font-poppins">
+                <div className="grid grid-cols-1 lg:grid-cols-2">
+                    {/* LEFT PANEL */}
+                    <div className="bg-[#06265e] px-10 md:px-16 py-16 md:py-24 flex flex-col justify-center">
+                        <div className="w-12 h-1 bg-blue-400 mb-8" />
+                        <h2 className="text-3xl sm:text-4xl font-bold leading-tight text-white mb-12">
+                            What Makes Us Different
+                        </h2>
+                        <div className="border-t border-white/10">
+                            {differentiators.map((item, i) => (
+                                <div key={i} className="group flex items-start gap-5 py-6 border-b border-white/10 hover:bg-white/5 transition-colors duration-300 px-4 -mx-4 rounded-lg cursor-default">
+                                    <div className="w-2 h-2 mt-2.5 bg-blue-400 rounded-sm shrink-0 group-hover:scale-125 transition-transform duration-300" />
+                                    <p className="text-sm sm:text-lg text-blue-100 leading-relaxed group-hover:text-white transition-colors duration-300">
+                                        {item}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* RIGHT PANEL: CTA */}
+                    <div className="bg-[#06153d] px-10 md:px-16 py-16 md:py-24 flex flex-col justify-center items-start lg:pl-28 border-t-4 border-blue-600 lg:border-t-0 lg:border-l-4">
+                        <div className="w-12 h-1 bg-blue-400 mb-10" />
+                        <p className="text-2xl sm:text-4xl text-white font-bold leading-tight mb-10">
+                            Let's build what's next
+                        </p>
+                        <Link to="/contact">
+                            <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300 font-semibold shadow-md hover:shadow-lg active:scale-110">
+                                Schedule a Consultation
+                            </button>
+                        </Link>
+                    </div>
+                </div>
+            </section>
+        </main>
+    );
+};
+
+export default DataAndAI;

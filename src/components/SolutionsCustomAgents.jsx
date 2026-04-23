@@ -62,7 +62,7 @@ export default function SolutionsCustomAgents() {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-0">
           
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-white tracking-tighter uppercase whitespace-normal md:whitespace-nowrap drop-shadow-xl inline-block">
-            Agentic <span className="text-blue-500 text-3xl md:text-4xl lg:text-6xl border-b-4 border-blue-500/50 pb-2 drop-shadow-md">AI-Custom</span>
+            Agentic <span className="text-3xl md:text-4xl lg:text-6xl border-b-4 border-blue-500/50 pb-2 drop-shadow-md">AI-Custom</span>
           </h2>
           
           <div className="flex-1 hidden md:flex items-center px-12">

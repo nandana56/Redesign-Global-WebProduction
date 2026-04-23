@@ -11,7 +11,8 @@ const servicesData = [
     {
         icon: "M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z", // Data icon
         title: "Data, AI & Automation",
-        content: "At Global Web Production, we harness the power of data, artificial intelligence, and automation to build intelligent systems that drive smarter decisions and improved business outcomes. Our expert team leverages advanced analytics, machine learning models, and automation tools to streamline operations, uncover insights, and enable predictive capabilities. From data strategy and AI implementation to workflow automation and intelligent dashboards, we deliver end-to-end solutions tailored to your unique needs. Our focus on precision, scalability, and business impact ensures your systems not only perform better but also evolve with your goals. With GWP Insights, we provide actionable intelligence and continuous optimisation, empowering you to make informed decisions, reduce manual effort, and stay ahead in a rapidly changing digital landscape."
+        content: "At Global Web Production, we harness the power of data, artificial intelligence, and automation to build intelligent systems that drive smarter decisions and improved business outcomes. Our expert team leverages advanced analytics, machine learning models, and automation tools to streamline operations, uncover insights, and enable predictive capabilities. From data strategy and AI implementation to workflow automation and intelligent dashboards, we deliver end-to-end solutions tailored to your unique needs. Our focus on precision, scalability, and business impact ensures your systems not only perform better but also evolve with your goals. With GWP Insights, we provide actionable intelligence and continuous optimisation, empowering you to make informed decisions, reduce manual effort, and stay ahead in a rapidly changing digital landscape.",
+        link: "/services/dataandai"
     },
     {
         icon: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z", // Chart icon
@@ -52,8 +53,8 @@ const ServicesVariety = () => {
 
     useEffect(() => {
         const update = () => {
-            if (window.innerWidth < 640) setRadius(140);
-            else if (window.innerWidth < 1024) setRadius(180);
+            if (window.innerWidth < 640) setRadius(120);
+            else if (window.innerWidth < 1024) setRadius(160);
             else setRadius(220);
             if (orbitContainerRef.current) {
                 setOrbitSize({
@@ -321,7 +322,7 @@ const ServicesVariety = () => {
                     </div>
 
                     {/* RIGHT SIDE: Dynamic Content Panel - Enhanced Glassmorphism */}
-                    <div className="w-full lg:w-1/2 flex flex-col justify-center min-h-[400px] bg-white/10 backdrop-blur-xl border border-white/20 p-8 sm:p-12 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative overflow-hidden transition-all duration-500">
+                    <div className="w-full lg:w-1/2 flex flex-col justify-center min-h-[400px] bg-white/10 backdrop-blur-xl border border-white/20 p-6 sm:p-12 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.3)] relative overflow-hidden transition-all duration-500">
                         {/* Decorative glow inside glass */}
                         <div className="absolute -top-24 -right-24 w-48 h-48 bg-white/10 rounded-full blur-3xl pointer-events-none" />
                         <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-white/5 rounded-full blur-3xl pointer-events-none" />
@@ -362,7 +363,7 @@ const ServicesVariety = () => {
                                     {servicesData[activeIndex].content}
                                 </p>
 
-                                <Link to="/services">
+                                <Link to={servicesData[activeIndex].link || "/services"}>
                                     {/* Using a modernized sweeping button equivalent */}
                                     <button className="group relative overflow-hidden inline-flex items-center justify-center bg-white text-[#050B1C] px-8 py-3 rounded-full font-bold text-sm font-poppins border border-white transition-all duration-300">
                                         <span className={`absolute inset-0 bg-gray-200 w-full h-full -translate-x-full group-hover:translate-x-0 transition-transform duration-[400ms] ease-out z-0`}>

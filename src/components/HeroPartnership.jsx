@@ -97,7 +97,7 @@ const EarthCanvas = () => {
 
 
     return (
-        <div className="absolute top-[-4%] right-[2%] sm:right-[5%] md:right-[8%] w-[350px] sm:w-[450px] md:w-[550px] h-[350px] sm:h-[450px] md:h-[550px] z-30 pointer-events-none">
+        <div className="absolute top-[-2%] sm:top-[-4%] right-[0%] sm:right-[5%] md:right-[8%] w-[280px] sm:w-[450px] md:w-[550px] h-[280px] sm:h-[450px] md:h-[550px] z-30 pointer-events-none">
             <Suspense fallback={null}>
                 
 <Canvas

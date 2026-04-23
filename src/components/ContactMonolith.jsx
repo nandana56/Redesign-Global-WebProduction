@@ -1,15 +1,13 @@
 import React, { useRef, useState, useEffect, useMemo } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { 
-    PerspectiveCamera, MeshDistortMaterial, Html, 
-    Text, Float, Center, PresentationControls, 
-    Environment, ContactShadows 
+    PerspectiveCamera, Html, 
+    Environment, ContactShadows, PresentationControls, Float
 } from "@react-three/drei";
 import * as THREE from "three";
 import { motion, AnimatePresence } from "framer-motion";
-import gsap from "gsap";
 import { 
-    Send, MapPin, Globe, ArrowUpRight, 
+    Send, Globe, ArrowUpRight, 
     User, Mail, Briefcase, MessageSquare, 
     CheckCircle2, Info, Facebook, Linkedin 
 } from "lucide-react";
@@ -20,16 +18,14 @@ const Monolith = ({ activeTab }) => {
     
     useFrame((state) => {
         const time = state.clock.getElapsedTime();
-        // Gentle rotation
         meshRef.current.rotation.y = Math.sin(time * 0.2) * 0.15;
         meshRef.current.position.y = Math.sin(time * 0.5) * 0.1;
     });
 
     return (
         <group>
-            {/* The Main Obsidian Monolith */}
             <mesh ref={meshRef}>
-                <boxGeometry args={[3.5, 5, 0.4]} />
+                <boxGeometry args={[3.8, 5.5, 0.4]} />
                 <meshStandardMaterial 
                     color="#020617" 
                     roughness={0.05} 
@@ -37,92 +33,96 @@ const Monolith = ({ activeTab }) => {
                     envMapIntensity={2}
                 />
                 
-                {/* Holographic "Screen" on the front face */}
                 <mesh position={[0, 0, 0.201]}>
-                    <planeGeometry args={[3.2, 4.6]} />
+                    <planeGeometry args={[3.5, 5.1]} />
                     <meshStandardMaterial 
                         color="#0a192f" 
                         emissive="#4bb5f8" 
                         emissiveIntensity={0.2}
                         transparent
-                        opacity={0.9}
+                        opacity={0.95}
                     />
                     
-                    {/* Content embedded on the Monolith face */}
                     <Html 
                         transform 
                         distanceFactor={2.5} 
                         position={[0, 0, 0.01]} 
                         className="pointer-events-none select-none"
                     >
-                        <div className="w-[800px] h-[1150px] p-12 text-white flex flex-col font-outfit">
+                        <div className="w-[850px] h-[1250px] p-16 text-white flex flex-col font-public-sans">
                             <AnimatePresence mode="wait">
                                 {activeTab === 'featured' ? (
                                     <motion.div 
                                         key="featured"
-                                        initial={{ opacity: 0, y: 20 }}
+                                        initial={{ opacity: 0, y: 30 }}
                                         animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: -20 }}
-                                        className="space-y-10"
+                                        exit={{ opacity: 0, scale: 0.9 }}
+                                        className="space-y-12"
                                     >
-                                        <div className="flex items-center gap-4 text-blue-400 font-bold tracking-[0.3em] uppercase text-2xl">
-                                            <Info className="w-8 h-8" />
-                                            Transmission Insight
+                                        <div className="flex items-center gap-6 text-blue-400 font-black tracking-[0.5em] uppercase text-2xl">
+                                            <Info className="w-10 h-10" />
+                                            Active_Transmission
                                         </div>
-                                        <div className="w-full aspect-video rounded-3xl overflow-hidden border-2 border-white/10">
+                                        <div className="w-full aspect-[16/10] rounded-[3rem] overflow-hidden border-4 border-white/5 shadow-2xl">
                                             <img 
-                                                src="/images/Industry-Articles-Card-3.webp" 
+                                                src="/Assets/aiblog-.webp" 
                                                 alt="Featured" 
                                                 className="w-full h-full object-cover" 
                                             />
                                         </div>
-                                        <h3 className="text-6xl font-bold leading-tight">
-                                            AI-Powered Web Content Optimizer
-                                        </h3>
-                                        <p className="text-3xl text-white/40 leading-relaxed font-light">
-                                            Creating optimized content that resonates with audiences while meeting technical requirements has become increasingly complex.
-                                        </p>
-                                        <div className="pt-10 flex items-center justify-between border-t border-white/10">
-                                            <span className="text-2xl text-blue-400/60 font-medium">Protocol 04 // GWP</span>
-                                            <div className="flex items-center gap-4 text-white text-3xl font-bold">
-                                                READ <ArrowUpRight className="w-10 h-10" />
+                                        <div className="space-y-6">
+                                            <h3 className="text-7xl font-black leading-tight tracking-tighter uppercase italic">
+                                                AI-Powered <br /> <span className="text-blue-500 not-italic">Optimizer.</span>
+                                            </h3>
+                                            <p className="text-3xl text-white/40 leading-relaxed font-light">
+                                                Enhancing UX through intelligent content orchestration and real-time user mapping. Creating optimized resonance.
+                                            </p>
+                                        </div>
+                                        <div className="pt-12 flex items-center justify-between border-t-2 border-white/5">
+                                            <span className="text-2xl text-blue-400 font-black tracking-widest">GWP_STREAM // 01</span>
+                                            <div className="flex items-center gap-4 text-white text-3xl font-black">
+                                                UPLINK <ArrowUpRight className="w-10 h-10" />
                                             </div>
                                         </div>
                                     </motion.div>
                                 ) : (
                                     <motion.div 
                                         key="locations"
-                                        initial={{ opacity: 0, y: 20 }}
+                                        initial={{ opacity: 0, y: 30 }}
                                         animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: -20 }}
-                                        className="space-y-16"
+                                        exit={{ opacity: 0, scale: 0.9 }}
+                                        className="space-y-20"
                                     >
-                                        <div className="flex items-center gap-4 text-blue-400 font-bold tracking-[0.3em] uppercase text-2xl">
-                                            <Globe className="w-8 h-8" />
-                                            Global Positioning
+                                        <div className="flex items-center gap-6 text-blue-400 font-black tracking-[0.5em] uppercase text-2xl">
+                                            <Globe className="w-10 h-10" />
+                                            Global_Nodes
                                         </div>
                                         
-                                        <div className="space-y-16 py-10">
-                                            <div className="flex gap-10 items-center bg-white/5 p-10 rounded-[3rem] border border-white/10">
-                                                <div className="w-32 h-20 bg-blue-600 rounded-2xl flex items-center justify-center text-5xl font-black">USA</div>
+                                        <div className="space-y-12">
+                                            <div className="flex gap-12 items-center bg-white/5 p-12 rounded-[3.5rem] border-2 border-white/5 group">
+                                                <div className="w-40 h-24 rounded-2xl overflow-hidden shadow-xl">
+                                                    <img src="/Assets/usa-flag.webp" alt="USA" className="w-full h-full object-cover" />
+                                                </div>
                                                 <div>
-                                                    <div className="text-5xl font-bold mb-2">Temecula</div>
-                                                    <div className="text-3xl text-white/40">California, US District</div>
+                                                    <div className="text-5xl font-black mb-2 uppercase tracking-tighter">United States</div>
+                                                    <div className="text-3xl text-white/30 font-light">Temecula, California Node</div>
                                                 </div>
                                             </div>
 
-                                            <div className="flex gap-10 items-center bg-white/5 p-10 rounded-[3rem] border border-white/10">
-                                                <div className="w-32 h-20 bg-emerald-600 rounded-2xl flex items-center justify-center text-5xl font-black">IND</div>
+                                            <div className="flex gap-12 items-center bg-white/5 p-12 rounded-[3.5rem] border-2 border-white/5 group">
+                                                <div className="w-40 h-24 rounded-2xl overflow-hidden shadow-xl">
+                                                    <img src="/Assets/indian-flag.webp" alt="India" className="w-full h-full object-cover" />
+                                                </div>
                                                 <div>
-                                                    <div className="text-5xl font-bold mb-2">Trivandrum</div>
-                                                    <div className="text-3xl text-white/40">Kerala, Southern India</div>
+                                                    <div className="text-5xl font-black mb-2 uppercase tracking-tighter">India</div>
+                                                    <div className="text-3xl text-white/30 font-light">Trivandrum, Kerala Node</div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div className="pt-10 border-t border-white/10">
-                                            <div className="text-2xl text-white/20 uppercase tracking-[0.5em] font-black">
-                                                &copy; GWP DIGITAL PRODUCTIONS
+                                        <div className="pt-12 border-t-2 border-white/5">
+                                            <div className="text-3xl text-white/10 uppercase tracking-[0.6em] font-black italic">
+                                                Persistence Established.
                                             </div>
                                         </div>
                                     </motion.div>
@@ -139,7 +139,7 @@ const Monolith = ({ activeTab }) => {
 // --- Scrambled Text Hook ---
 const useScrambledText = (text, delay = 0) => {
     const [displayedText, setDisplayedText] = useState("");
-    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
 
     useEffect(() => {
         let iterations = 0;
@@ -154,7 +154,7 @@ const useScrambledText = (text, delay = 0) => {
             );
 
             if (iterations >= text.length) clearInterval(interval);
-            iterations += 1 / 3;
+            iterations += 1 / 2;
         }, 30);
         
         return () => clearInterval(interval);
@@ -163,10 +163,44 @@ const useScrambledText = (text, delay = 0) => {
     return displayedText;
 };
 
+const BUSINESS_AREAS = [
+    {
+        label: "── Agentic AI – Copilot ──",
+        options: [
+            { value: "AI-Powered-Sales", text: "AI-Powered Agentic Sales Assistant" },
+            { value: "Role-Specific", text: "Ask Me – Role Specific" },
+            { value: "Knowledge-Agent", text: "Ask Me – Knowledge Agent" },
+            { value: "Request-Intake", text: "Request Intake Agent" },
+            { value: "WebOps-Agent", text: "Content Update Agent for WebOps" },
+            { value: "Content-Checker", text: "Aria Label / Alt Text Generator" }
+        ]
+    },
+    {
+        label: "── Agentic AI – Custom ──",
+        options: [
+            { value: "Supervisor", text: "Supervisor Agent" },
+            { value: "Document-Extractor", text: "AI Document Extractor" },
+            { value: "HR-Assistant", text: "HR Assistant" },
+            { value: "IQ-Assessment", text: "AI-Powered Aptitude & IQ" }
+        ]
+    },
+    {
+        label: "── Products & Services ──",
+        options: [
+            { value: "Site360ai", text: "Site360.ai" },
+            { value: "Quality-Checker", text: "Quality Checker Extension" },
+            { value: "Web-Dev", text: "Web Development" },
+            { value: "Managed-Services", text: "Managed Services" },
+            { value: "SEO-Performance", text: "SEO & Site Performance" }
+        ]
+    }
+];
+
 const ContactMonolith = () => {
     const [activeTab, setActiveTab] = useState('featured');
     const [isSubmitted, setIsSubmitted] = useState(false);
-    const [hoveredField, setHoveredField] = useState(null);
+    
+    const title = useScrambledText("TRANSMIT VISION.", 0);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -174,32 +208,31 @@ const ContactMonolith = () => {
         setTimeout(() => setIsSubmitted(false), 5000);
     };
 
-    const inputClasses = "w-full bg-transparent border-white/20 border-b py-4 text-white placeholder:text-white/10 focus:outline-none focus:border-blue-500 transition-all duration-500 font-light text-xl";
+    const inputClasses = "w-full bg-transparent border-white/10 border-b py-6 text-white placeholder:text-white/20 focus:outline-none focus:border-blue-500 transition-all duration-700 font-light text-2xl uppercase tracking-widest";
 
     return (
-        <section className="relative min-h-[120vh] bg-[#020617] overflow-hidden">
-            {/* Ambient Background Elements */}
+        <section className="relative min-h-[120vh] bg-[#020617] overflow-hidden py-32">
             <div className="absolute inset-0 z-0">
-                <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-600/10 rounded-full blur-[200px]" />
-                <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-cyan-600/5 rounded-full blur-[180px]" />
+                <div className="absolute top-0 right-0 w-[1000px] h-[1000px] bg-blue-600/5 rounded-full blur-[250px]" />
+                <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-cyan-600/5 rounded-full blur-[200px]" />
             </div>
 
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-0 min-h-screen">
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-0 max-w-[1920px] mx-auto min-h-screen">
                 
                 {/* LEFT: THE 3D SPATIAL WINDOW */}
-                <div className="relative h-[600px] lg:h-screen lg:sticky lg:top-0 order-2 lg:order-1">
-                    <Canvas shadows dpr={[1, 2]}>
-                        <PerspectiveCamera makeDefault position={[0, 0, 10]} fov={35} />
+                <div className="relative h-[700px] lg:h-screen lg:sticky lg:top-0 order-2 lg:order-1 flex items-center justify-center">
+                    <Canvas shadows dpr={[1, 2]} className="w-full h-full">
+                        <PerspectiveCamera makeDefault position={[0, 0, 12]} fov={35} />
                         <Environment preset="city" />
-                        <ambientLight intensity={0.5} />
-                        <pointLight position={[10, 10, 10]} intensity={1.5} color="#4bb5f8" />
+                        <ambientLight intensity={0.4} />
+                        <pointLight position={[10, 10, 10]} intensity={2} color="#4bb5f8" />
                         
                         <PresentationControls
                             global
                             config={{ mass: 2, tension: 500 }}
                             snap={{ mass: 4, tension: 1500 }}
-                            rotation={[0, -0.3, 0]}
-                            polar={[-Math.PI / 6, Math.PI / 6]}
+                            rotation={[0, -0.2, 0]}
+                            polar={[-Math.PI / 8, Math.PI / 8]}
                             azimuth={[-Math.PI / 4, Math.PI / 4]}
                         >
                             <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
@@ -208,41 +241,41 @@ const ContactMonolith = () => {
                         </PresentationControls>
                         
                         <ContactShadows 
-                            opacity={0.4} scale={10} blur={2.5} far={4} resolution={256} color="#000000" 
-                            position={[0, -3.5, 0]}
+                            opacity={0.4} scale={15} blur={3} far={4} resolution={512} color="#000000" 
+                            position={[0, -4, 0]}
                         />
                     </Canvas>
                     
                     {/* Floating Controls for the Monolith */}
-                    <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-4 bg-white/5 backdrop-blur-3xl p-2 rounded-2xl border border-white/10">
+                    <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex gap-6 bg-white/5 backdrop-blur-3xl p-3 rounded-3xl border border-white/10 shadow-2xl">
                         <button 
                             onClick={() => setActiveTab('featured')}
-                            className={`px-6 py-3 rounded-xl font-bold transition-all text-sm uppercase tracking-widest ${activeTab === 'featured' ? 'bg-blue-600 text-white shadow-xl shadow-blue-600/20' : 'text-white/40 hover:text-white'}`}
+                            className={`px-10 py-4 rounded-2xl font-black transition-all text-xs uppercase tracking-[0.4em] ${activeTab === 'featured' ? 'bg-blue-600 text-white shadow-[0_0_40px_rgba(37,99,235,0.4)]' : 'text-white/20 hover:text-white'}`}
                         >
-                            Article
+                            Insight
                         </button>
                         <button 
                             onClick={() => setActiveTab('locations')}
-                            className={`px-6 py-3 rounded-xl font-bold transition-all text-sm uppercase tracking-widest ${activeTab === 'locations' ? 'bg-blue-600 text-white shadow-xl shadow-blue-600/20' : 'text-white/40 hover:text-white'}`}
+                            className={`px-10 py-4 rounded-2xl font-black transition-all text-xs uppercase tracking-[0.4em] ${activeTab === 'locations' ? 'bg-blue-600 text-white shadow-[0_0_40px_rgba(37,99,235,0.4)]' : 'text-white/20 hover:text-white'}`}
                         >
-                            Positions
+                            Nodes
                         </button>
                     </div>
                 </div>
 
                 {/* RIGHT: THE MINIMALIST FORM PANEL */}
-                <div className="relative px-8 sm:px-16 lg:px-24 py-24 lg:py-48 flex flex-col justify-center order-1 lg:order-2">
+                <div className="relative px-8 sm:px-20 lg:px-32 py-24 lg:py-48 flex flex-col justify-center order-1 lg:order-2 border-l border-white/5">
                     <motion.div
-                        initial={{ opacity: 0, x: 50 }}
+                        initial={{ opacity: 0, x: 100 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 1, ease: "easeOut" }}
+                        transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
                     >
-                        <header className="mb-20">
-                            <h2 className="text-6xl sm:text-7xl font-bold text-white mb-6 tracking-tighter">
-                                SEND <span className="text-blue-500 italic">MESSAGE.</span>
+                        <header className="mb-24">
+                            <h2 className="text-7xl sm:text-9xl font-black text-white mb-8 tracking-tighter leading-none">
+                                {title}
                             </h2>
-                            <p className="text-white/40 text-xl font-light leading-relaxed max-w-lg">
-                                Initiating direct connection protocol. Complete the fields below to transmit your vision to our core team.
+                            <p className="text-white/30 text-2xl font-light leading-relaxed max-w-xl">
+                                Direct uplink established. Transmit your project requirements through our secure neural portal.
                             </p>
                         </header>
 
@@ -251,86 +284,77 @@ const ContactMonolith = () => {
                                 <motion.form 
                                     key="form"
                                     initial={{ opacity: 1 }}
-                                    exit={{ opacity: 0, scale: 0.95 }}
+                                    exit={{ opacity: 0, scale: 0.98 }}
                                     onSubmit={handleSubmit}
-                                    className="space-y-16"
+                                    className="space-y-20"
                                 >
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-12">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
                                         <div className="relative group">
-                                            <input 
-                                                type="text" 
-                                                placeholder="FIRST NAME" 
-                                                required 
-                                                className={inputClasses}
-                                                onFocus={() => setHoveredField('name')}
-                                                onBlur={() => setHoveredField(null)}
-                                            />
-                                            <User className={`absolute right-0 top-6 transition-all ${hoveredField === 'name' ? 'text-blue-500 scale-110' : 'text-white/10'}`} />
+                                            <input type="text" placeholder="FIRST IDENTITY" required className={inputClasses} />
+                                            <User className="absolute right-0 top-8 text-white/5 group-hover:text-blue-500 transition-colors" />
                                         </div>
-                                        <div className="relative">
-                                            <input type="text" placeholder="LAST NAME" required className={inputClasses} />
+                                        <div className="relative group">
+                                            <input type="text" placeholder="LAST IDENTITY" required className={inputClasses} />
                                         </div>
                                     </div>
 
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-12">
-                                        <div className="relative">
-                                            <input type="text" placeholder="COMPANY" className={inputClasses} />
-                                            <Briefcase className="absolute right-0 top-6 text-white/10" />
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+                                        <div className="relative group">
+                                            <input type="text" placeholder="ENTITY NAME" className={inputClasses} />
+                                            <Briefcase className="absolute right-0 top-8 text-white/5 group-hover:text-blue-500 transition-colors" />
                                         </div>
-                                        <div className="relative">
-                                            <input type="email" placeholder="EMAIL ADDRESS" required className={inputClasses} />
-                                            <Mail className="absolute right-0 top-6 text-white/10" />
+                                        <div className="relative group">
+                                            <input type="email" placeholder="VECTOR ADDRESS" required className={inputClasses} />
+                                            <Mail className="absolute right-0 top-8 text-white/5 group-hover:text-blue-500 transition-colors" />
                                         </div>
                                     </div>
 
-                                    <div className="relative">
-                                        <label className="text-[10px] uppercase tracking-[0.4em] text-blue-500 font-black mb-2 block">Protocol Selection / Business Area</label>
-                                        <select required className={`${inputClasses} appearance-none cursor-pointer outline-none`}>
-                                            <option value="" disabled selected className="bg-[#020617] text-white/20">SELECT AREA</option>
-                                            <optgroup label="── CO-PILOT ──" className="bg-[#020617] text-blue-400">
-                                                <option value="Agentic-Sales" className="bg-[#020617]">AGENTIC SALES ASSISTANT</option>
-                                                <option value="Role-Specific" className="bg-[#020617]">ROLE SPECIFIC ORCHESTRATION</option>
-                                                <option value="Knowledge-Agent" className="bg-[#020617]">KNOWLEDGE AGENT</option>
-                                            </optgroup>
-                                            <optgroup label="── PRODUCTS & SERVICES ──" className="bg-[#020617] text-blue-400">
-                                                <option value="Site360" className="bg-[#020617]">SITE360.AI</option>
-                                                <option value="Web-Dev" className="bg-[#020617]">WEB DEVELOPMENT</option>
-                                                <option value="AI-Enablement" className="bg-[#020617]">AI ENABLEMENT</option>
-                                            </optgroup>
+                                    <div className="relative group">
+                                        <label className="text-[10px] uppercase tracking-[0.6em] text-blue-500 font-black mb-4 block">Protocol_Selection</label>
+                                        <select required className={`${inputClasses} appearance-none cursor-pointer outline-none border-blue-500/20`}>
+                                            <option value="" disabled selected className="bg-[#020617] text-white/10 uppercase">Select Target Area</option>
+                                            {BUSINESS_AREAS.map((group, idx) => (
+                                                <optgroup key={idx} label={group.label} className="bg-[#020617] text-blue-400 font-black py-4">
+                                                    {group.options.map((opt, oIdx) => (
+                                                        <option key={oIdx} value={opt.value} className="bg-[#020617] text-white py-2">
+                                                            {opt.text}
+                                                        </option>
+                                                    ))}
+                                                </optgroup>
+                                            ))}
                                         </select>
                                     </div>
 
-                                    <div className="relative">
-                                        <textarea placeholder="HOW CAN WE HELP YOU?" rows="2" required className={`${inputClasses} resize-none`}></textarea>
-                                        <MessageSquare className="absolute right-0 top-6 text-white/10" />
+                                    <div className="relative group">
+                                        <textarea placeholder="TRANSMISSION DATA" rows="2" required className={`${inputClasses} resize-none`}></textarea>
+                                        <MessageSquare className="absolute right-0 top-8 text-white/5 group-hover:text-blue-500 transition-colors" />
                                     </div>
 
                                     <div>
                                         <motion.button 
-                                            whileHover={{ scale: 1.05 }}
-                                            whileTap={{ scale: 0.95 }}
+                                            whileHover={{ scale: 1.02 }}
+                                            whileTap={{ scale: 0.98 }}
                                             type="submit" 
-                                            className="group flex items-center gap-12"
+                                            className="group flex items-center gap-16"
                                         >
-                                            <span className="text-4xl font-black uppercase tracking-tighter group-hover:text-blue-500 transition-colors">
-                                                TRANSMIT
+                                            <span className="text-5xl font-black uppercase tracking-tighter group-hover:text-blue-500 transition-colors italic">
+                                                INITIALIZE
                                             </span>
-                                            <div className="relative w-20 h-20 rounded-full border border-white/20 flex items-center justify-center group-hover:border-blue-500 transition-colors">
-                                                <Send className="w-8 h-8 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                                                <div className="absolute inset-0 rounded-full bg-blue-500 opacity-0 group-hover:opacity-10 transition-opacity" />
+                                            <div className="relative w-28 h-28 rounded-full border-2 border-white/10 flex items-center justify-center group-hover:border-blue-500 transition-colors shadow-2xl">
+                                                <Send className="w-10 h-10 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                                                <div className="absolute inset-0 rounded-full bg-blue-500 opacity-0 group-hover:opacity-10 transition-opacity blur-xl" />
                                             </div>
                                         </motion.button>
                                     </div>
                                     
-                                    {/* Social Connect (Minimalist) */}
-                                    <div className="pt-24 flex gap-12 items-center">
-                                        <span className="text-[10px] uppercase tracking-[0.5em] text-white/20 font-black">Social Sync</span>
-                                        <div className="flex gap-8">
-                                            <a href="https://facebook.com" target="_blank" rel="noreferrer" className="text-white hover:text-blue-500 transition-colors">
-                                                <Facebook className="w-6 h-6" />
+                                    <div className="pt-32 flex gap-12 items-center border-t border-white/5">
+                                        <span className="text-[10px] uppercase tracking-[0.8em] text-white/10 font-black">Social Uplink</span>
+                                        <div className="flex gap-10">
+                                            <a href="https://facebook.com" target="_blank" rel="noreferrer" className="text-white/20 hover:text-white hover:scale-125 transition-all">
+                                                <Facebook className="w-8 h-8" />
                                             </a>
-                                            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-white hover:text-blue-500 transition-colors">
-                                                <Linkedin className="w-6 h-6" />
+                                            <a href="https://www.linkedin.com/company/global-web-production/posts/?feedView=all" target="_blank" rel="noreferrer" className="text-white/20 hover:text-white hover:scale-125 transition-all">
+                                                <Linkedin className="w-8 h-8" />
                                             </a>
                                         </div>
                                     </div>
@@ -340,21 +364,21 @@ const ContactMonolith = () => {
                                     key="success"
                                     initial={{ opacity: 0, scale: 0.9 }}
                                     animate={{ opacity: 1, scale: 1 }}
-                                    className="py-12 space-y-10"
+                                    className="py-12 space-y-16"
                                 >
-                                    <h3 className="text-8xl font-black text-white tracking-tighter">SENT.</h3>
-                                    <div className="flex items-center gap-4 text-emerald-500">
-                                        <CheckCircle2 className="w-8 h-8" />
-                                        <span className="text-2xl font-bold uppercase tracking-widest">Protocol Confirmed</span>
+                                    <h3 className="text-[10rem] font-black text-white tracking-tighter leading-none italic uppercase">Sent.</h3>
+                                    <div className="flex items-center gap-6 text-blue-500">
+                                        <CheckCircle2 className="w-12 h-12" />
+                                        <span className="text-3xl font-black uppercase tracking-[0.4em]">Propagating...</span>
                                     </div>
-                                    <p className="text-white/40 text-xl font-light leading-relaxed max-w-sm">
-                                        Your transmission has been received and added to our priority queue. Expect a response shortly.
+                                    <p className="text-white/30 text-3xl font-light leading-relaxed max-w-lg">
+                                        Your vision is currently being decoded by the GWP central intelligence. Expect a response on this vector shortly.
                                     </p>
                                     <button 
                                         onClick={() => setIsSubmitted(false)}
-                                        className="text-white/20 hover:text-white uppercase tracking-widest text-sm font-black border-b border-white/10 pb-2 transition-all"
+                                        className="text-white/10 hover:text-blue-500 uppercase tracking-[0.5em] text-sm font-black border-b border-white/5 pb-4 transition-all"
                                     >
-                                        Transmit Again
+                                        New Transmission
                                     </button>
                                 </motion.div>
                             )}

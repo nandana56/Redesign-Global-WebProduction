@@ -63,7 +63,6 @@ const HexCard = ({ article, index, setSelectedId, isFeatured }) => {
       */}
       
       <motion.div 
-        layoutId={`card-container-${article.id}`}
         onClick={() => setSelectedId(article.id)}
         className="absolute inset-0 flex flex-col items-center justify-center cursor-pointer group"
         whileHover={{ scale: 1.05 }}
@@ -83,7 +82,7 @@ const HexCard = ({ article, index, setSelectedId, isFeatured }) => {
 
         {/* Deep Dark Content Interior */}
         <div 
-          className="absolute inset-[3px] bg-[#061530] overflow-hidden"
+          className="absolute inset-[3px] bg-[#061530] overflow-hidden bg-white/10"
           style={{ clipPath: hexClip }}
         >
           {/* Subtle Cyberpunk Overlay Pattern */}
@@ -123,12 +122,11 @@ const ExpandedHUD = ({ article, index, onClose }) => {
       
       {/* The Morphing Dashboard Window */}
       <motion.div 
-        layoutId={`card-container-${article.id}`}
         className="relative w-full max-w-[1400px] h-[90vh] md:h-[85vh] bg-[#061530]/95 backdrop-blur-3xl overflow-hidden flex flex-col md:flex-row shadow-[0_0_150px_rgba(0,0,0,0.8)] border border-white/10"
         style={{
           // Forcibly clear any clipPath that was persisting from the Hexagon origin state!
           clipPath: "none", 
-          borderRadius: "2rem"
+          borderRadius: "1.5rem"
         }}
       >
         
@@ -225,7 +223,6 @@ const IndustryArticles = () => {
 
   return (
     <section className="relative w-full min-h-[110vh] bg-[#030712] flex flex-col items-center justify-center py-20 px-4 md:px-0 overflow-hidden">
-      
       {/* HUD Glitch Ambience Layer */}
       <div className="absolute inset-0 pointer-events-none z-0 flex items-center justify-center opacity-30">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1px] h-[150vh] bg-[#52b8f4]/30" />
@@ -246,32 +243,40 @@ const IndustryArticles = () => {
       {/* The Central Honeycomb Cluster Grid Engine */}
       <div className="relative z-20 w-full max-w-[1200px] mx-auto flex flex-col items-center">
          
-         {/* Row 1: 2 Hexagons */}
-         <div className="flex justify-center gap-2 sm:gap-4 lg:gap-6 z-10 relative">
-            <HexCard article={articles[0]} index={0} setSelectedId={setSelectedId} />
-            <HexCard article={articles[1]} index={1} setSelectedId={setSelectedId} />
-         </div>
-         
-         {/* Row 2: 3 Hexagons. Aggressive negative margin strictly pulls the points up perfectly into the Row 1 gaps */}
-         <div className="flex justify-center gap-2 sm:gap-4 lg:gap-6 -mt-[45px] sm:-mt-[55px] md:-mt-[65px] lg:-mt-[80px] z-20 relative">
-            <HexCard article={articles[2]} index={2} setSelectedId={setSelectedId} />
-            {/* Center Featured Payload */}
-            <HexCard article={articles[3]} index={3} setSelectedId={setSelectedId} isFeatured={true} />
-            <HexCard article={articles[4]} index={4} setSelectedId={setSelectedId} />
+         {/* Desktop/Tablet Honeycomb (Hidden on small mobile) */}
+         <div className="hidden sm:flex flex-col items-center">
+            {/* Row 1: 2 Hexagons */}
+            <div className="flex justify-center gap-2 sm:gap-4 lg:gap-6 z-10 relative">
+               <HexCard article={articles[0]} index={0} setSelectedId={setSelectedId} />
+               <HexCard article={articles[1]} index={1} setSelectedId={setSelectedId} />
+            </div>
+            
+            {/* Row 2: 3 Hexagons */}
+            <div className="flex justify-center gap-2 sm:gap-4 lg:gap-6 -mt-[45px] sm:-mt-[55px] md:-mt-[65px] lg:-mt-[80px] z-20 relative">
+               <HexCard article={articles[2]} index={2} setSelectedId={setSelectedId} />
+               <HexCard article={articles[3]} index={3} setSelectedId={setSelectedId} isFeatured={true} />
+               <HexCard article={articles[4]} index={4} setSelectedId={setSelectedId} />
+            </div>
          </div>
 
+         {/* Mobile Staggered List (Shown only on small mobile) */}
+         <div className="flex sm:hidden flex-col items-center gap-1">
+            {articles.map((article, idx) => (
+               <div key={article.id} className={idx % 2 !== 0 ? "-mt-10 mb-[-40px]" : ""}>
+                  <HexCard article={article} index={idx} setSelectedId={setSelectedId} isFeatured={idx === 3} />
+               </div>
+            ))}
+         </div>
       </div>
 
-      {/* Cross-Fade Framer Motion Root Portal processing layout morphs globally safely out of DOM tree constraints */}
-      <AnimatePresence>
-        {selectedId && (
-            <ExpandedHUD 
-               article={articles.find(a => a.id === selectedId)} 
-               index={articles.findIndex(a => a.id === selectedId)}
-               onClose={() => setSelectedId(null)} 
-            />
-        )}
-      </AnimatePresence>
+      {/* Expanded View (Simplified) */}
+      {selectedId && (
+          <ExpandedHUD 
+             article={articles.find(a => a.id === selectedId)} 
+             index={articles.findIndex(a => a.id === selectedId)}
+             onClose={() => setSelectedId(null)} 
+          />
+      )}
 
     </section>
   );

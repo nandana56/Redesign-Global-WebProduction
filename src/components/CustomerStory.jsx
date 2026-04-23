@@ -11,7 +11,7 @@ const CustomerStory = () => {
     // Scroll transformations
     const imageScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1.1, 1.2]);
     const textRevealY = useTransform(scrollYProgress, [0.3, 0.6], [50, 0]);
-    const opacityReveal = useTransform(scrollYProgress, [0.3, 0.6], [0, 1]);
+    const opacityReveal = useTransform(scrollYProgress, [0.3, 0.4], [0.1, 1]);
 
     // Architectural geometric paths for the portal reveal
     const initialPath = "polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%)";
@@ -39,7 +39,7 @@ const CustomerStory = () => {
                             duration: 1.2, 
                             ease: [0.22, 1, 0.36, 1],
                         }}
-                        className="relative w-full aspect-[4/3] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.6)]"
+                        className="relative w-full aspect-video sm:aspect-[4/3] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.6)]"
                     >
                         <motion.img
                             style={{ scale: imageScale }}

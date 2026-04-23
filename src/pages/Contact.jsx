@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import ContactLightningScene from "../components/ContactLightningScene";
-import ContactPrismPortal from "../components/ContactPrismPortal";
+import ContactRevitalized from "../components/ContactRevitalized";
 
 
 const Contact = () => {
@@ -16,16 +16,17 @@ const Contact = () => {
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[#57C2FF]/5 pointer-events-none" />
                 </div>
                 
-                <div className="relative z-10 w-full h-full max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="relative z-10 w-full h-full max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-12 items-center">
                     {/* Left Side: Text */}
-                    <div className="text-left py-12 lg:py-0">
+                    <div className="text-left py-12 lg:py-0 lg:-ml-8 xl:-ml-16">
                         <motion.h1 
                             initial={{ opacity: 0, x: -50 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8 }}
-                            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-6 leading-tight drop-shadow-2xl"
+                            className="text-lg sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-6 leading-tight drop-shadow-2xl"
                         >
-                            Let&apos;s Build the Future Together — <br className="hidden md:block" /> Contact Us Today
+                            <span className="block md:inline">Let&apos;s Build the Future Together —</span> <br className="hidden md:block" />
+                            Contact Us Today
                         </motion.h1>
                         <motion.p 
                             initial={{ opacity: 0, x: -50 }}
@@ -41,7 +42,7 @@ const Contact = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 1, delay: 0.4 }}
-                        className="w-full h-[350px] sm:h-[450px] lg:h-[550px] flex items-center justify-center relative rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(9,24,46,0.5)] border border-white/10 bg-[#09182e]/40 backdrop-blur-xl"
+                        className="w-full h-[300px] sm:h-[450px] lg:h-[550px] flex items-center justify-center relative rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(9,24,46,0.5)] border border-white/10 bg-[#09182e]/40 backdrop-blur-xl"
                     >
                         {/* The Background Image - Centered and static */}
                         <div 
@@ -55,14 +56,14 @@ const Contact = () => {
                         {/* Overlay to dim it slightly for better 3D visibility - Tinted blue for seamless look */}
                         <div className="absolute inset-0 z-1 bg-blue-500/5 pointer-events-none" />
 
-                        <div className="w-full h-[350px] sm:h-[450px] lg:h-[550px] flex items-center justify-center">
+                        <div className="w-full h-[300px] sm:h-[450px] lg:h-[550px] flex items-center justify-center">
                             <ContactLightningScene />
                         </div>
                     </motion.div>
                 </div>
             </div>
-            {/* Kinetic Prism Contact Section */}
-            <ContactPrismPortal />
+            
+            <ContactRevitalized />
         </div>
     );
 };

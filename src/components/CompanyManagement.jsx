@@ -106,7 +106,7 @@ const CompanyManagement = () => {
                         >
                             
                             {/* Inner Content Wrapper */}
-                            <div className={`w-full h-full flex items-center justify-center p-6 ${isActive ? 'flex-col lg:flex-row gap-6 lg:gap-12' : 'flex-col gap-1'} transition-all duration-500`}>
+                            <div className={`w-full h-full flex items-center justify-center p-4 sm:p-6 ${isActive ? 'flex-col lg:flex-row gap-6 lg:gap-12' : 'flex-col gap-1'} transition-all duration-500`}>
                                 
                                 {/* Image / Avatar Area */}
                                 <motion.div 
@@ -162,7 +162,7 @@ const CompanyManagement = () => {
                                                     {exec.name}
                                                 </h2>
                                                 {/* Text Content */}
-                                                <div className="text-gray-200 text-xs md:text-sm leading-relaxed font-light space-y-4 pr-2">
+                                                <div className="text-gray-200 text-[13px] sm:text-sm leading-relaxed font-light space-y-4 pr-2">
                                                     {exec.bio}
                                                 </div>
                                             </div>

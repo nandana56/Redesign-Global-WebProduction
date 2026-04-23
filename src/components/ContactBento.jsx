@@ -217,7 +217,9 @@ const ContactBento = () => {
                             <p className="text-white/50 mb-8 leading-relaxed">Join the conversation at our digital frontiers. We maintain active pipelines across professional and social ecosystems.</p>
                             <div className="flex flex-wrap gap-4">
                                 <a 
-                                    href="https://www.linkedin.com/company/global-web-production/" 
+                                    href="https://www.linkedin.com/company/global-web-production/posts/?feedView=all" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
                                     className="flex items-center gap-4 bg-[#0A66C2]/10 border border-[#0A66C2]/30 px-6 py-4 rounded-2xl hover:bg-[#0A66C2]/20 transition-all group/soc"
                                 >
                                     <Linkedin className="w-6 h-6 text-[#0A66C2]" />

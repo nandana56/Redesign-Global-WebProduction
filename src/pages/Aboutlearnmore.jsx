@@ -6,12 +6,12 @@ const Aboutlearnmore = () => {
         <div className="pb-20 bg-gradient-to-br from-white via-blue-50/50 to-white min-h-screen">
             <div className="max-w-7xl mx-auto px-6">
                 {/* Hero Section */}
-                <div className="text-center mb-20">
+                <div className="text-center mb-12 sm:mb-20">
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="text-4xl lg:text-7xl font-bold text-gray-900 leading-tight mb-6"
+                        className="text-3xl sm:text-4xl lg:text-7xl font-bold text-gray-900 leading-tight mb-6"
                     >
                         Our <span className="text-[#57c2ff]">Journey</span>
                     </motion.h1>
@@ -50,7 +50,7 @@ const Aboutlearnmore = () => {
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
-                        className="relative rounded-[2.5rem] overflow-hidden shadow-2xl h-[400px] lg:h-[600px]"
+                        className="relative rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden shadow-2xl h-[300px] sm:h-[400px] lg:h-[600px]"
                     >
                         <img
                             src="/images/vision.gif"
@@ -78,7 +78,7 @@ const Aboutlearnmore = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ delay: i * 0.2 }}
                                 viewport={{ once: true }}
-                                className="p-8 rounded-[2rem] border border-gray-100 bg-gray-50/50 hover:bg-white hover:shadow-xl transition-all duration-300"
+                                className="p-6 sm:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-gray-100 bg-gray-50/50 hover:bg-white hover:shadow-xl transition-all duration-300"
                             >
                                 <span className="text-4xl font-black text-[#57c2ff]/20 mb-4 block">{m.year}</span>
                                 <h3 className="text-xl font-bold text-gray-900 mb-4">{m.title}</h3>

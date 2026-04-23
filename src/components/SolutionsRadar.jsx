@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, Pause, Play } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 /* ─────────────────────────────────────────────────────────────────
    SolutionsRadar — Option 4: The Core Orbit Radar (Circular)
@@ -13,6 +14,7 @@ const AGENTS = [
     subtitle: "Co-Pilot Based",
     image: "/solution/1.jfif",
     gradient: "from-blue-500 to-cyan-400",
+    link: "/solutions/ai-sales-assistant"
   },
   {
     id: 2,
@@ -52,6 +54,7 @@ const AGENTS = [
 ];
 
 export default function SolutionsRadar() {
+  const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [autoDirection, setAutoDirection] = useState(1);
@@ -62,7 +65,8 @@ export default function SolutionsRadar() {
   useEffect(() => {
     const handleResize = () => {
       const w = window.innerWidth;
-      if (w < 640) setRadii({ x: 140, y: 80 });
+      if (w < 480) setRadii({ x: 120, y: 70 });
+      else if (w < 640) setRadii({ x: 140, y: 80 });
       else if (w < 1024) setRadii({ x: 300, y: 120 });
       else setRadii({ x: 450, y: 180 });
     };
@@ -113,7 +117,7 @@ export default function SolutionsRadar() {
       <div className="relative z-40 w-full max-w-7xl mx-auto px-6 sm:px-12 pt-8">
         <div className="flex flex-col md:flex-row md:items-center md:space-x-4 mb-4 md:mb-6 gap-6 md:gap-0">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-white tracking-tighter uppercase whitespace-normal md:whitespace-nowrap inline-block">
-            Agentic <span className="text-blue-500 text-3xl md:text-4xl lg:text-6xl drop-shadow-md">AI-Copilot</span>
+            Agentic <span className="text-2xl md:text-4xl lg:text-6xl drop-shadow-md text-blue-500">AI-Copilot</span>
           </h2>
           <div className="flex-1 flex items-center gap-4">
             <div className="h-px flex-1 bg-gradient-to-r from-blue-500/50 to-transparent"></div>
@@ -188,12 +192,18 @@ export default function SolutionsRadar() {
                   ${isFront ? 'border-2 border-[#4bb5f8] shadow-[0_0_50px_rgba(75,181,248,0.3)] bg-[#04153b]' : 'border border-white/20 bg-[#04153b]/80 hover:border-[#4bb5f8]/50'}
                 `}
                 onClick={() => {
-                  // Calculate the shortest path offset mapping 'i' to new activeIndex
-                  // We find the difference and add to activeIndex natively
                   let diff = i - activeMod;
+                  
                   // Handle wrapping rotation shortest path
                   if (diff > 3) diff -= 6;
                   if (diff < -3) diff += 6;
+
+                  // Navigate if the clicked card is already in the front and has a link
+                  if (diff === 0 && agent.link) {
+                    navigate(agent.link);
+                    return;
+                  }
+
                   setActiveIndex(prev => prev + diff);
                 }}
               >

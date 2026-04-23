@@ -40,7 +40,11 @@ const HolographicCard = ({ job, index }) => {
             ref={cardRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+            style={{ 
+                rotateX: typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches ? 0 : rotateX, 
+                rotateY: typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches ? 0 : rotateY, 
+                transformStyle: "preserve-3d" 
+            }}
             className="job-holographic-card relative w-full bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-2xl cursor-pointer group hover:bg-white/10 transition-colors"
         >
             {/* Holographic Shimmer Effect */}

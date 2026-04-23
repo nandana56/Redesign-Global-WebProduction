@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { ArrowRight, Layers, Globe } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 // ── UI COMPONENTS ─────────────────────────────────────────────────────────
 
@@ -26,6 +27,7 @@ const LiquidBlob = ({ className, color, size = "300px" }) => (
 );
 
 const OrganicCaseStudyCard = ({ item, index }) => {
+  const navigate = useNavigate();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -57,6 +59,8 @@ const OrganicCaseStudyCard = ({ item, index }) => {
     y.set(0);
   };
 
+  const isTouch = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 50 }}
@@ -66,11 +70,16 @@ const OrganicCaseStudyCard = ({ item, index }) => {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{
-        rotateX,
-        rotateY,
+        rotateX: isTouch ? 0 : rotateX,
+        rotateY: isTouch ? 0 : rotateY,
         transformStyle: "preserve-3d",
       }}
       className="relative flex flex-col group cursor-pointer [perspective:1000px] h-full"
+      onClick={() => {
+        if (item.link) {
+          navigate(item.link);
+        }
+      }}
     >
       <div 
         style={{
@@ -137,6 +146,7 @@ export default function SolutionsCaseStudies() {
       desc: "Legacy CMS to Adobe Experience Manager transformation: 300 pages, 4,000+ assets, 4 months, zero compromises.",
       image: "/solution/11.webp",
       category: "Custom AI",
+      link: "/solutions/Fortune-50-AEM-Cloud-Migration",
     },
     {
       id: 2,
@@ -184,7 +194,7 @@ export default function SolutionsCaseStudies() {
           <div className="flex items-center gap-3 text-blue-400 font-black text-[10px] uppercase tracking-[0.5em]">
             <Layers size={14} /> Real World Impact
           </div>
-          <h2 className="text-5xl md:text-7xl font-black text-white tracking-tighter uppercase leading-[0.85] font-poppins">
+          <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-white tracking-tighter uppercase leading-[0.85] font-poppins">
             Case <span className="text-blue-500">Studies</span>
           </h2>
           <motion.div 

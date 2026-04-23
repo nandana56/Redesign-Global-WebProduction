@@ -214,7 +214,7 @@ const ContactSplitNarrative = () => {
                                 <a href="https://www.facebook.com/globalwebproduction/" target="_blank" rel="noopener noreferrer" className="w-16 h-16 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-500">
                                     <Facebook className="w-6 h-6" />
                                 </a>
-                                <a href="https://www.linkedin.com/company/global-web-production/" target="_blank" rel="noopener noreferrer" className="w-16 h-16 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-500">
+                                <a href="https://www.linkedin.com/company/global-web-production/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="w-16 h-16 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-500">
                                     <Linkedin className="w-6 h-6" />
                                 </a>
                             </div>

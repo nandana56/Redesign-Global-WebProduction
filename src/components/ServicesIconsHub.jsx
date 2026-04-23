@@ -2,8 +2,6 @@ import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, Text, Sparkles, PerspectiveCamera, Environment, RoundedBox } from '@react-three/drei';
 import * as THREE from 'three';
-import WebGLDisposer from './WebGLDisposer';
-
 
 /* ──────────────── Icon Components ──────────────── */
 
@@ -123,7 +121,7 @@ const ChatIcon = ({ color }) => {
     );
 };
 
-/* ──────────────── Main Hub Component ──────────────── */
+/* ──────────────── Hub Icon Item Component ──────────────── */
 
 const HubIcon = ({ index, total, type, label, color }) => {
     const groupRef = useRef();
@@ -155,7 +153,6 @@ const HubIcon = ({ index, total, type, label, color }) => {
             groupRef.current.scale.setScalar(ease);
         } else {
             // Cycle Effect Logic
-            // Each icon gets a 3-second spotlight in a continuous loop
             const cycleDuration = 3;
             const totalCycleTime = total * cycleDuration;
             const loopTime = (t - 2) % totalCycleTime; // Start cycle after initial jumps
@@ -210,12 +207,11 @@ const HubIcon = ({ index, total, type, label, color }) => {
 
             <Text
                 position={[0, -0.75, 0.5]}
-                fontSize={0.35}
+                fontSize={window.innerWidth < 640 ? 0.45 : 0.35}
                 color="#ffffff"
                 anchorX="center"
                 maxWidth={2}
                 textAlign="center"
-                font={undefined}
                 outlineWidth={0.02}
                 outlineColor="#0ea5e9"
             >
@@ -231,6 +227,8 @@ const HubIcon = ({ index, total, type, label, color }) => {
     );
 };
 
+/* ──────────────── HUD Rings Component ──────────────── */
+
 const RingHUD = ({ radius, color, speed = 1, opacity = 0.2 }) => {
     const ref = useRef();
     useFrame(({ clock }) => {
@@ -244,6 +242,8 @@ const RingHUD = ({ radius, color, speed = 1, opacity = 0.2 }) => {
     );
 };
 
+/* ──────────────── Main Export Component ──────────────── */
+
 export default function ServicesIconsHub() {
     const icons = [
         { type: 'gears', label: 'Process', color: '#60a5fa' },
@@ -255,20 +255,9 @@ export default function ServicesIconsHub() {
     ];
 
     return (
-        <div className="w-full h-[450px] md:h-[550px]">
-            
-<Canvas
-                gl={{ antialias: true, alpha: true }}
-                dpr={[1, 2]}
-                camera={{ position: [0, 0, 11], fov: 45 }}
-            >
-                <WebGLDisposer />
-                <ambientLight intensity={2.0} />
-                <pointLight position={[10, 10, 10]} intensity={3} color="#ffffff" />
-                <pointLight position={[-10, -5, 10]} intensity={2} color="#ffffff" />
-                <directionalLight position={[0, 5, 5]} intensity={1.5} color="#ffffff" />
-
-                <group position={[0, -0.5, 0]} scale={0.9}>
+        <div className="w-full h-[400px] sm:h-[450px] md:h-[550px]">
+            <Canvas camera={{ position: [0, 0, 8], fov: 45 }}>
+                <group position={[0, -0.5, 0]} scale={0.7}>
                     {/* Central Hub */}
                     <group rotation={[Math.PI / 2, 0, 0]}>
                         <mesh>
@@ -312,7 +301,6 @@ export default function ServicesIconsHub() {
 
                 <Environment preset="city" />
             </Canvas>
-
         </div>
     );
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import DynamicPartnerCTA from "../components/DynamicPartnerCTA";
@@ -113,7 +114,7 @@ const Products = () => {
                         className="flex flex-col"
                         style={{ perspective: "1000px" }}
                     >
-                        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tight text-white flex flex-wrap gap-x-1">
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold uppercase tracking-tight text-white flex flex-wrap gap-x-1">
                             {titleLetters.map((letter, i) => (
                                 <motion.span key={i} variants={letterVariants} className="inline-block origin-left">
                                     {letter}
@@ -150,9 +151,9 @@ const Products = () => {
                                 className="absolute inset-[-8px] bg-gradient-to-r from-[#57C2FF] via-blue-600 to-indigo-500 rounded-[40px] opacity-0 group-hover:opacity-40 blur-xl transition-all duration-700 pointer-events-none"
                             />
                             
-                            <button className="relative z-10 rounded-full bg-white text-black px-8 py-3 text-sm font-semibold hover:bg-gray-100 hover:scale-105 transition-all duration-300 active:scale-95 active:bg-gray-300 shadow-[0_0_30px_rgba(255,255,255,0.1)]">
+                            <Link to="/contact" className="relative z-10 rounded-full bg-white text-black px-8 py-3 text-sm font-semibold hover:bg-gray-100 hover:scale-105 transition-all duration-300 active:scale-95 active:bg-gray-300 shadow-[0_0_30px_rgba(255,255,255,0.1)] inline-block">
                                 Contact Us
-                            </button>
+                            </Link>
                         </div>
                     </motion.div>
 
@@ -332,13 +333,21 @@ const Products = () => {
                                         </p>
                                         <div className="flex flex-wrap gap-4">
                                             {productsData[activeAccordion].hasPrimaryBtn && (
-                                                <button className="px-8 py-3 rounded-full font-bold text-sm bg-[#57C2FF] text-black hover:bg-white transition-all shadow-[0_0_20px_rgba(87,194,255,0.4)]">
+                                                <a 
+                                                    href="https://www.site360.ai/" 
+                                                    target="_blank" 
+                                                    rel="noopener noreferrer"
+                                                    className="px-8 py-3 rounded-full font-bold text-sm bg-[#57C2FF] text-black hover:bg-white transition-all shadow-[0_0_20px_rgba(87,194,255,0.4)] inline-block text-center"
+                                                >
                                                     Explore Platform
-                                                </button>
+                                                </a>
                                             )}
-                                            <button className="px-8 py-3 border border-white/40 rounded-full font-semibold text-sm text-white hover:bg-white hover:text-black transition-all">
+                                            <Link 
+                                                to={productsData[activeAccordion].id === 'site360' ? "/products/site360" : "#"}
+                                                className="px-8 py-3 border border-white/40 rounded-full font-semibold text-sm text-white hover:bg-white hover:text-black transition-all inline-block"
+                                            >
                                                 Learn More
-                                            </button>
+                                            </Link>
                                         </div>
                                     </div>
                                 </motion.div>
@@ -359,17 +368,29 @@ const Products = () => {
                         {productsData.map((item) => (
                             <div key={item.id} className="relative overflow-hidden rounded-[30px] border border-white/10">
                                 <div className="absolute inset-0 z-0">
-                                    <img src={item.img} alt={item.title} className="w-full h-full object-cover opacity-50" />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-black/20"></div>
+                                    <img src={item.img} alt={item.title} className="w-full h-full object-cover opacity-30" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/95 to-black/40"></div>
                                 </div>
                                 <div className="relative z-10 p-8 flex flex-col items-start space-y-4">
                                     <h3 className="text-3xl font-black">{item.title}</h3>
                                     <p className="text-gray-300">{item.desc}</p>
                                     <div className="flex flex-col sm:flex-row gap-4 w-full pt-4">
                                         {item.hasPrimaryBtn && (
-                                            <button className="w-full px-6 py-3 rounded-full font-bold text-sm bg-[#57C2FF] text-black shadow-lg">Explore Platform</button>
+                                            <a 
+                                                href="https://www.site360.ai/" 
+                                                target="_blank" 
+                                                rel="noopener noreferrer"
+                                                className="w-full px-6 py-3 rounded-full font-bold text-sm bg-[#57C2FF] text-black shadow-lg inline-block text-center"
+                                            >
+                                                Explore Platform
+                                            </a>
                                         )}
-                                        <button className="w-full px-6 py-3 border border-white/50 rounded-full font-semibold text-white">Learn More</button>
+                                        <Link 
+                                            to={item.id === 'site360' ? "/products/site360" : "#"}
+                                            className="w-full px-6 py-3 border border-white/50 rounded-full font-semibold text-white text-center inline-block"
+                                        >
+                                            Learn More
+                                        </Link>
                                     </div>
                                 </div>
                             </div>

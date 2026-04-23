@@ -15,7 +15,7 @@ const BlogPost = () => {
                     className="mb-8"
                 >
                     <span className="text-[#57c2ff] font-bold uppercase tracking-widest">Industry Insights</span>
-                    <h1 className="text-5xl font-bold text-gray-900 mt-4 leading-tight capitalize">
+                    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mt-4 leading-tight capitalize">
                         {id.replace("-", " ")}
                     </h1>
                     <div className="flex items-center gap-4 mt-6 text-gray-400">

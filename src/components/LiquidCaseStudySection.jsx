@@ -61,6 +61,8 @@ const OrganicCaseStudyCard = ({ item, index }) => {
     y.set(0);
   };
 
+  const isTouch = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 50 }}
@@ -70,8 +72,8 @@ const OrganicCaseStudyCard = ({ item, index }) => {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{
-        rotateX,
-        rotateY,
+        rotateX: isTouch ? 0 : rotateX,
+        rotateY: isTouch ? 0 : rotateY,
         transformStyle: "preserve-3d",
       }}
       className="relative flex flex-col group cursor-pointer [perspective:1000px]"
@@ -133,23 +135,86 @@ const OrganicCaseStudyCard = ({ item, index }) => {
   );
 };
 
-const FluidInput = ({ label, icon: Icon, type = "text", placeholder }) => (
+const FluidInput = ({ label, icon: Icon, type = "text", placeholder, name, value, onChange, required, error }) => (
   <div className="space-y-2">
-    <label className="text-xs font-bold text-slate-400 ml-4 mb-2 block">{label}</label>
+    <label className="text-xs font-bold text-slate-400 ml-4 mb-2 block">{label}{required && "*"}</label>
     <div className="relative group">
-      <div className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#57c2ff] transition-colors">
+      <div className={`absolute left-5 top-1/2 -translate-y-1/2 transition-colors ${error ? 'text-red-400' : 'text-slate-400 group-focus-within:text-[#57c2ff]'}`}>
         <Icon className="w-4 h-4" />
       </div>
       <input
         type={type}
+        name={name}
+        value={value}
+        onChange={onChange}
+        required={required}
         placeholder={placeholder}
-        className="w-full bg-slate-900/50 border-2 border-white/5 focus:border-[#57c2ff]/30 rounded-[1.5rem] py-4 pl-12 pr-6 text-white font-poppins font-medium transition-all group-hover:bg-slate-900/80 focus:bg-slate-900 focus:shadow-[0_0_30px_-5px_rgba(87,194,255,0.1)] placeholder:text-slate-600"
+        className={`w-full bg-slate-900/50 border-2 rounded-[1.5rem] py-4 pl-12 pr-6 text-white font-poppins font-medium transition-all focus:bg-slate-900 placeholder:text-slate-600 ${error ? 'border-red-500/50 focus:border-red-500 shadow-[0_0_20px_-5px_rgba(239,68,68,0.2)]' : 'border-white/5 hover:bg-slate-900/80 focus:border-[#57c2ff]/30 focus:shadow-[0_0_30px_-5px_rgba(87,194,255,0.1)]'}`}
       />
     </div>
+    {error && <p className="text-red-400 text-xs ml-4 font-semibold animate-pulse">{error}</p>}
   </div>
 );
 
 const LiquidCaseStudySection = () => {
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    category: '',
+    message: ''
+  });
+  const [errors, setErrors] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.fullName.trim()) newErrors.fullName = "Full Name is required";
+    
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Phone number is required";
+    } else if (!/^\+?[\d\s-]{10,15}$/.test(formData.phone)) {
+      newErrors.phone = "Please enter a valid phone number (e.g. +1 234-567-8900)";
+    }
+
+    if (!formData.category) newErrors.category = "Please select a category";
+    
+    if (!formData.message.trim()) {
+      newErrors.message = "Please tell us how we can help";
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = "Message must be at least 10 characters long";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleChange = (e) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    // Clear error for this field as the user types
+    if (errors[e.target.name]) {
+      setErrors(prev => ({ ...prev, [e.target.name]: undefined }));
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+    
+    // Simulate API call and store in local storage
+    localStorage.setItem('caseStudyForm', JSON.stringify(formData));
+    setIsSubmitted(true);
+    setFormData({ fullName: '', email: '', phone: '', category: '', message: '' });
+    setErrors({});
+    setTimeout(() => setIsSubmitted(false), 4000);
+  };
+
   const caseStudies = [
     {
       title: "AI Shopping Experience",
@@ -177,9 +242,9 @@ const LiquidCaseStudySection = () => {
   return (
     <section className="relative w-full py-32 bg-[#020617] overflow-hidden" id="case-studies">
       {/* ── BACKGROUND BLOBS ── */}
-      <LiquidBlob color="linear-gradient(to right, #3b82f6, #1d4ed8)" className="top-20 -left-20" size="500px" />
-      <LiquidBlob color="linear-gradient(to right, #57c2ff, #3b82f6)" className="bottom-20 right-10" size="400px" />
-      <LiquidBlob color="linear-gradient(to right, #6366f1, #4338ca)" className="top-1/2 left-1/3" size="300px" />
+      <LiquidBlob color="linear-gradient(to right, #3b82f6, #1d4ed8)" className="top-20 -left-20" size={window.innerWidth < 640 ? "200px" : "500px"} />
+      <LiquidBlob color="linear-gradient(to right, #57c2ff, #3b82f6)" className="bottom-20 right-10" size={window.innerWidth < 640 ? "180px" : "400px"} />
+      <LiquidBlob color="linear-gradient(to right, #6366f1, #4338ca)" className="top-1/2 left-1/3" size={window.innerWidth < 640 ? "150px" : "300px"} />
 
       <div className="max-w-7xl mx-auto px-8 relative z-10">
 
@@ -246,18 +311,24 @@ const LiquidCaseStudySection = () => {
                     Have a question or looking to collaborate? Reach out to our team of experts.
                   </p>
 
-                  <form className="space-y-6">
-                    <FluidInput label="Full Name" icon={User} placeholder="Full Name" />
-                    <FluidInput label="Email Address" icon={Mail} type="email" placeholder="Email Address" />
-                    <FluidInput label="Phone Number" icon={Smartphone} placeholder="Phone Number" />
+                  <form className="space-y-6" onSubmit={handleSubmit}>
+                    <FluidInput label="Full Name" name="fullName" value={formData.fullName} onChange={handleChange} required error={errors.fullName} icon={User} placeholder="Full Name" />
+                    <FluidInput label="Email Address" name="email" value={formData.email} onChange={handleChange} required error={errors.email} icon={Mail} type="email" placeholder="Email Address" />
+                    <FluidInput label="Phone Number" name="phone" value={formData.phone} onChange={handleChange} required error={errors.phone} icon={Smartphone} placeholder="Phone Number" />
 
                     <div className="space-y-2">
-                      <label className="text-xs font-bold text-slate-400 ml-4 mb-2 block">Inquiry Category</label>
+                      <label className="text-xs font-bold text-slate-400 ml-4 mb-2 block">Inquiry Category*</label>
                       <div className="relative group">
-                        <div className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#57c2ff] transition-colors pointer-events-none">
+                        <div className={`absolute left-5 top-1/2 -translate-y-1/2 transition-colors pointer-events-none ${errors.category ? 'text-red-400' : 'text-slate-400 group-focus-within:text-[#57c2ff]'}`}>
                           <Briefcase className="w-4 h-4" />
                         </div>
-                        <select className="w-full bg-slate-900/50 border-2 border-white/5 focus:border-[#57c2ff]/30 rounded-[1.5rem] py-4 pl-12 pr-10 text-white font-poppins font-medium appearance-none cursor-pointer focus:bg-slate-900 transition-all">
+                        <select 
+                          name="category"
+                          required
+                          value={formData.category}
+                          onChange={handleChange}
+                          className={`w-full bg-slate-900/50 border-2 rounded-[1.5rem] py-4 pl-12 pr-10 text-white font-poppins font-medium appearance-none cursor-pointer focus:bg-slate-900 transition-all ${errors.category ? 'border-red-500/50 focus:border-red-500 shadow-[0_0_20px_-5px_rgba(239,68,68,0.2)]' : 'border-white/5 focus:border-[#57c2ff]/30'}`}
+                        >
                           <option value="" className="bg-slate-900">Select a category</option>
                           <option value="ai" className="bg-slate-900">AI Enablement</option>
                           <option value="web" className="bg-slate-900">Web Development</option>
@@ -267,28 +338,37 @@ const LiquidCaseStudySection = () => {
                           <ChevronRight className="w-4 h-4 rotate-90" />
                         </div>
                       </div>
+                      {errors.category && <p className="text-red-400 text-xs ml-4 font-semibold animate-pulse">{errors.category}</p>}
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-xs font-bold text-slate-400 ml-4 mb-2 block">How can we help?</label>
+                      <label className="text-xs font-bold text-slate-400 ml-4 mb-2 block">How can we help?*</label>
                       <div className="relative group">
-                        <div className="absolute left-5 top-6 text-slate-400 group-focus-within:text-[#57c2ff] transition-colors">
+                        <div className={`absolute left-5 top-6 transition-colors ${errors.message ? 'text-red-400' : 'text-slate-400 group-focus-within:text-[#57c2ff]'}`}>
                           <MessageSquare className="w-4 h-4" />
                         </div>
                         <textarea
+                          name="message"
+                          value={formData.message}
+                          onChange={handleChange}
                           rows="4"
+                          required
                           placeholder="How can we help?"
-                          className="w-full bg-slate-900/50 border-2 border-white/5 focus:border-[#57c2ff]/30 rounded-[1.5rem] py-5 pl-12 pr-6 text-white font-poppins font-medium placeholder:text-slate-600 focus:bg-slate-900 transition-all resize-none"
+                          className={`w-full bg-slate-900/50 border-2 rounded-[1.5rem] py-5 pl-12 pr-6 text-white font-poppins font-medium placeholder:text-slate-600 focus:bg-slate-900 transition-all resize-none ${errors.message ? 'border-red-500/50 focus:border-red-500 shadow-[0_0_20px_-5px_rgba(239,68,68,0.2)]' : 'border-white/5 focus:border-[#57c2ff]/30'}`}
                         />
                       </div>
+                      {errors.message && <p className="text-red-400 text-xs ml-4 font-semibold animate-pulse">{errors.message}</p>}
                     </div>
 
                     <motion.button
+                      type="submit"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full bg-[#57c2ff] hover:bg-[#3ba8ff] text-slate-900 font-extrabold py-5 rounded-[1.5rem] shadow-[0_20px_40px_-10px_rgba(87,194,255,0.4)] transition-all flex items-center justify-center gap-3 mt-6 font-poppins"
+                      className={`w-full font-extrabold py-5 rounded-[1.5rem] transition-all flex items-center justify-center gap-3 mt-6 font-poppins
+                        ${isSubmitted ? 'bg-green-500 hover:bg-green-400 text-white shadow-[0_20px_40px_-10px_rgba(34,197,94,0.4)]' : 'bg-[#57c2ff] hover:bg-[#3ba8ff] text-slate-900 shadow-[0_20px_40px_-10px_rgba(87,194,255,0.4)]'}
+                      `}
                     >
-                      Start Journey <Send className="w-4 h-4" />
+                      {isSubmitted ? "Sent Successfully!" : "Start Journey"} {!isSubmitted && <Send className="w-4 h-4" />}
                     </motion.button>
                   </form>
                 </div>

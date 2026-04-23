@@ -124,7 +124,7 @@ const InnovationIntroduction = () => {
     }, [current, isPaused]);
 
     return (
-        <section className="relative w-full py-2 lg:py-4 bg-[#003153] overflow-hidden">
+        <section className="relative w-full py-12 lg:py-20 bg-[#003153] overflow-hidden">
             {/* Background Pattern */}
             <div className="absolute inset-0 z-0 opacity-20" 
                  style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #57C2FF 1px, transparent 0)', backgroundSize: '40px 40px' }} />
@@ -148,7 +148,7 @@ const InnovationIntroduction = () => {
                                 variants={containerVariants}
                                 initial="hidden"
                                 animate="visible"
-                                className="w-full p-5 sm:p-7 md:p-8 rounded-[2.5rem] bg-white/[0.03] backdrop-blur-xl border border-white/10 shadow-3xl relative overflow-hidden group"
+                                className="w-full p-6 sm:p-7 md:p-8 rounded-[2.5rem] bg-white/[0.03] backdrop-blur-xl border border-white/10 shadow-3xl relative overflow-hidden group"
                             >
                                 {/* Animated border beam effect */}
                                 <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
@@ -192,7 +192,7 @@ const InnovationIntroduction = () => {
                                     {/* Heading */}
                                     <motion.h2
                                         variants={itemVariants}
-                                        className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-poppins font-bold leading-tight mb-6"
+                                        className="text-white text-xl sm:text-2xl md:text-3xl lg:text-5xl font-poppins font-bold leading-tight mb-6"
                                     >
                                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#57C2FF] via-white to-white">
                                             {innovationSlides[current].heading}

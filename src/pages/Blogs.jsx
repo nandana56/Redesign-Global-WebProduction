@@ -1,7 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Canvas } from '@react-three/fiber';
 import { content } from '../content_data';
 import LiquidCaseStudySection from '../components/LiquidCaseStudySection';
+import BlogLetters3D from '../components/BlogLetters3D';
 
 const Blogs = () => {
     const posts = content?.blog?.posts ?? [];
@@ -50,6 +52,13 @@ const Blogs = () => {
             <section
                 className="relative overflow-hidden rounded-3xl mx-6 max-w-7xl lg:mx-auto px-6 py-16 bg-[#0a1628] shadow-xl mb-20 border border-[#57c2ff]/10"
             >
+                
+                {/* 3D Title Wrapper */}
+                <div className="w-full h-[150px] md:h-[200px] mb-8 relative z-20 pointer-events-none">
+                    <Canvas camera={{ position: [0, 0, 22], fov: 45 }}>
+                        <BlogLetters3D />
+                    </Canvas>
+                </div>
 
                 <motion.div
                     initial="hidden"

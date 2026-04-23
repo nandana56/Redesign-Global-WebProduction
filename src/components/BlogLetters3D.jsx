@@ -114,7 +114,7 @@ const SpeechBubbleLetter = ({ letter, position, index, totalLetters }) => {
 
             <Center position={[0, 0, 0.4]}>
                 <Text
-                    fontSize={1.5}
+                    fontSize={window.innerWidth < 640 ? 1.2 : 1.5}
                     color="#ffffff"
                     anchorX="center"
                     anchorY="middle"
@@ -140,7 +140,7 @@ const SpeechBubbleLetter = ({ letter, position, index, totalLetters }) => {
 // Main component
 const BlogLetters3D = () => {
     const letters = ['B', 'L', 'O', 'G', 'S'];
-    const spacing = 4.2;
+    const spacing = window.innerWidth < 640 ? 2.8 : 4.2;
 
     return (
         <>

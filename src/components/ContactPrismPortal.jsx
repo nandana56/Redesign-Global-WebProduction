@@ -276,7 +276,7 @@ const ContactPrismPortal = () => {
                             </div>
                             <div className="pt-10 border-t border-white/5 flex gap-8">
                                 <a href="https://facebook.com" className="text-white/20 hover:text-white transition-colors"><Facebook className="w-6 h-6" /></a>
-                                <a href="https://linkedin.com" className="text-white/20 hover:text-white transition-colors"><Linkedin className="w-6 h-6" /></a>
+                                <a href="https://www.linkedin.com/company/global-web-production/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="text-white/20 hover:text-white transition-colors"><Linkedin className="w-6 h-6" /></a>
                             </div>
                         </PrismModule>
                     </div>
