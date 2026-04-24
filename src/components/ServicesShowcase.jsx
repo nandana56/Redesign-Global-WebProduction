@@ -19,7 +19,7 @@ const pillars = [
         description:
             "Our Small and Medium Business Solutions are designed to help growing companies establish a strong digital presence, attract customers, and scale efficiently. From SEO-optimized website design and e-commerce development to cost-effective digital marketing and branding services, we deliver high-impact results without the enterprise-level complexity. Our team also implements CRM systems, AI-powered marketing automation, and streamlined workflows to boost productivity and customer engagement. With tailored strategies, creative expertise, and hands-on support, we empower SMBs to compete and thrive in today’s digital marketplace.",
         color: "#57c2ff",
-        image: "/images/smb.jpg",
+        image: "/home/SMB.webp",
     },
 ];
 
