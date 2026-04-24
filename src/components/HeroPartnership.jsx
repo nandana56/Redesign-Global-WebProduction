@@ -86,6 +86,13 @@ const slides = [
 // ── SELF-HEALING 3D EARTH CANVAS (auto-remounts on WebGL context loss) ────────
 const EarthCanvas = () => {
     const [canvasKey, setCanvasKey] = React.useState(0);
+    const [shouldMount, setShouldMount] = React.useState(false);
+
+    React.useEffect(() => {
+        // Defer mounting WebGL to not block the main thread during initial LCP paint
+        const timer = setTimeout(() => setShouldMount(true), 500);
+        return () => clearTimeout(timer);
+    }, []);
 
     const handleContextLost = React.useCallback((e, canvasEl) => {
         e.preventDefault();
@@ -95,6 +102,7 @@ const EarthCanvas = () => {
         }, 1000);
     }, []);
 
+    if (!shouldMount) return <div className="absolute top-[-2%] sm:top-[-4%] right-[0%] sm:right-[5%] md:right-[8%] w-[280px] sm:w-[450px] md:w-[550px] h-[280px] sm:h-[450px] md:h-[550px] z-30 pointer-events-none" />;
 
     return (
         <div className="absolute top-[-2%] sm:top-[-4%] right-[0%] sm:right-[5%] md:right-[8%] w-[280px] sm:w-[450px] md:w-[550px] h-[280px] sm:h-[450px] md:h-[550px] z-30 pointer-events-none">
@@ -134,9 +142,13 @@ const HeroPartnership = () => {
 
             {/* ── BACKGROUND ── */}
             <div className="absolute inset-0 z-0">
-                <div
-                    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                    style={{ backgroundImage: `url('/home/digital-app-innovation-banner-image.jpg')` }}
+                <img 
+                    src="/home/digital-app-innovation-banner-image.jpg"
+                    alt="Technology Solutions Background"
+                    className="absolute inset-0 w-full h-full object-cover"
+                    fetchpriority="high"
+                    loading="eager"
+                    decoding="sync"
                 />
             </div>
 

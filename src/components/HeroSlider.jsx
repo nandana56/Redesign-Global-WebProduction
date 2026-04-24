@@ -74,7 +74,7 @@ const HeroSlider = () => {
                 <div className="slide-item relative h-[80vh] min-h-[600px] flex items-center">
                     <div
                         className="image-layer absolute inset-0 bg-cover bg-center bg-no-repeat z-0"
-                        style={{ backgroundImage: "url('/home/bg-4.webp')" }}
+                        style={{ backgroundImage: "url('/home/istockphoto-477698565-170667a.jpg')" }}
                     />
                     <div className="absolute inset-0 bg-[#06235f]/60 z-[1]" />
                     <div className="shape-1 absolute top-[10%] left-[5%] w-[100px] h-[100px] border-2 border-white/10 rounded-full animate-spin-slow z-[2]" />

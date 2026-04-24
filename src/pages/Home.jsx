@@ -1,20 +1,24 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import HeroPartnership from '../components/HeroPartnership';
-import InnovationIntroduction from '../components/InnovationIntroduction';
-import ServicesVariety from '../components/ServicesVariety';
-import IndustryArticles from '../components/IndustryArticles';
-import CustomerStory from '../components/CustomerStory';
-import Ladder7Partnership from '../components/Ladder7Partnership';
+
+// Lazy load below-the-fold components
+const InnovationIntroduction = lazy(() => import('../components/InnovationIntroduction'));
+const ServicesVariety = lazy(() => import('../components/ServicesVariety'));
+const CustomerStory = lazy(() => import('../components/CustomerStory'));
+const IndustryArticles = lazy(() => import('../components/IndustryArticles'));
+const Ladder7Partnership = lazy(() => import('../components/Ladder7Partnership'));
 
 const Home = () => {
     return (
         <main className="">
             <HeroPartnership />
-            <InnovationIntroduction />
-            <ServicesVariety />
-            <CustomerStory />
-            <IndustryArticles />
-            <Ladder7Partnership />
+            <Suspense fallback={<div className="h-[50vh] w-full flex items-center justify-center bg-[#050B1C]">Loading...</div>}>
+                <InnovationIntroduction />
+                <ServicesVariety />
+                <CustomerStory />
+                <IndustryArticles />
+                <Ladder7Partnership />
+            </Suspense>
         </main>
     );
 };
