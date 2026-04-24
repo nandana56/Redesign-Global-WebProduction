@@ -210,6 +210,8 @@ const FutureOfWebProduction = () => {
                             src="/career/webproduction.jpg" 
                             alt="Web Production" 
                             className="future-image absolute inset-0 w-full h-full object-cover origin-center"
+                            loading="lazy"
+                            decoding="async"
                         />
                     </div>
                 </div>

@@ -91,7 +91,7 @@ const TiltCard = ({ article }) => {
         className="absolute inset-4 rounded-[30px] bg-[#000e34]/80 shadow-lg flex flex-col overflow-hidden"
       >
         <div className="relative h-[220px] overflow-hidden">
-          <img src={article.image} alt={article.title} className="w-full h-full object-cover" />
+          <img src={article.image} alt={article.title} className="w-full h-full object-cover" loading="lazy" decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#000e34] via-transparent to-transparent opacity-80" />
           <div className="absolute top-4 left-4">
              <span className="px-3 py-1 rounded-full text-[9px] font-black uppercase text-white bg-[#4bb5f8]/80 backdrop-blur-sm">

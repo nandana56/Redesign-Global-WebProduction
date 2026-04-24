@@ -103,7 +103,7 @@ const IndustryArticlesV3 = () => {
               >
                 <div className="w-full h-full bg-[#062055] rounded-[40px] shadow-2xl overflow-hidden border border-white/5 flex flex-col">
                   <div className="relative h-[45%] overflow-hidden">
-                    <img src={article.image} alt={article.title} className="w-full h-full object-cover" />
+                    <img src={article.image} alt={article.title} className="w-full h-full object-cover" loading="lazy" decoding="async" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#062055] via-transparent to-transparent opacity-60" />
                   </div>
                   <div className="p-8 flex-grow flex flex-col text-white">
