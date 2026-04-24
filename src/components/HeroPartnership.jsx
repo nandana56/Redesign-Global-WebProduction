@@ -90,7 +90,9 @@ const EarthCanvas = () => {
 
     React.useEffect(() => {
         // Defer mounting WebGL to not block the main thread during initial LCP paint
-        const timer = setTimeout(() => setShouldMount(true), 500);
+        // A longer delay (1500ms) ensures heavily throttled devices (like PageSpeed Insights)
+        // have enough time to finish FCP and LCP before spinning up the GPU.
+        const timer = setTimeout(() => setShouldMount(true), 1500);
         return () => clearTimeout(timer);
     }, []);
 
