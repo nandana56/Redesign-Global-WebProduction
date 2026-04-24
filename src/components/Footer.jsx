@@ -180,10 +180,10 @@ const Footer = () => {
                 <div className="flex flex-col md:flex-row justify-between items-start space-y-8 md:space-y-0">
                     <div className="flex flex-col items-start space-y-4">
                         <div className="flex space-x-4">
-                            <a href="https://www.linkedin.com/company/global-web-production/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="bg-white p-2 rounded shadow-md hover:scale-110 transition-transform">
+                            <a href="https://www.linkedin.com/company/global-web-production/posts/?feedView=all" target="_blank" rel="noopener noreferrer" aria-label="Visit our LinkedIn page" className="bg-white p-2 rounded shadow-md hover:scale-110 transition-transform">
                                 <FaLinkedinIn className="text-[#061539] text-xl" />
                             </a>
-                            <a href="mailto:lekshmi@globalwebproduction.com" className="bg-white p-2 rounded shadow-md hover:scale-110 transition-transform">
+                            <a href="mailto:lekshmi@globalwebproduction.com" aria-label="Send us an email" className="bg-white p-2 rounded shadow-md hover:scale-110 transition-transform">
                                 <FaEnvelope className="text-[#061539] text-xl" />
                             </a>
                         </div>

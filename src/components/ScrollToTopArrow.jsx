@@ -42,6 +42,7 @@ const ScrollToTopArrow = () => {
                     whileTap={{ scale: 0.9 }}
                     className="fixed top-[60%] -translate-y-1/2 right-1 z-[100] w-12 h-12 bg-[#08204d]/90 backdrop-blur-md text-white transition-all duration-300 focus:outline-none flex items-center justify-center cursor-pointer shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-white/10 rounded-full"
                     title="Scroll to Top"
+                    aria-label="Scroll to Top"
                 >
                     <FaChevronUp className="text-xl" />
                 </motion.button>
