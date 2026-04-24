@@ -110,7 +110,7 @@ const HeroPartnership = () => {
                     src="/home/digital-app-innovation-banner-image.jpg"
                     alt="Technology Solutions Background"
                     className="absolute inset-0 w-full h-full object-cover"
-                    fetchpriority="high"
+                    fetchPriority="high"
                     loading="eager"
                     decoding="sync"
                 />

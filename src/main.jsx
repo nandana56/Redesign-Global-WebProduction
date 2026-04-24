@@ -7,10 +7,13 @@ import App from './App.jsx'
 const _origError = console.error.bind(console);
 console.error = (...args) => {
   const msg = args[0];
-  if (typeof msg === 'string' &&
-    (msg.includes('Texture is immutable') ||
-     msg.includes('GL_INVALID_OPERATION') ||
-     msg.includes('WebGL: INVALID_OPERATION'))) {
+  const msgStr = typeof msg === 'string' ? msg : (msg instanceof Error ? msg.message : String(msg));
+  if (
+    msgStr.includes('Texture is immutable') ||
+    msgStr.includes('GL_INVALID_OPERATION') ||
+    msgStr.includes('WebGL: INVALID_OPERATION') ||
+    msgStr.includes('Context lost')
+  ) {
     return; // swallow — purely cosmetic after context loss
   }
   _origError(...args);

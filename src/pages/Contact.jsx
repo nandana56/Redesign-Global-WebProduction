@@ -56,7 +56,7 @@ const Contact = () => {
                         {/* Overlay to dim it slightly for better 3D visibility - Tinted blue for seamless look */}
                         <div className="absolute inset-0 z-1 bg-blue-500/5 pointer-events-none" />
 
-                        <div className="w-full h-[300px] sm:h-[450px] lg:h-[550px] flex items-center justify-center">
+                        <div className="relative z-10 w-full h-[300px] sm:h-[450px] lg:h-[550px] flex items-center justify-center">
                             <ContactLightningScene />
                         </div>
                     </motion.div>

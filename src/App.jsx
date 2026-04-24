@@ -4,9 +4,9 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import StickyContactBar from './components/StickyContactBar';
+import Home from './pages/Home';
 
 // Lazy loaded pages
-const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
 const Services = lazy(() => import('./pages/Services'));
 const Blogs = lazy(() => import('./pages/Blogs'));
