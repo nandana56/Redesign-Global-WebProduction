@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useState, useEffect } from 'react';
+import React, { useRef, useMemo, useState, useEffect, Suspense } from 'react';
 import { content } from '../content_data';
 import { motion, useMotionValue, useSpring, useTransform, useScroll } from 'framer-motion';
 import gsap from 'gsap';
@@ -8,6 +8,7 @@ import * as THREE from 'three';
 import CareerSignpost3D from '../components/CareerSignpost3D';
 import ImpactSectionOption3 from '../components/ImpactSectionOption3';
 import JobsHolographicStack from '../components/JobsHolographicStack';
+import WebGLDisposer from '../components/WebGLDisposer';
 
 const JOBS_DATA = [
     { title: "Technical Project Manager - AEM Lead", location: "Trivandrum, Kerala", type: "Remote" },
@@ -286,9 +287,12 @@ const Careers = () => {
                     className="relative z-10 py-28 overflow-hidden min-h-[70vh] flex items-center bg-[#020617] group/section"
                 >
                     <div className="absolute inset-0 z-0">
-                        <Canvas camera={{ position: [0, 0, 5] }}>
-                            <LiquidBackground />
-                        </Canvas>
+                        <Suspense fallback={null}>
+                            <Canvas camera={{ position: [0, 0, 5] }} gl={{ powerPreference: 'low-power' }}>
+                                <WebGLDisposer />
+                                <LiquidBackground />
+                            </Canvas>
+                        </Suspense>
                     </div>
                     
                     <motion.div 

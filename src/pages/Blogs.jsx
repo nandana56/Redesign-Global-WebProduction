@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
 import { content } from '../content_data';
 import LiquidCaseStudySection from '../components/LiquidCaseStudySection';
 import BlogLetters3D from '../components/BlogLetters3D';
+import WebGLDisposer from '../components/WebGLDisposer';
 
 const Blogs = () => {
     const posts = content?.blog?.posts ?? [];
@@ -55,9 +56,16 @@ const Blogs = () => {
                 
                 {/* 3D Title Wrapper */}
                 <div className="w-full h-[150px] md:h-[200px] mb-8 relative z-20 pointer-events-none">
-                    <Canvas camera={{ position: [0, 0, 22], fov: 45 }}>
-                        <BlogLetters3D />
-                    </Canvas>
+                    <Suspense fallback={null}>
+                        <Canvas
+                            camera={{ position: [0, 0, 22], fov: 45 }}
+                            gl={{ antialias: true, alpha: true, powerPreference: 'low-power' }}
+                            frameloop="demand"
+                        >
+                            <WebGLDisposer />
+                            <BlogLetters3D />
+                        </Canvas>
+                    </Suspense>
                 </div>
 
                 <motion.div
