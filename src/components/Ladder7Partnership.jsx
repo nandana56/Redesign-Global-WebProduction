@@ -144,6 +144,8 @@ const Ladder7Partnership = () => {
                         src="/home/ladder7.jpg" 
                         alt="Ladder7 Core" 
                         className="w-full h-full object-cover transition-transform duration-[2000ms] group-hover:scale-110"
+                        loading="lazy"
+                        decoding="async"
                     />
                     
                     {/* Internal lens edge light */}

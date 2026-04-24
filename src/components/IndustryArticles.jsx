@@ -134,9 +134,9 @@ const ExpandedHUD = ({ article, index, onClose }) => {
         <div className="w-full md:w-[45%] h-[35%] md:h-full relative shrink-0 border-b md:border-b-0 md:border-r border-white/10">
            {/* Cyberpunk Scanner Line sweeping image */}
            <motion.div 
-             animate={{ top: ["0%", "100%", "0%"] }} 
+             animate={{ translateY: ["0%", "100%", "0%"] }} 
              transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-             className="absolute left-0 right-0 h-[2px] z-20 shadow-[0_0_15px_currentColor]"
+             className="absolute top-0 left-0 right-0 h-[2px] z-20 shadow-[0_0_15px_currentColor]"
              style={{ backgroundColor: article.color, color: article.color }}
            />
            

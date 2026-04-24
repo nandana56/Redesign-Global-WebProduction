@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef, Suspense, lazy } from "react";
+import React, { Suspense, lazy } from "react";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const HeroEarthCanvas = lazy(() => import('./HeroEarthCanvas'));
 
@@ -34,55 +34,6 @@ const ThemeButton = ({ to, text, isOutlined = false }) => {
     );
 };
 
-// ── SLIDER DOT NAVIGATION ──────────────────────────────────────────────────────
-const SliderDots = ({ total, current, onSelect }) => (
-    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-3">
-        {Array.from({ length: total }).map((_, i) => (
-            <button
-                key={i}
-                onClick={() => onSelect(i)}
-                className={`transition-all duration-500 rounded-full border border-white/60 ${i === current
-                    ? "w-8 h-3 bg-white scale-110"
-                    : "w-3 h-3 bg-transparent hover:bg-white/50"
-                    }`}
-                aria-label={`Go to slide ${i + 1}`}
-            />
-        ))}
-    </div>
-);
-
-// ── ARROW NAVIGATION ───────────────────────────────────────────────────────────
-const ArrowBtn = ({ direction, onClick }) => (
-    <button
-        onClick={onClick}
-        aria-label={direction === "prev" ? "Previous slide" : "Next slide"}
-        className="absolute top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-[#57C2FF] hover:border-[#57C2FF] transition-all duration-300"
-        style={{ [direction === "prev" ? "left" : "right"]: "24px" }}
-    >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d={direction === "prev" ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7"}
-            />
-        </svg>
-    </button>
-);
-
-// ── SLIDE DATA ─────────────────────────────────────────────────────────────────
-const slides = [
-    {
-        id: "hero",
-        bgImage: "/home/digital-app-innovation-banner-image.jpg",
-    },
-    {
-        id: "innovation",
-        bgImage: "/home/istockphoto-477698565-170667a.jpg",
-    },
-];
-
-
 
 // ── MAIN COMPONENT ─────────────────────────────────────────────────────────────
 const HeroPartnership = () => {
@@ -90,8 +41,6 @@ const HeroPartnership = () => {
 
     React.useEffect(() => {
         // Defer mounting WebGL to not block the main thread during initial LCP paint
-        // A longer delay (1500ms) ensures heavily throttled devices (like PageSpeed Insights)
-        // have enough time to finish FCP and LCP before spinning up the GPU.
         const timer = setTimeout(() => setShouldMount(true), 1500);
         return () => clearTimeout(timer);
     }, []);

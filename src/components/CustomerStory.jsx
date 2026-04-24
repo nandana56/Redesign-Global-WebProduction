@@ -46,6 +46,8 @@ const CustomerStory = () => {
                             src="/home/customerstories.jpg"
                             alt="AEM Migration"
                             className="w-full h-full object-cover grayscale-[40%] group-hover:grayscale-0 transition-all duration-1000"
+                            loading="lazy"
+                            decoding="async"
                         />
                     </motion.div>
                 </div>

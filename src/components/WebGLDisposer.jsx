@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useThree } from '@react-three/fiber';
+import { runOnIdle } from '../utils/idle';
 
 /**
  * WebGLDisposer – mounts inside a <Canvas> and disposes the WebGL
@@ -40,24 +41,27 @@ const WebGLDisposer = () => {
             canvas.removeEventListener('webglcontextlost', handleContextLost);
             canvas.removeEventListener('webglcontextrestored', handleContextRestored);
 
-            // Dispose all scene objects
-            scene.traverse((obj) => {
-                if (obj.geometry) obj.geometry.dispose();
-                if (obj.material) {
-                    const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
-                    mats.forEach((mat) => {
-                        Object.values(mat).forEach((val) => {
-                            if (val && val.isTexture) val.dispose();
+            // Defer heavy disposal to idle time to avoid blocking page transitions
+            runOnIdle(() => {
+                // Dispose all scene objects
+                scene.traverse((obj) => {
+                    if (obj.geometry) obj.geometry.dispose();
+                    if (obj.material) {
+                        const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
+                        mats.forEach((mat) => {
+                            Object.values(mat).forEach((val) => {
+                                if (val && val.isTexture) val.dispose();
+                            });
+                            mat.dispose();
                         });
-                        mat.dispose();
-                    });
-                }
-            });
+                    }
+                });
 
-            // Small delay lets React finish unmounting before we nuke the context
-            setTimeout(() => {
-                try { gl.dispose(); } catch (_) { /* already gone */ }
-            }, 50);
+                // Small delay lets React finish unmounting before we nuke the context
+                setTimeout(() => {
+                    try { gl.dispose(); } catch (_) { /* already gone */ }
+                }, 50);
+            });
         };
     }, [gl, scene]);
 

@@ -116,6 +116,8 @@ const ServicesVariety = () => {
                     src="/home/istockphoto-1270899501-2048x2048.jpg" 
                     alt="Orbit Background" 
                     className="w-full h-full object-cover opacity-60"
+                    loading="lazy"
+                    decoding="async"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-[#050B1C] via-transparent to-[#050B1C] opacity-70" />
                 {/* Technical Pattern Overlay */}

@@ -1,10 +1,12 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
-import StickyContactBar from './components/StickyContactBar';
 import Home from './pages/Home';
+
+// Lazy loaded components
+const Footer = lazy(() => import('./components/Footer'));
+const StickyContactBar = lazy(() => import('./components/StickyContactBar'));
 
 // Lazy loaded pages
 const About = lazy(() => import('./pages/About'));
@@ -31,9 +33,11 @@ const App = () => {
   return (
     <Router>
       <ScrollToTop />
-      <StickyContactBar />
       <div className="min-h-screen">
         <Navbar />
+        <Suspense fallback={null}>
+          <StickyContactBar />
+        </Suspense>
         <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-[#050B1C]">Loading...</div>}>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -58,7 +62,9 @@ const App = () => {
             <Route path="/solutions/Fortune-50-AEM-Cloud-Migration" element={<AEMCloudMigration />} />
           </Routes>
         </Suspense>
-        <Footer />
+        <Suspense fallback={null}>
+          <Footer />
+        </Suspense>
       </div>
     </Router>
   );

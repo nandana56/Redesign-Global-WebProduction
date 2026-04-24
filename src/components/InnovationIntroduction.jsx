@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 // ── Shared Button Component ──
 const ThemeButton = ({ to, text, isOutlined = false }) => {
@@ -152,8 +152,8 @@ const InnovationIntroduction = () => {
                             >
                                 {/* Animated border beam effect */}
                                 <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-                                    <div className="absolute top-0 left-[-100%] w-full h-[1px] bg-gradient-to-r from-transparent via-[#57C2FF] to-transparent animate-[shimmer_4s_infinite]" />
-                                    <div className="absolute bottom-0 right-[-100%] w-full h-[1px] bg-gradient-to-r from-transparent via-[#57C2FF] to-transparent animate-[shimmer_4s_infinite_reverse]" />
+                                    <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#57C2FF] to-transparent animate-[shimmer_4s_infinite]" />
+                                    <div className="absolute bottom-0 right-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#57C2FF] to-transparent animate-[shimmer_4s_infinite_reverse]" />
                                 </div>
 
                                 {/* Pause/Play toggle in the top right of the card */}
@@ -242,6 +242,8 @@ const InnovationIntroduction = () => {
                                         src={innovationSlides[current].bgImage} 
                                         alt={innovationSlides[current].heading}
                                         className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                                        loading="lazy"
+                                        decoding="async"
                                     />
                                     {/* Stylish overlay */}
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
@@ -301,10 +303,10 @@ const InnovationIntroduction = () => {
                                 aria-label={`Go to slide ${index + 1}`}
                             >
                                 <div 
-                                    className={`h-1.5 rounded-full transition-all duration-500 ease-out ${
+                                    className={`h-1.5 w-10 rounded-full transition-all duration-500 ease-out origin-left ${
                                         index === current 
-                                        ? 'w-10 bg-gradient-to-r from-[#57C2FF] to-white shadow-[0_0_12px_rgba(87,194,255,0.7)]' 
-                                        : 'w-2.5 bg-white/20 group-hover:bg-white/50 group-hover:w-4'
+                                        ? 'bg-gradient-to-r from-[#57C2FF] to-white shadow-[0_0_12px_rgba(87,194,255,0.7)] scale-x-100 opacity-100' 
+                                        : 'bg-white/20 scale-x-[0.25] opacity-50 group-hover:scale-x-[0.4] group-hover:opacity-70'
                                     }`}
                                 />
                             </button>
