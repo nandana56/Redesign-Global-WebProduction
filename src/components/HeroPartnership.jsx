@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef, Suspense } from "react";
+import React, { useState, useEffect, useRef, Suspense, lazy } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Canvas } from "@react-three/fiber";
-import { EarthScene } from "./EarthScene";
-import WebGLDisposer from './WebGLDisposer';
+
+const HeroEarthCanvas = lazy(() => import('./HeroEarthCanvas'));
 
 
 // ── CURVE-SWEEP BUTTON ─────────────────────────────────────────────────────────
@@ -83,9 +82,10 @@ const slides = [
     },
 ];
 
-// ── SELF-HEALING 3D EARTH CANVAS (auto-remounts on WebGL context loss) ────────
-const EarthCanvas = () => {
-    const [canvasKey, setCanvasKey] = React.useState(0);
+
+
+// ── MAIN COMPONENT ─────────────────────────────────────────────────────────────
+const HeroPartnership = () => {
     const [shouldMount, setShouldMount] = React.useState(false);
 
     React.useEffect(() => {
@@ -96,44 +96,6 @@ const EarthCanvas = () => {
         return () => clearTimeout(timer);
     }, []);
 
-    const handleContextLost = React.useCallback((e, canvasEl) => {
-        e.preventDefault();
-        // After a short delay, bump the key to force a full remount
-        setTimeout(() => {
-            setCanvasKey(k => k + 1);
-        }, 1000);
-    }, []);
-
-    if (!shouldMount) return <div className="absolute top-[-2%] sm:top-[-4%] right-[0%] sm:right-[5%] md:right-[8%] w-[280px] sm:w-[450px] md:w-[550px] h-[280px] sm:h-[450px] md:h-[550px] z-30 pointer-events-none" />;
-
-    return (
-        <div className="absolute top-[-2%] sm:top-[-4%] right-[0%] sm:right-[5%] md:right-[8%] w-[280px] sm:w-[450px] md:w-[550px] h-[280px] sm:h-[450px] md:h-[550px] z-30 pointer-events-none">
-            <Suspense fallback={null}>
-                
-<Canvas
-                    key={canvasKey}
-                    camera={{ position: [0, 0, 3.0], fov: 45 }}
-                    gl={{ antialias: true, alpha: true }}
-                    style={{ background: "transparent", width: "100%", height: "100%" }}
-                    frameloop="always"
-                    onCreated={({ gl }) => {
-                        const canvas = gl.domElement;
-                        const lostHandler = (e) => handleContextLost(e, canvas);
-                        canvas.addEventListener('webglcontextlost', lostHandler);
-                        // Cleanup is handled by the key-based remount
-                    }}
-                >
-                    <WebGLDisposer />
-                    <EarthScene showStars={false} earthScale={0.6} earthSpeed={0.85} />
-                </Canvas>
-
-            </Suspense>
-        </div>
-    );
-};
-
-// ── MAIN COMPONENT ─────────────────────────────────────────────────────────────
-const HeroPartnership = () => {
     const contentVariants = {
         hidden: { opacity: 0, y: 40 },
         visible: (delay) => ({ opacity: 1, y: 0, transition: { duration: 0.8, delay, ease: "easeOut" } }),
@@ -155,7 +117,11 @@ const HeroPartnership = () => {
             </div>
 
             {/* ── 3D Earth Overlay (auto-remounts on context loss) ── */}
-            <EarthCanvas />
+            {shouldMount && (
+                <Suspense fallback={<div className="absolute top-[-2%] sm:top-[-4%] right-[0%] sm:right-[5%] md:right-[8%] w-[280px] sm:w-[450px] md:w-[550px] h-[280px] sm:h-[450px] md:h-[550px] z-30 pointer-events-none" />}>
+                    <HeroEarthCanvas />
+                </Suspense>
+            )}
 
             {/* ── UI content (Extreme Left) ── */}
             <div className="relative z-20 h-full w-full flex items-center justify-start px-6 sm:pl-12 md:pl-20 pt-20 md:pt-0">
